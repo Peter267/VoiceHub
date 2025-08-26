@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
       createdAt: Date
     }> = []
 
-    // 获取最近的歌曲活动
+    // 获取最近的视频活动
     const recentSongs = await prisma.song.findMany({
       take: 5,
       orderBy: { createdAt: 'desc' },
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
       activities.push({
         id: `song-${song.id}`,
         type: 'song',
-        title: '新歌曲投稿',
+        title: '新视频投稿',
         description: `${song.requester?.name || song.requester?.username || '用户'} 投稿了《${song.title}》`,
         createdAt: song.createdAt
       })

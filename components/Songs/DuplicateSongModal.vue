@@ -2,7 +2,7 @@
   <div v-if="show" class="modal-overlay" @click="handleOverlayClick">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
-        <h3>歌曲已存在</h3>
+        <h3>视频已存在</h3>
         <button class="close-btn" @click="$emit('close')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -13,10 +13,10 @@
       
       <div class="modal-body">
         <p class="duplicate-message">
-          这首歌曲已经在列表中了，不能重复投稿。您可以为它点赞支持！
+          这首视频已经在列表中了，不能重复投稿。您可以为它点赞支持！
         </p>
         
-        <!-- 歌曲卡片 -->
+        <!-- 视频卡片 -->
         <div class="song-card">
           <div class="song-cover">
             <img 

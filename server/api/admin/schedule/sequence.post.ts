@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   if (!user || !['SONG_ADMIN', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
     throw createError({
       statusCode: 403,
-      statusMessage: '需要歌曲管理员及以上权限'
+      statusMessage: '需要视频管理员及以上权限'
     })
   }
   

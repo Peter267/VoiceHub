@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
         break
 
       case 'song_change':
-        // 歌曲切换
+        // 视频切换
         if (data && typeof data === 'object') {
           const songInfo = {
             songId: data.songId,
@@ -52,12 +52,12 @@ export default defineEventHandler(async (event) => {
             timestamp: Date.now()
           }
           
-          // 广播歌曲切换
+          // 广播视频切换
           broadcastSongChange(songInfo)
           
           return {
             success: true,
-            message: '歌曲切换已广播'
+            message: '视频切换已广播'
           }
         }
         break

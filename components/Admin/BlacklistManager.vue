@@ -1,8 +1,8 @@
 <template>
   <div class="blacklist-manager">
     <div class="header">
-      <h3>歌曲黑名单管理</h3>
-      <p class="description">管理禁止点歌的歌曲和关键词</p>
+      <h3>视频黑名单管理</h3>
+      <p class="description">管理禁止点歌的视频和关键词</p>
     </div>
 
     <!-- 添加黑名单项 -->
@@ -13,16 +13,16 @@
           <div class="form-group">
             <label>类型:</label>
             <select v-model="newItem.type" class="form-select">
-              <option value="SONG">具体歌曲</option>
+              <option value="SONG">具体视频</option>
               <option value="KEYWORD">关键词</option>
             </select>
           </div>
           <div class="form-group flex-1">
-            <label>{{ newItem.type === 'SONG' ? '歌曲名称 - 艺术家' : '关键词' }}:</label>
+            <label>{{ newItem.type === 'SONG' ? '视频名称 - 艺术家' : '关键词' }}:</label>
             <input
               v-model="newItem.value"
               type="text"
-              :placeholder="newItem.type === 'SONG' ? '例如: 歌曲名 - 艺术家' : '例如: 敏感词'"
+              :placeholder="newItem.type === 'SONG' ? '例如: 视频名 - 艺术家' : '例如: 敏感词'"
               class="form-input"
             />
           </div>
@@ -49,7 +49,7 @@
           <label>类型筛选:</label>
           <select v-model="filters.type" @change="loadBlacklist" class="form-select">
             <option value="">全部</option>
-            <option value="SONG">具体歌曲</option>
+            <option value="SONG">具体视频</option>
             <option value="KEYWORD">关键词</option>
           </select>
         </div>
@@ -83,7 +83,7 @@
           <div class="item-header">
             <div class="item-info">
               <span class="item-type" :class="item.type.toLowerCase()">
-                {{ item.type === 'SONG' ? '歌曲' : '关键词' }}
+                {{ item.type === 'SONG' ? '视频' : '关键词' }}
               </span>
               <span class="item-value">{{ item.value }}</span>
               <span v-if="!item.isActive" class="item-status disabled">已禁用</span>

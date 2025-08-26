@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   if (!user || !['SONG_ADMIN', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
     throw createError({
       statusCode: 403,
-      statusMessage: '需要歌曲管理员及以上权限'
+      statusMessage: '需要视频管理员及以上权限'
     })
   }
   
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
       }
     }
     
-    console.log(`找到排期 ID=${scheduleIdNumber}, 歌曲=${existingSchedule.song?.title || '未知歌曲'}`)
+    console.log(`找到排期 ID=${scheduleIdNumber}, 视频=${existingSchedule.song?.title || '未知视频'}`)
     
     // 删除排期
     const deletedSchedule = await prisma.schedule.delete({

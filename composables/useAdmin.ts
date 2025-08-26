@@ -8,7 +8,7 @@ export const useAdmin = () => {
   const loading = ref(false)
   const error = ref('')
   
-  // 创建歌曲排期
+  // 创建视频排期
   const createSchedule = async (songId: number, playDate: Date, playTimeId?: number | null, sequence: number = 1) => {
     if (!isAdmin.value) {
       error.value = '只有管理员才能创建排期'
@@ -100,10 +100,10 @@ export const useAdmin = () => {
     }
   }
   
-  // 标记歌曲已播放
+  // 标记视频已播放
   const markSongAsPlayed = async (songId: number) => {
     if (!isAdmin.value) {
-      error.value = '只有管理员才能标记歌曲已播放'
+      error.value = '只有管理员才能标记视频已播放'
       return null
     }
     
@@ -333,10 +333,10 @@ export const useAdmin = () => {
     }
   }
 
-  // 删除歌曲
+  // 删除视频
   const deleteSong = async (songId: number) => {
     if (!isAdmin.value) {
-      error.value = '只有管理员才能删除歌曲'
+      error.value = '只有管理员才能删除视频'
       return null
     }
     
@@ -355,17 +355,17 @@ export const useAdmin = () => {
       
       return data
     } catch (err: any) {
-      error.value = err.message || '删除歌曲失败'
+      error.value = err.message || '删除视频失败'
       throw err
     } finally {
       loading.value = false
     }
   }
 
-  // 更新歌曲
+  // 更新视频
   const updateSong = async (songId: number, songData: any) => {
     if (!isAdmin.value) {
-      error.value = '只有管理员才能更新歌曲'
+      error.value = '只有管理员才能更新视频'
       return null
     }
     
@@ -384,17 +384,17 @@ export const useAdmin = () => {
       
       return data
     } catch (err: any) {
-      error.value = err.message || '更新歌曲失败'
+      error.value = err.message || '更新视频失败'
       throw err
     } finally {
       loading.value = false
     }
   }
 
-  // 添加歌曲
+  // 添加视频
   const addSong = async (songData: any) => {
     if (!isAdmin.value) {
-      error.value = '只有管理员才能添加歌曲'
+      error.value = '只有管理员才能添加视频'
       return null
     }
     
@@ -413,7 +413,7 @@ export const useAdmin = () => {
       
       return data
     } catch (err: any) {
-      error.value = err.message || '添加歌曲失败'
+      error.value = err.message || '添加视频失败'
       throw err
     } finally {
       loading.value = false

@@ -130,7 +130,7 @@
                     :class="{ 'played': schedule.song.played }"
                   >
                     <div class="song-card-main">
-                      <!-- 添加歌曲封面 -->
+                      <!-- 添加视频封面 -->
                       <div class="song-cover">
                         <template v-if="schedule.song.cover">
                           <img
@@ -490,7 +490,7 @@ const handleImageError = (event, song) => {
   event.target.parentNode.textContent = getFirstChar(song.title)
 }
 
-// 获取歌曲标题的第一个字符作为封面
+// 获取视频标题的第一个字符作为封面
 const getFirstChar = (title) => {
   if (!title) return '音'
   return title.trim().charAt(0)
@@ -498,18 +498,18 @@ const getFirstChar = (title) => {
 
 
 
-// 切换歌曲播放/暂停
+// 切换视频播放/暂停
 const togglePlaySong = async (song) => {
-  // 检查是否为当前歌曲且正在播放
+  // 检查是否为当前视频且正在播放
   if (audioPlayer.isCurrentSong(song.id) && audioPlayer.getPlayingStatus().value) {
     // 如果正在播放，则暂停
     audioPlayer.pauseSong()
     return
   }
 
-  // 如果是当前歌曲但已暂停，则恢复播放
+  // 如果是当前视频但已暂停，则恢复播放
   if (audioPlayer.isCurrentSong(song.id) && !audioPlayer.getPlayingStatus().value) {
-    // 检查当前全局歌曲是否有URL
+    // 检查当前全局视频是否有URL
     const currentGlobalSong = audioPlayer.getCurrentSong().value
     if (currentGlobalSong && currentGlobalSong.musicUrl) {
       // 如果有URL，直接恢复播放
@@ -552,16 +552,16 @@ const togglePlaySong = async (song) => {
         let songIndex = 0
         
         if (currentTimeSlot && currentTimeSlot.songs) {
-          // 为播放列表中的每首歌曲获取音乐URL（如果需要的话）
+          // 为播放列表中的每首视频获取音乐URL（如果需要的话）
           playlist = await Promise.all(currentTimeSlot.songs.map(async (s) => {
             let musicUrl = s.musicUrl
             
-            // 如果歌曲没有musicUrl但有平台信息，尝试获取
+            // 如果视频没有musicUrl但有平台信息，尝试获取
             if (!musicUrl && s.musicPlatform && s.musicId) {
               try {
                 musicUrl = await getMusicUrl(s.musicPlatform, s.musicId)
               } catch (error) {
-                console.warn(`无法获取歌曲 ${s.title} 的播放链接:`, error)
+                console.warn(`无法获取视频 ${s.title} 的播放链接:`, error)
                 musicUrl = null
               }
             }
@@ -577,7 +577,7 @@ const togglePlaySong = async (song) => {
             }
           }))
           
-          // 找到当前歌曲在播放列表中的索引
+          // 找到当前视频在播放列表中的索引
           songIndex = playlist.findIndex((s) => s.id === song.id)
           if (songIndex === -1) songIndex = 0
         }
@@ -587,7 +587,7 @@ const togglePlaySong = async (song) => {
           musicUrl: url
         }
         
-        // 更新播放列表中当前歌曲的URL
+        // 更新播放列表中当前视频的URL
         if (playlist.length > 0 && songIndex >= 0) {
           playlist[songIndex] = playableSong
         }
@@ -607,7 +607,7 @@ const togglePlaySong = async (song) => {
   }
 }
 
-// 获取歌曲所在的时段
+// 获取视频所在的时段
 const getCurrentTimeSlot = (song) => {
   if (!schedulesByPlayTime.value) return null
   
@@ -689,7 +689,7 @@ const getMusicUrl = async (platform, musicId) => {
   }
 }
 
-// 判断当前是否正在播放指定ID的歌曲
+// 判断当前是否正在播放指定ID的视频
 const isCurrentPlaying = (songId) => {
   return audioPlayer.isCurrentPlaying(songId)
 }
@@ -697,7 +697,7 @@ const isCurrentPlaying = (songId) => {
 // 格式化播放时间
 const formatPlayTime = (schedule) => {
   try {
-    // 根据歌曲播放状态显示不同文本
+    // 根据视频播放状态显示不同文本
     if (schedule.song && schedule.song.played) {
       return "已播放"
     } else {
@@ -1068,7 +1068,7 @@ const vRipple = {
   margin-left: 0.5rem;
 }
 
-/* 歌曲卡片样式 - 固定宽度布局 */
+/* 视频卡片样式 - 固定宽度布局 */
 .song-cards {
   display: flex;
   flex-wrap: wrap;
@@ -1123,7 +1123,7 @@ const vRipple = {
 
 
 
-/* 歌曲封面样式 */
+/* 视频封面样式 */
 .song-cover {
   width: 55px;
   height: 55px;
@@ -1348,7 +1348,7 @@ const vRipple = {
     gap: 0.75rem;
   }
   
-  /* 修复歌曲卡片布局 */
+  /* 修复视频卡片布局 */
   .song-card-main {
     height: auto;
     min-height: 70px;

@@ -45,18 +45,18 @@ const isPlaylistMode = computed(() => {
   if (currentPath.includes('/request') || currentPath.includes('/submit')) {
     return false
   }
-  // 其他页面默认为播放列表模式（如歌曲列表、播出排期等）
+  // 其他页面默认为播放列表模式（如视频列表、播出排期等）
   return true
 })
 
 
-// 监听当前播放的歌曲
+// 监听当前播放的视频
 watch(() => audioPlayer.getCurrentSong().value, (newSong) => {
   if (newSong) {
     currentSong.value = newSong
     isPlayerVisible.value = true
   } else {
-    // 当没有歌曲时，不立即隐藏播放器，而是让动画完成
+    // 当没有视频时，不立即隐藏播放器，而是让动画完成
     currentSong.value = null
   }
 }, { immediate: true })
@@ -101,7 +101,7 @@ const setupHarmonyOSListeners = () => {
   const handleHarmonyOSPlay = () => {
     const currentGlobalSong = audioPlayer.getCurrentSong().value
     if (currentGlobalSong) {
-      // 如果有当前歌曲，恢复播放
+      // 如果有当前视频，恢复播放
       audioPlayer.playSong(currentGlobalSong)
     }
   }
@@ -118,12 +118,12 @@ const setupHarmonyOSListeners = () => {
     try {
       const success = await audioPlayer.playNext()
       if (!success) {
-        console.log('没有下一首歌曲或切换失败，继续播放当前歌曲')
-        // 如果切换失败，不做任何操作，继续播放当前歌曲
+        console.log('没有下一首视频或切换失败，继续播放当前视频')
+        // 如果切换失败，不做任何操作，继续播放当前视频
       }
     } catch (error) {
-      console.error('切换下一首歌曲失败:', error)
-      // 切换失败时不停止播放，继续播放当前歌曲
+      console.error('切换下一首视频失败:', error)
+      // 切换失败时不停止播放，继续播放当前视频
     }
   }
   
@@ -131,12 +131,12 @@ const setupHarmonyOSListeners = () => {
     try {
       const success = await audioPlayer.playPrevious()
       if (!success) {
-        console.log('没有上一首歌曲或切换失败，继续播放当前歌曲')
-        // 如果切换失败，不做任何操作，继续播放当前歌曲
+        console.log('没有上一首视频或切换失败，继续播放当前视频')
+        // 如果切换失败，不做任何操作，继续播放当前视频
       }
     } catch (error) {
-      console.error('切换上一首歌曲失败:', error)
-      // 切换失败时不停止播放，继续播放当前歌曲
+      console.error('切换上一首视频失败:', error)
+      // 切换失败时不停止播放，继续播放当前视频
     }
   }
   

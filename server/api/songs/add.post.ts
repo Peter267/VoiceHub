@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
       requesterId = requesterUser?.id || null
     }
 
-    // 检查歌曲是否已存在
+    // 检查视频是否已存在
     const existingSong = await prisma.song.findFirst({
       where: {
         title: title.trim(),
@@ -84,7 +84,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 创建歌曲
+    // 创建视频
     const newSong = await prisma.song.create({
       data: {
         title: title.trim(),
@@ -106,12 +106,12 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    // 清除歌曲数量缓存
+    // 清除视频数量缓存
     const cacheService = CacheService.getInstance()
     try {
       await cacheService.clearSongsCache()
     } catch (error) {
-      console.error('清除歌曲缓存失败:', error)
+      console.error('清除视频缓存失败:', error)
     }
     
     return {

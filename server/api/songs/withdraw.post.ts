@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!user) {
     throw createError({
       statusCode: 401,
-      message: '需要登录才能撤回歌曲'
+      message: '需要登录才能撤回视频'
     })
   }
   
@@ -17,11 +17,11 @@ export default defineEventHandler(async (event) => {
   if (!body.songId) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID不能为空'
+      message: '视频ID不能为空'
     })
   }
   
-  // 查找歌曲
+  // 查找视频
   const song = await prisma.song.findUnique({
     where: {
       id: body.songId
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   if (!song) {
     throw createError({
       statusCode: 404,
-      message: '歌曲不存在'
+      message: '视频不存在'
     })
   }
   
@@ -43,15 +43,15 @@ export default defineEventHandler(async (event) => {
     })
   }
   
-  // 检查歌曲是否已经播放
+  // 检查视频是否已经播放
   if (song.played) {
     throw createError({
       statusCode: 400,
-      message: '已播放的歌曲不能撤回'
+      message: '已播放的视频不能撤回'
     })
   }
   
-  // 检查歌曲是否已排期
+  // 检查视频是否已排期
   const schedule = await prisma.schedule.findFirst({
     where: {
       songId: body.songId
@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
   if (schedule) {
     throw createError({
       statusCode: 400,
-      message: '已排期的歌曲不能撤回'
+      message: '已排期的视频不能撤回'
     })
   }
   
@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
   const dailyLimit = settings?.dailySubmissionLimit || 0
   const weeklyLimit = settings?.weeklySubmissionLimit || 0
   
-  // 检查撤销的歌曲是否在当前限制期间内（用于返还配额）
+  // 检查撤销的视频是否在当前限制期间内（用于返还配额）
   let canReturnQuota = false
   const now = new Date()
   
@@ -97,27 +97,27 @@ export default defineEventHandler(async (event) => {
     }
   }
   
-  // 删除歌曲的所有投票
+  // 删除视频的所有投票
   await prisma.vote.deleteMany({
     where: {
       songId: body.songId
     }
   })
   
-  // 删除歌曲
+  // 删除视频
   await prisma.song.delete({
     where: {
       id: body.songId
     }
   })
   
-  // 清除歌曲列表缓存
+  // 清除视频列表缓存
   const cacheService = new CacheService()
   await cacheService.clearSongsCache()
-  console.log('[Cache] 歌曲缓存已清除（撤回歌曲）')
+  console.log('[Cache] 视频缓存已清除（撤回视频）')
   
   return {
-    message: canReturnQuota ? '歌曲已成功撤回，投稿配额已返还' : '歌曲已成功撤回',
+    message: canReturnQuota ? '视频已成功撤回，投稿配额已返还' : '视频已成功撤回',
     songId: body.songId,
     quotaReturned: canReturnQuota
   }

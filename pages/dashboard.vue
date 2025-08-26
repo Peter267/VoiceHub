@@ -64,7 +64,7 @@
               </button>
             </div>
             
-            <!-- 内容管理 - 歌曲管理员及以上可见 -->
+            <!-- 内容管理 - 视频管理员及以上可见 -->
             <div v-if="permissions.canAccessPage('schedule') || permissions.canAccessPage('print') || permissions.canAccessPage('songs')" class="nav-section">
               <div class="nav-section-title">内容管理</div>
               <button
@@ -102,7 +102,7 @@
                   <circle cx="6" cy="18" r="3"/>
                   <circle cx="18" cy="16" r="3"/>
                 </svg>
-                歌曲管理
+                视频管理
               </button>
               <button 
                 v-if="permissions.canAccessPage('data-analysis')"
@@ -266,7 +266,7 @@
               <LazyAdminOverviewDashboard @navigate="handleNavigate" />
             </div>
             
-            <!-- 歌曲管理 -->
+            <!-- 视频管理 -->
             <div v-if="activeTab === 'songs' && permissions.canAccessPage('songs')" class="content-section">
               <LazyAdminSongManagement />
             </div>
@@ -357,7 +357,7 @@ const permissions = usePermissions()
 const getPageTitle = () => {
   const titles = {
     overview: '数据概览',
-    songs: '歌曲管理',
+    songs: '视频管理',
     schedule: '排期管理',
     print: '打印排期',
     users: '用户管理',
@@ -397,7 +397,7 @@ watch(() => siteTitle?.value, () => {
 const getRoleDisplayName = (role) => {
   const roleNames = {
     'USER': '普通用户',
-    'SONG_ADMIN': '歌曲管理员',
+    'SONG_ADMIN': '视频管理员',
     'ADMIN': '超级管理员',
     'SUPER_ADMIN': '超级管理员'
   }

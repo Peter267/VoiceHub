@@ -374,13 +374,13 @@ class CacheService {
   }
 
 
-  // 获取歌曲数量缓存
+  // 获取视频数量缓存
   async getSongCount(semester?: string): Promise<number | null> {
     const key = this.generateKey(CACHE_PREFIXES.SONG_COUNT, semester || 'all')
     return await this.getCache<number>(key)
   }
 
-  // 设置歌曲数量缓存
+  // 设置视频数量缓存
   async setSongCount(count: number, semester?: string): Promise<void> {
     const key = this.generateKey(CACHE_PREFIXES.SONG_COUNT, semester || 'all')
     await this.setCache(key, count, CACHE_TTL.SONG_COUNT)
@@ -398,7 +398,7 @@ class CacheService {
     await this.setCache(key, songIds, CACHE_TTL.USER_VOTES)
   }
 
-  // 清除歌曲相关缓存
+  // 清除视频相关缓存
   async clearSongsCache(semester?: string): Promise<void> {
     const patterns = [
       this.generateKey(CACHE_PREFIXES.SONG_COUNT, '*'),
@@ -409,7 +409,7 @@ class CacheService {
       await this.deleteCachePattern(pattern)
     }
     
-    console.log(`[Cache] 歌曲相关缓存已清除${semester ? ` (学期: ${semester})` : ''}`)
+    console.log(`[Cache] 视频相关缓存已清除${semester ? ` (学期: ${semester})` : ''}`)
   }
 
   // 清理损坏的缓存数据（UTF-8编码问题）
@@ -674,14 +674,14 @@ class CacheService {
 
   // ==================== 缓存预热 ====================
 
-  // 预热歌曲缓存
+  // 预热视频缓存
   async warmupSongsCache(semester?: string): Promise<void> {
     if (!isRedisReady()) return
     
-    console.log(`[Cache] 开始预热歌曲数量缓存${semester ? ` (学期: ${semester})` : ''}`)
+    console.log(`[Cache] 开始预热视频数量缓存${semester ? ` (学期: ${semester})` : ''}`)
     
     try {
-      // 只预热歌曲数量，不缓存歌曲列表（因为每个用户的voted状态不同）
+      // 只预热视频数量，不缓存视频列表（因为每个用户的voted状态不同）
       const songCount = await executeWithPool(async () => {
         const whereCondition: any = {}
         if (semester) {
@@ -697,9 +697,9 @@ class CacheService {
         await this.setSongCount(songCount, semester)
       }
       
-      console.log(`[Cache] 歌曲数量缓存预热完成，歌曲数量: ${songCount || 0}`)
+      console.log(`[Cache] 视频数量缓存预热完成，视频数量: ${songCount || 0}`)
     } catch (error) {
-      console.error('[Cache] 歌曲缓存预热失败:', error)
+      console.error('[Cache] 视频缓存预热失败:', error)
     }
   }
 
@@ -786,7 +786,7 @@ class CacheService {
             schoolLogoHomeUrl: null,
             schoolLogoPrintUrl: null,
             siteDescription: '校园广播站点歌系统 - 让你的声音被听见',
-            submissionGuidelines: '请遵守校园规定，提交健康向上的歌曲。',
+            submissionGuidelines: '请遵守校园规定，提交健康向上的视频。',
             icpNumber: null,
             enableSubmissionLimit: false,
             dailySubmissionLimit: null,
@@ -953,13 +953,13 @@ class CacheService {
 
     console.log('[Cache] 启动定期刷新任务')
     
-    // 每5分钟刷新歌曲缓存
+    // 每5分钟刷新视频缓存
     setInterval(async () => {
       try {
         await this.warmupSongsCache()
-        console.log('[Cache] 定期歌曲缓存刷新完成')
+        console.log('[Cache] 定期视频缓存刷新完成')
       } catch (error) {
-        console.error('[Cache] 定期歌曲缓存刷新失败:', error)
+        console.error('[Cache] 定期视频缓存刷新失败:', error)
       }
     }, 5 * 60 * 1000)
 

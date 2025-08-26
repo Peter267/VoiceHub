@@ -77,7 +77,7 @@ export const useAudioPlayerSync = () => {
             })
           }
         } else if (action === 'metadata') {
-          // 元数据更新时，只更新歌曲信息，不改变播放状态和位置
+          // 元数据更新时，只更新视频信息，不改变播放状态和位置
           window.voiceHubPlayer.onSongChanged(songInfo)
           // 延迟同步播放列表状态，但不更新播放状态
           setTimeout(() => {
@@ -147,7 +147,7 @@ export const useAudioPlayerSync = () => {
       lastHarmonyUpdate.value = now
       lastProgressDiff.value = currentTime
       
-      // 只更新播放状态和进度，不传递歌曲信息（避免覆盖元数据）
+      // 只更新播放状态和进度，不传递视频信息（避免覆盖元数据）
       if (typeof window !== 'undefined' && window.voiceHubPlayer && window.voiceHubPlayer.onPlayStateChanged) {
         window.voiceHubPlayer.onPlayStateChanged(isPlaying, {
           position: currentTime,
@@ -164,13 +164,13 @@ export const useAudioPlayerSync = () => {
     }
   }
 
-  // 播放上一首歌曲
+  // 播放上一首视频
   const playPrevious = async (song?: any) => {
     try {
-      // 检查是否有上一首歌曲
+      // 检查是否有上一首视频
       if (!globalAudioPlayer.hasPrevious.value) {
         if (window.$showNotification) {
-          window.$showNotification('没有上一首歌曲', 'warning')
+          window.$showNotification('没有上一首视频', 'warning')
         }
         return { success: false, newSong: null }
       }
@@ -203,12 +203,12 @@ export const useAudioPlayerSync = () => {
               playlistIndex: globalAudioPlayer.getCurrentPlaylistIndex().value
             })
             
-            // 获取新歌曲的歌词（但不立即设置元数据，让AudioPlayer的handleLoaded处理）
+            // 获取新视频的歌词（但不立即设置元数据，让AudioPlayer的handleLoaded处理）
             if (newSong.musicPlatform && newSong.musicId) {
               await lyrics.fetchLyrics(newSong.musicPlatform, newSong.musicId)
             }
             
-            // 如果之前是播放状态，切换歌曲后自动开始播放
+            // 如果之前是播放状态，切换视频后自动开始播放
             // 不在这里传递歌词，让AudioPlayer的handleLoaded方法负责歌词传递
             if (wasPlaying) {
               setTimeout(() => {
@@ -229,13 +229,13 @@ export const useAudioPlayerSync = () => {
         }
       } else {
         if (window.$showNotification) {
-          window.$showNotification('播放上一首歌曲失败', 'error')
+          window.$showNotification('播放上一首视频失败', 'error')
         }
       }
     } catch (error) {
-      console.error('播放上一首歌曲失败:', error)
+      console.error('播放上一首视频失败:', error)
       if (window.$showNotification) {
-        window.$showNotification('播放上一首歌曲失败', 'error')
+        window.$showNotification('播放上一首视频失败', 'error')
       }
     }
     
@@ -281,13 +281,13 @@ export const useAudioPlayerSync = () => {
     }
   }
 
-  // 播放下一首歌曲
+  // 播放下一首视频
   const playNext = async (song?: any) => {
     try {
-      // 检查是否有下一首歌曲
+      // 检查是否有下一首视频
       if (!globalAudioPlayer.hasNext.value) {
         if (window.$showNotification) {
-          window.$showNotification('没有下一首歌曲', 'warning')
+          window.$showNotification('没有下一首视频', 'warning')
         }
         return { success: false, newSong: null }
       }
@@ -320,12 +320,12 @@ export const useAudioPlayerSync = () => {
               playlistIndex: globalAudioPlayer.getCurrentPlaylistIndex().value
             })
             
-            // 获取新歌曲的歌词（但不立即设置元数据，让AudioPlayer的handleLoaded处理）
+            // 获取新视频的歌词（但不立即设置元数据，让AudioPlayer的handleLoaded处理）
             if (newSong.musicPlatform && newSong.musicId) {
               await lyrics.fetchLyrics(newSong.musicPlatform, newSong.musicId)
             }
             
-            // 如果之前是播放状态，切换歌曲后自动开始播放
+            // 如果之前是播放状态，切换视频后自动开始播放
             // 不在这里传递歌词，让AudioPlayer的handleLoaded方法负责歌词传递
             if (wasPlaying) {
               setTimeout(() => {
@@ -346,13 +346,13 @@ export const useAudioPlayerSync = () => {
         }
       } else {
         if (window.$showNotification) {
-          window.$showNotification('播放下一首歌曲失败', 'error')
+          window.$showNotification('播放下一首视频失败', 'error')
         }
       }
     } catch (error) {
-      console.error('播放下一首歌曲失败:', error)
+      console.error('播放下一首视频失败:', error)
       if (window.$showNotification) {
-        window.$showNotification('播放下一首歌曲失败', 'error')
+        window.$showNotification('播放下一首视频失败', 'error')
       }
     }
     
@@ -402,7 +402,7 @@ export const useAudioPlayerSync = () => {
       })
       
       musicWebSocket.setSongChangeListener((songInfo) => {
-        // 处理歌曲切换通知
+        // 处理视频切换通知
         console.log('Received song change notification:', songInfo)
       })
     }

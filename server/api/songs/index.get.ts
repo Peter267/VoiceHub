@@ -56,10 +56,10 @@ export default defineEventHandler(async (event) => {
         }
       }
 
-      // 查询歌曲总数
+      // 查询视频总数
       const total = await prisma.song.count({ where: whereCondition })
 
-      // 获取歌曲及其投票数
+      // 获取视频及其投票数
       const songs = await prisma.song.findMany({
         where: whereCondition,
         include: {
@@ -150,7 +150,7 @@ export default defineEventHandler(async (event) => {
           }
         }
 
-        // 创建基本歌曲对象
+        // 创建基本视频对象
         const songObject: any = {
           id: song.id,
           title: song.title,
@@ -202,12 +202,12 @@ export default defineEventHandler(async (event) => {
       }
     }, 'getSongsList')
 
-    console.log(`[Songs API] 成功返回 ${result.data.songs.length} 首歌曲，用户类型: ${user ? '登录用户' : '未登录用户'}`)
+    console.log(`[Songs API] 成功返回 ${result.data.songs.length} 首视频，用户类型: ${user ? '登录用户' : '未登录用户'}`)
 
     return result
 
   } catch (error: any) {
-    console.error('[Songs API] 获取歌曲列表失败:', error)
+    console.error('[Songs API] 获取视频列表失败:', error)
 
     // 检查是否是数据库连接错误
     const isDbError = error.message?.includes('ECONNRESET') ||
@@ -225,7 +225,7 @@ export default defineEventHandler(async (event) => {
     } else {
       throw createError({
         statusCode: isDbError ? 503 : 500,
-        message: isDbError ? '数据库连接暂时不可用，请稍后重试' : '获取歌曲列表失败，请稍后重试'
+        message: isDbError ? '数据库连接暂时不可用，请稍后重试' : '获取视频列表失败，请稍后重试'
       })
     }
   }

@@ -153,7 +153,7 @@ const handlePlay = () => {
   control.onPlay()
   sync.syncPlayStateToGlobal(true, props.song)
   
-  // 直接调用鸿蒙侧播放状态更新，不传递歌曲信息避免覆盖元数据
+  // 直接调用鸿蒙侧播放状态更新，不传递视频信息避免覆盖元数据
   if (typeof window !== 'undefined' && window.voiceHubPlayer && window.voiceHubPlayer.onPlayStateChanged) {
     window.voiceHubPlayer.onPlayStateChanged(true, {
       position: control.currentTime.value,
@@ -177,7 +177,7 @@ const handlePause = () => {
   control.onPause()
   sync.syncPlayStateToGlobal(false, props.song)
   
-  // 直接调用鸿蒙侧播放状态更新，不传递歌曲信息避免覆盖元数据
+  // 直接调用鸿蒙侧播放状态更新，不传递视频信息避免覆盖元数据
   if (typeof window !== 'undefined' && window.voiceHubPlayer && window.voiceHubPlayer.onPlayStateChanged) {
     window.voiceHubPlayer.onPlayStateChanged(false, {
       position: control.currentTime.value,
@@ -200,7 +200,7 @@ const handleLoaded = async () => {
   
   control.onLoaded(audioPlayer.value.duration)
   
-  // 先传递基本的歌曲元数据给鸿蒙侧（不包含歌词）
+  // 先传递基本的视频元数据给鸿蒙侧（不包含歌词）
   sync.notifyHarmonyOS('metadata', {
     title: props.song?.title || '',
     artist: props.song?.artist || '',
@@ -209,7 +209,7 @@ const handleLoaded = async () => {
     duration: audioPlayer.value.duration
   }, props.song)
   
-  // 如果歌曲有平台信息，主动获取并等待歌词加载完成后单独传递歌词
+  // 如果视频有平台信息，主动获取并等待歌词加载完成后单独传递歌词
   if (props.song?.musicPlatform && props.song?.musicId) {
     // 主动触发歌词获取
     await control.lyrics.fetchLyrics(props.song.musicPlatform, props.song.musicId)
@@ -273,7 +273,7 @@ const handleError = async (error) => {
   
   if (result.handled) {
     if (result.shouldRetry) {
-      // 重试当前歌曲
+      // 重试当前视频
       setTimeout(() => {
         if (audioPlayer.value) {
           audioPlayer.value.load()
@@ -281,8 +281,8 @@ const handleError = async (error) => {
         }
       }, 500)
     } else if (result.newSong) {
-      // 已经切换到新歌曲，不需要额外处理
-      console.log('已切换到新歌曲或新音质')
+      // 已经切换到新视频，不需要额外处理
+      console.log('已切换到新视频或新音质')
     } else if (result.shouldClose) {
       // 已经关闭播放器，不需要额外处理
       console.log('播放器已关闭')
@@ -325,7 +325,7 @@ const handleNext = async () => {
   }
 }
 
-// 获取当前歌曲平台的音质文本
+// 获取当前视频平台的音质文本
 const currentQualityText = computed(() => {
   if (!props.song || !props.song.musicPlatform) return '音质'
 
@@ -367,13 +367,13 @@ const selectQuality = async (qualityValue) => {
   const result = await enhanced.enhancedQualitySwitch(props.song, qualityValue)
   
   if (result.success) {
-    // 更新歌曲的音乐链接
+    // 更新视频的音乐链接
     const updatedSong = {
       ...props.song,
       musicUrl: result.url
     }
     
-    // 通知父组件更新歌曲
+    // 通知父组件更新视频
     emit('songChange', updatedSong)
     
     // 重新加载音频
@@ -439,7 +439,7 @@ watch(() => props.song, async (newSong, oldSong) => {
   // 确保组件已经挂载
   if (!isMounted.value) return
   
-  // 如果是新歌曲，加载并播放
+  // 如果是新视频，加载并播放
   if (!oldSong || newSong.id !== oldSong.id) {
     const loadSuccess = await control.loadSong(newSong)
     if (loadSuccess) {
@@ -469,7 +469,7 @@ watch(() => sync.globalAudioPlayer.getPlayingStatus().value, (newPlayingStatus) 
   })
 }, { immediate: true })
 
-// 监听全局歌曲变化
+// 监听全局视频变化
 watch(() => sync.globalAudioPlayer.getCurrentSong().value, (newGlobalSong) => {
   if (newGlobalSong && (!props.song || newGlobalSong.id !== props.song.id)) {
     emit('songChange', newGlobalSong)
@@ -520,7 +520,7 @@ onMounted(async () => {
   // 重置重试状态
   enhanced.resetRetryState()
   
-  // 处理初始歌曲的播放
+  // 处理初始视频的播放
   if (props.song) {
     const loadSuccess = await control.loadSong(props.song)
     if (loadSuccess) {

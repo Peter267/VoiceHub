@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
       return cachedSchedules
     }
     
-    // 获取排期的歌曲，包含播放时段信息
+    // 获取排期的视频，包含播放时段信息
     const result = await executeWithPool(async () => {
       // 构建查询条件
       const whereCondition: any = {}

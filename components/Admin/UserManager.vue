@@ -118,7 +118,7 @@
                   <button
                     @click="viewUserSongs(user)"
                     class="action-btn music-btn"
-                    title="查看歌曲"
+                    title="查看视频"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M9 18V5l12-2v13"/>
@@ -181,7 +181,7 @@
               <button
                 @click="viewUserSongs(user)"
                 class="action-btn music-btn"
-                title="查看歌曲"
+                title="查看视频"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M9 18V5l12-2v13"/>
@@ -467,8 +467,8 @@
           </div>
           <p class="import-note">
             注意：第一行可以是标题行（会自动跳过），角色可以是：
-            <span v-if="isSuperAdmin">USER（普通用户）、ADMIN（管理员）、SONG_ADMIN（歌曲管理员）、SUPER_ADMIN（超级管理员）</span>
-            <span v-else>USER（普通用户）、SONG_ADMIN（歌曲管理员）</span>
+            <span v-if="isSuperAdmin">USER（普通用户）、ADMIN（管理员）、SONG_ADMIN（视频管理员）、SUPER_ADMIN（超级管理员）</span>
+            <span v-else>USER（普通用户）、SONG_ADMIN（视频管理员）</span>
           </p>
         </div>
 
@@ -586,7 +586,7 @@
     @update-success="handleBatchUpdateSuccess"
   />
 
-  <!-- 用户歌曲模态框 -->
+  <!-- 用户视频模态框 -->
   <UserSongsModal
     :show="showUserSongsModal"
     :user-id="selectedUserId"
@@ -729,7 +729,7 @@ const totalPages = ref(1)
 // 硬编码角色定义
 const allRoles = [
   { name: 'USER', displayName: '普通用户' },
-  { name: 'SONG_ADMIN', displayName: '歌曲管理员' },
+  { name: 'SONG_ADMIN', displayName: '视频管理员' },
   { name: 'ADMIN', displayName: '管理员' },
   { name: 'SUPER_ADMIN', displayName: '超级管理员' }
 ]
@@ -761,7 +761,7 @@ const showDeleteModal = ref(false)
 const deletingUser = ref(null)
 const deleting = ref(false)
 
-// 用户歌曲模态框状态
+// 用户视频模态框状态
 const showUserSongsModal = ref(false)
 const selectedUserId = ref(null)
 
@@ -852,7 +852,7 @@ const getRoleDisplayName = (role) => {
   const names = {
     'USER': '普通用户',
     'ADMIN': '管理员',
-    'SONG_ADMIN': '歌曲管理员',
+    'SONG_ADMIN': '视频管理员',
     'SUPER_ADMIN': '超级管理员'
   }
   return names[role] || role
@@ -1032,7 +1032,7 @@ const saveUser = async () => {
       try {
         const roleNames = {
           'USER': '普通用户',
-          'SONG_ADMIN': '歌曲管理员', 
+          'SONG_ADMIN': '视频管理员', 
           'ADMIN': '管理员',
           'SUPER_ADMIN': '超级管理员'
         }

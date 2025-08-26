@@ -11,7 +11,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="搜索歌曲标题、艺术家或投稿人..."
+            placeholder="搜索视频标题、艺术家或投稿人..."
             class="search-input"
           />
           <button
@@ -109,10 +109,10 @@
     <!-- 加载状态 -->
     <div v-if="loading" class="loading-container">
       <div class="spinner"></div>
-      <div class="loading-text">正在加载歌曲...</div>
+      <div class="loading-text">正在加载视频...</div>
     </div>
 
-    <!-- 歌曲列表 -->
+    <!-- 视频列表 -->
     <div v-else class="song-list">
       <div v-if="filteredSongs.length === 0" class="empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -120,7 +120,7 @@
           <path d="M8 12h8"/>
         </svg>
         <div class="empty-text">
-          {{ searchQuery ? '没有找到匹配的歌曲' : '暂无歌曲数据' }}
+          {{ searchQuery ? '没有找到匹配的视频' : '暂无视频数据' }}
         </div>
       </div>
       
@@ -135,14 +135,14 @@
               class="checkbox"
             />
           </div>
-          <div class="header-cell song-info-cell">歌曲信息</div>
+          <div class="header-cell song-info-cell">视频信息</div>
           <div class="header-cell submitter-cell">投稿人</div>
           <div class="header-cell stats-cell">统计</div>
           <div class="header-cell status-cell">状态</div>
           <div class="header-cell actions-cell">操作</div>
         </div>
         
-        <!-- 歌曲行 -->
+        <!-- 视频行 -->
         <div
           v-for="song in paginatedSongs"
           :key="song.id"
@@ -197,7 +197,7 @@
               <button
                 @click="editSong(song)"
                 class="action-btn edit-btn"
-                title="编辑歌曲"
+                title="编辑视频"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -231,7 +231,7 @@
               <button
                 @click="deleteSong(song.id)"
                 class="action-btn delete-btn"
-                title="删除歌曲"
+                title="删除视频"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="3,6 5,6 21,6"/>
@@ -304,22 +304,22 @@
     @close="closeVotersModal"
   />
 
-  <!-- 编辑歌曲模态框 -->
+  <!-- 编辑视频模态框 -->
   <div v-if="showEditModal" class="modal-overlay" @click="cancelEditSong">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
-        <h3>编辑歌曲</h3>
+        <h3>编辑视频</h3>
         <button @click="cancelEditSong" class="close-btn">×</button>
       </div>
       <div class="modal-body">
         <form @submit.prevent="saveEditSong">
           <div class="form-group">
-            <label>歌曲名称</label>
+            <label>视频名称</label>
             <input
               v-model="editForm.title"
               type="text"
               class="form-input"
-              placeholder="请输入歌曲名称"
+              placeholder="请输入视频名称"
               required
             />
           </div>
@@ -387,22 +387,22 @@
               v-model="editForm.musicId"
               type="text"
               class="form-input"
-              placeholder="请输入音乐平台上的歌曲ID"
+              placeholder="请输入音乐平台上的视频ID"
             />
             <div class="field-hint">
-              音乐ID是歌曲在对应平台上的唯一标识符，用于播放功能
+              音乐ID是视频在对应平台上的唯一标识符，用于播放功能
             </div>
           </div>
           <div class="form-group">
-            <label>歌曲封面URL <span class="optional-label">（可选）</span></label>
+            <label>视频封面URL <span class="optional-label">（可选）</span></label>
             <input
               v-model="editForm.cover"
               type="url"
               class="form-input"
-              placeholder="请输入歌曲封面图片的URL地址"
+              placeholder="请输入视频封面图片的URL地址"
             />
             <div class="field-hint">
-              歌曲封面将显示在歌曲列表中，建议使用高质量的图片链接
+              视频封面将显示在视频列表中，建议使用高质量的图片链接
             </div>
           </div>
           <div class="form-actions">
@@ -416,22 +416,22 @@
     </div>
   </div>
 
-  <!-- 手动添加歌曲模态框 -->
+  <!-- 手动添加视频模态框 -->
   <div v-if="showAddSongModal" class="modal-overlay" @click="cancelAddSong">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
-        <h3>手动添加歌曲</h3>
+        <h3>手动添加视频</h3>
         <button @click="cancelAddSong" class="close-btn">×</button>
       </div>
       <div class="modal-body">
         <form @submit.prevent="saveAddSong">
           <div class="form-group">
-            <label>歌曲名称</label>
+            <label>视频名称</label>
             <input
               v-model="addForm.title"
               type="text"
               class="form-input"
-              placeholder="请输入歌曲名称"
+              placeholder="请输入视频名称"
               required
             />
           </div>
@@ -499,28 +499,28 @@
               v-model="addForm.musicId"
               type="text"
               class="form-input"
-              placeholder="请输入音乐平台上的歌曲ID"
+              placeholder="请输入音乐平台上的视频ID"
             />
             <div class="field-hint">
-              音乐ID是歌曲在对应平台上的唯一标识符，用于播放功能
+              音乐ID是视频在对应平台上的唯一标识符，用于播放功能
             </div>
           </div>
           <div class="form-group">
-            <label>歌曲封面URL <span class="optional-label">（可选）</span></label>
+            <label>视频封面URL <span class="optional-label">（可选）</span></label>
             <input
               v-model="addForm.cover"
               type="url"
               class="form-input"
-              placeholder="请输入歌曲封面图片的URL地址"
+              placeholder="请输入视频封面图片的URL地址"
             />
             <div class="field-hint">
-              歌曲封面将显示在歌曲列表中，建议使用高质量的图片链接
+              视频封面将显示在视频列表中，建议使用高质量的图片链接
             </div>
           </div>
           <div class="form-actions">
             <button type="button" @click="cancelAddSong" class="btn-cancel">取消</button>
             <button type="submit" class="btn-primary" :disabled="addLoading">
-              {{ addLoading ? '添加中...' : '添加歌曲' }}
+              {{ addLoading ? '添加中...' : '添加视频' }}
             </button>
           </div>
         </form>
@@ -561,7 +561,7 @@ const deleteAction = ref(null)
 const showVotersModal = ref(false)
 const selectedSongId = ref(null)
 
-// 编辑歌曲相关
+// 编辑视频相关
 const showEditModal = ref(false)
 const editLoading = ref(false)
 const editForm = ref({
@@ -575,7 +575,7 @@ const editForm = ref({
   cover: ''
 })
 
-// 添加歌曲相关
+// 添加视频相关
 const showAddSongModal = ref(false)
 const addLoading = ref(false)
 const searchLoading = ref(false)
@@ -747,7 +747,7 @@ const refreshSongs = async () => {
     songs.value = songsService.songs.value || []
     selectedSongs.value = []
   } catch (error) {
-    console.error('刷新歌曲失败:', error)
+    console.error('刷新视频失败:', error)
   } finally {
     loading.value = false
   }
@@ -781,8 +781,8 @@ const deleteSong = async (songId) => {
   const song = songs.value.find(s => s.id === songId)
   if (!song) return
 
-  deleteDialogTitle.value = '删除歌曲'
-  deleteDialogMessage.value = `确定要删除歌曲 "${song.title}" 吗？此操作不可撤销。`
+  deleteDialogTitle.value = '删除视频'
+  deleteDialogMessage.value = `确定要删除视频 "${song.title}" 吗？此操作不可撤销。`
   deleteAction.value = async () => {
     try {
       await adminService.deleteSong(songId)
@@ -795,10 +795,10 @@ const deleteSong = async (songId) => {
       }
 
       if (window.$showNotification) {
-        window.$showNotification('歌曲删除成功', 'success')
+        window.$showNotification('视频删除成功', 'success')
       }
     } catch (error) {
-      console.error('删除歌曲失败:', error)
+      console.error('删除视频失败:', error)
       if (window.$showNotification) {
         window.$showNotification('删除失败: ' + error.message, 'error')
       }
@@ -810,8 +810,8 @@ const deleteSong = async (songId) => {
 const batchDelete = async () => {
   if (selectedSongs.value.length === 0) return
 
-  deleteDialogTitle.value = '批量删除歌曲'
-  deleteDialogMessage.value = `确定要删除选中的 ${selectedSongs.value.length} 首歌曲吗？此操作不可撤销。`
+  deleteDialogTitle.value = '批量删除视频'
+  deleteDialogMessage.value = `确定要删除选中的 ${selectedSongs.value.length} 首视频吗？此操作不可撤销。`
   deleteAction.value = async () => {
     try {
       loading.value = true
@@ -859,7 +859,7 @@ const confirmDelete = async () => {
   deleteAction.value = null
 }
 
-// 编辑歌曲
+// 编辑视频
 const editSong = (song) => {
   editForm.value = {
     id: song.id,
@@ -890,7 +890,7 @@ const editSong = (song) => {
 const saveEditSong = async () => {
   if (!editForm.value.title || !editForm.value.artist) {
     if (window.$showNotification) {
-      window.$showNotification('请填写歌曲名称和歌手', 'error')
+      window.$showNotification('请填写视频名称和歌手', 'error')
     }
     return
   }
@@ -913,10 +913,10 @@ const saveEditSong = async () => {
     showEditModal.value = false
     
     if (window.$showNotification) {
-      window.$showNotification('歌曲信息更新成功', 'success')
+      window.$showNotification('视频信息更新成功', 'success')
     }
   } catch (error) {
-    console.error('更新歌曲失败:', error)
+    console.error('更新视频失败:', error)
     if (window.$showNotification) {
       window.$showNotification('更新失败: ' + error.message, 'error')
     }
@@ -940,7 +940,7 @@ const cancelEditSong = () => {
   clearSelectedEditUser()
 }
 
-// 添加歌曲
+// 添加视频
 const openAddSongModal = () => {
   addForm.value = {
     title: '',
@@ -959,7 +959,7 @@ const openAddSongModal = () => {
 const saveAddSong = async () => {
   if (!addForm.value.title || !addForm.value.artist) {
     if (window.$showNotification) {
-      window.$showNotification('请填写歌曲名称和歌手', 'error')
+      window.$showNotification('请填写视频名称和歌手', 'error')
     }
     return
   }
@@ -981,10 +981,10 @@ const saveAddSong = async () => {
     showAddSongModal.value = false
     
     if (window.$showNotification) {
-      window.$showNotification('歌曲添加成功', 'success')
+      window.$showNotification('视频添加成功', 'success')
     }
   } catch (error) {
-    console.error('添加歌曲失败:', error)
+    console.error('添加视频失败:', error)
     if (window.$showNotification) {
       window.$showNotification('添加失败: ' + error.message, 'error')
     }
@@ -1385,7 +1385,7 @@ onUnmounted(() => {
   text-align: center;
 }
 
-/* 歌曲表格 */
+/* 视频表格 */
 .song-table {
   background: #1a1a1a;
   border-radius: 12px;

@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
       currentSemester,
       blacklistCount
     ] = await Promise.all([
-      // 总歌曲数
+      // 总视频数
       prisma.song.count({ where }),
       
       // 总用户数
@@ -111,7 +111,7 @@ export default defineEventHandler(async (event) => {
         }
       }),
       
-      // 本周新增歌曲
+      // 本周新增视频
       prisma.song.count({
         where: {
           ...where,
@@ -121,7 +121,7 @@ export default defineEventHandler(async (event) => {
         }
       }),
       
-      // 上周新增歌曲
+      // 上周新增视频
       prisma.song.count({
         where: {
           ...where,
@@ -173,7 +173,7 @@ export default defineEventHandler(async (event) => {
 
     // 获取趋势数据 (最近7天)
     const trendData = await Promise.all([
-      // 歌曲趋势
+      // 视频趋势
       (async () => {
         const trends = []
         for (let i = 6; i >= 0; i--) {

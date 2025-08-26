@@ -23,13 +23,13 @@ const isPlaying = ref(false)
 const currentPlaylist = ref<PlaylistItem[]>([])
 const currentPlaylistIndex = ref(-1)
 const currentPosition = ref(0) // 当前播放位置（秒）
-const duration = ref(0) // 歌曲总时长（秒）
+const duration = ref(0) // 视频总时长（秒）
 
 export function useAudioPlayer() {
-  // 播放歌曲
+  // 播放视频
   const playSong = (song: PlayableSong, playlist?: PlayableSong[], playlistIndex?: number) => {
     if (!song.musicUrl) {
-      console.error('歌曲没有可播放的URL')
+      console.error('视频没有可播放的URL')
       return false
     }
 
@@ -37,7 +37,7 @@ export function useAudioPlayer() {
     if (playlist && playlist.length > 0) {
       // 将PlayableSong数组转换为PlaylistItem数组
       currentPlaylist.value = playlist.map(s => ({ song: s }))
-      // 使用提供的索引或查找当前歌曲在播放列表中的位置
+      // 使用提供的索引或查找当前视频在播放列表中的位置
       if (typeof playlistIndex === 'number' && playlistIndex >= 0 && playlistIndex < playlist.length) {
         currentPlaylistIndex.value = playlistIndex
       } else {
@@ -45,7 +45,7 @@ export function useAudioPlayer() {
         currentPlaylistIndex.value = index >= 0 ? index : -1
       }
     } else if (currentSong.value && currentSong.value.id !== song.id) {
-      // 如果没有提供播放列表且是新歌曲，清空播放列表
+      // 如果没有提供播放列表且是新视频，清空播放列表
       currentPlaylist.value = []
       currentPlaylistIndex.value = -1
     }
@@ -56,7 +56,7 @@ export function useAudioPlayer() {
       return true
     }
 
-    // 播放新歌曲
+    // 播放新视频
     currentSong.value = song
     isPlaying.value = true
     currentPosition.value = 0
@@ -76,10 +76,10 @@ export function useAudioPlayer() {
     duration.value = 0
   }
 
-  // 播放下一首歌曲
+  // 播放下一首视频
   const playNext = async () => {
     if (currentPlaylist.value.length === 0 || currentPlaylistIndex.value === -1) {
-      console.log('没有播放列表或当前歌曲不在播放列表中')
+      console.log('没有播放列表或当前视频不在播放列表中')
       return false
     }
 
@@ -87,7 +87,7 @@ export function useAudioPlayer() {
     let attempts = 0
     const maxAttempts = currentPlaylist.value.length // 最多尝试整个播放列表的长度
 
-    // 循环尝试找到可播放的下一首歌曲
+    // 循环尝试找到可播放的下一首视频
     while (nextIndex < currentPlaylist.value.length && attempts < maxAttempts) {
       const nextSong = currentPlaylist.value[nextIndex].song
       
@@ -113,13 +113,13 @@ export function useAudioPlayer() {
             isPlaying.value = true
             return true
           } else {
-            console.warn(`跳过第${nextIndex + 1}首歌曲：无法获取播放链接，可能是付费内容`)
+            console.warn(`跳过第${nextIndex + 1}首视频：无法获取播放链接，可能是付费内容`)
           }
         } catch (error) {
-          console.warn(`跳过第${nextIndex + 1}首歌曲：获取播放URL失败`, error)
+          console.warn(`跳过第${nextIndex + 1}首视频：获取播放URL失败`, error)
         }
       } else {
-        console.warn(`跳过第${nextIndex + 1}首歌曲：缺少音乐平台或ID信息`)
+        console.warn(`跳过第${nextIndex + 1}首视频：缺少音乐平台或ID信息`)
       }
       
       // 尝试下一首
@@ -127,14 +127,14 @@ export function useAudioPlayer() {
       attempts++
     }
 
-    console.log('没有找到可播放的下一首歌曲')
+    console.log('没有找到可播放的下一首视频')
     return false
   }
 
-  // 播放上一首歌曲
+  // 播放上一首视频
   const playPrevious = async () => {
     if (currentPlaylist.value.length === 0 || currentPlaylistIndex.value === -1) {
-      console.log('没有播放列表或当前歌曲不在播放列表中')
+      console.log('没有播放列表或当前视频不在播放列表中')
       return false
     }
 
@@ -142,7 +142,7 @@ export function useAudioPlayer() {
     let attempts = 0
     const maxAttempts = currentPlaylist.value.length // 最多尝试整个播放列表的长度
 
-    // 循环尝试找到可播放的上一首歌曲
+    // 循环尝试找到可播放的上一首视频
     while (prevIndex >= 0 && attempts < maxAttempts) {
       const prevSong = currentPlaylist.value[prevIndex].song
       
@@ -168,13 +168,13 @@ export function useAudioPlayer() {
             isPlaying.value = true
             return true
           } else {
-            console.warn(`跳过第${prevIndex + 1}首歌曲：无法获取播放链接，可能是付费内容`)
+            console.warn(`跳过第${prevIndex + 1}首视频：无法获取播放链接，可能是付费内容`)
           }
         } catch (error) {
-          console.warn(`跳过第${prevIndex + 1}首歌曲：获取播放URL失败`, error)
+          console.warn(`跳过第${prevIndex + 1}首视频：获取播放URL失败`, error)
         }
       } else {
-        console.warn(`跳过第${prevIndex + 1}首歌曲：缺少音乐平台或ID信息`)
+        console.warn(`跳过第${prevIndex + 1}首视频：缺少音乐平台或ID信息`)
       }
       
       // 尝试上一首
@@ -182,7 +182,7 @@ export function useAudioPlayer() {
       attempts++
     }
 
-    console.log('没有找到可播放的上一首歌曲')
+    console.log('没有找到可播放的上一首视频')
     return false
   }
 
@@ -191,7 +191,7 @@ export function useAudioPlayer() {
     currentPosition.value = Math.max(0, Math.min(position, duration.value))
   }
 
-  // 设置歌曲总时长
+  // 设置视频总时长
   const setDuration = (newDuration: number) => {
     duration.value = Math.max(0, newDuration)
   }
@@ -201,24 +201,24 @@ export function useAudioPlayer() {
     currentPosition.value = position
   }
 
-  // 检查指定ID的歌曲是否正在播放
+  // 检查指定ID的视频是否正在播放
   const isCurrentPlaying = (songId: number) => {
     return isPlaying.value && currentSong.value && currentSong.value.id === songId
   }
 
-  // 检查指定ID的歌曲是否为当前歌曲（不管是否在播放）
+  // 检查指定ID的视频是否为当前视频（不管是否在播放）
   const isCurrentSong = (songId: number) => {
     return currentSong.value && currentSong.value.id === songId
   }
 
-  // 检查是否有下一首歌曲
+  // 检查是否有下一首视频
   const hasNext = computed(() => {
     return currentPlaylist.value.length > 0 && 
            currentPlaylistIndex.value >= 0 && 
            currentPlaylistIndex.value < currentPlaylist.value.length - 1
   })
 
-  // 检查是否有上一首歌曲
+  // 检查是否有上一首视频
   const hasPrevious = computed(() => {
     return currentPlaylist.value.length > 0 && 
            currentPlaylistIndex.value > 0
@@ -234,7 +234,7 @@ export function useAudioPlayer() {
     return readonly(currentPlaylistIndex)
   }
   
-  // 获取当前播放的歌曲信息
+  // 获取当前播放的视频信息
   const getCurrentSong = () => {
     return readonly(currentSong)
   }
@@ -249,7 +249,7 @@ export function useAudioPlayer() {
     return readonly(currentPosition)
   }
 
-  // 获取歌曲总时长
+  // 获取视频总时长
   const getDuration = () => {
     return readonly(duration)
   }

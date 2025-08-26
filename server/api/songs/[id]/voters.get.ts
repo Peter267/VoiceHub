@@ -22,18 +22,18 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 获取歌曲ID
+    // 获取视频ID
     const songId = parseInt(getRouterParam(event, 'id') || '0')
     
     if (!songId || isNaN(songId)) {
       throw createError({
         statusCode: 400,
-        message: '无效的歌曲ID'
+        message: '无效的视频ID'
       })
     }
 
     return await executeWithPool(async () => {
-      // 检查歌曲是否存在
+      // 检查视频是否存在
       const song = await prisma.song.findUnique({
         where: { id: songId },
         select: {
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
       if (!song) {
         throw createError({
           statusCode: 404,
-          message: '歌曲不存在'
+          message: '视频不存在'
         })
       }
 

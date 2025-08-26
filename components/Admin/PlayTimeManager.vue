@@ -173,7 +173,7 @@
         
         <div class="modal-body">
           <p>确定要删除播出时段 "{{ playTimeToDelete?.name }}" 吗？</p>
-          <p class="warning">此操作不可恢复，相关歌曲和排期的时段设置将被清除。</p>
+          <p class="warning">此操作不可恢复，相关视频和排期的时段设置将被清除。</p>
           
           <div class="form-actions">
             <button type="button" class="btn btn-secondary" @click="showDeleteConfirm = false">

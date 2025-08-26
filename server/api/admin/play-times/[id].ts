@@ -213,7 +213,7 @@ export default defineEventHandler(async (event) => {
     }
   } else if (method === 'DELETE') {
     try {
-      // 检查该播出时段是否有关联的歌曲或排期
+      // 检查该播出时段是否有关联的视频或排期
       const songs = await prisma.song.count({
         where: { preferredPlayTimeId: id }
       })
@@ -227,7 +227,7 @@ export default defineEventHandler(async (event) => {
         where: { id }
       })
       
-      // 如果有关联的歌曲或排期，将它们的playTimeId设为null
+      // 如果有关联的视频或排期，将它们的playTimeId设为null
       if (songs > 0) {
         await prisma.song.updateMany({
           where: { preferredPlayTimeId: id },

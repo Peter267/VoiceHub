@@ -6,11 +6,11 @@
         <div v-if="submissionGuidelines" class="guidelines-content" v-html="submissionGuidelines.replace(/\n/g, '<br>')"></div>
         <div v-else class="default-guidelines">
           <p>1. 投稿时无需加入书名号</p>
-          <p>2. 除DJ外，其他类型歌曲均接收（包括小语种）</p>
-          <p>3. 禁止投递含有违规内容的歌曲</p>
-          <p>4. 点播的歌曲将由管理员进行审核</p>
+          <p>2. 除DJ外，其他类型视频均接收（包括小语种）</p>
+          <p>3. 禁止投递含有违规内容的视频</p>
+          <p>4. 点播的视频将由管理员进行审核</p>
           <p>5. 审核通过后将安排在播放时段播出</p>
-          <p>6. 提交即表明我已阅读投稿须知并已知该歌曲有概率无法播出</p>
+          <p>6. 提交即表明我已阅读投稿须知并已知该视频有概率无法播出</p>
           <p>7. 本系统仅提供音乐搜索和播放管理功能，不存储任何音乐文件。所有音乐内容均来自第三方音乐平台，版权归原平台及版权方所有。用户点歌时请确保遵守相关音乐平台的服务条款，尊重音乐作品版权。我们鼓励用户支持正版音乐，在官方平台购买和收听喜爱的音乐作品。</p>
           <p>8. 最终解释权归广播站所有</p>
         </div>
@@ -19,16 +19,16 @@
 
     <div class="form-container">
       <form @submit.prevent="handleSearch" class="song-request-form">
-        <!-- 歌曲搜索区域 -->
+        <!-- 视频搜索区域 -->
         <div class="search-section">
-          <div class="search-label">歌曲搜索</div>
+          <div class="search-label">视频搜索</div>
           <div class="search-input-group">
             <input
               id="title"
               v-model="title"
               type="text"
               required
-              placeholder="请输入歌曲名称"
+              placeholder="请输入视频名称"
               class="search-input"
               @input="checkSimilarSongs"
             />
@@ -120,12 +120,12 @@
                       <p class="result-album" v-if="result.album">专辑：{{ result.album }}</p>
                     </div>
                     <div class="result-actions">
-                      <!-- 检查是否已存在相似歌曲 -->
+                      <!-- 检查是否已存在相似视频 -->
                       <div v-if="getSimilarSong(result)" class="similar-song-info">
-                        <!-- 根据歌曲状态显示不同的文本 -->
-                        <span v-if="getSimilarSong(result)?.played" class="similar-text status-played">歌曲已播放</span>
-                        <span v-else-if="getSimilarSong(result)?.scheduled" class="similar-text status-scheduled">歌曲已排期</span>
-                        <span v-else class="similar-text">歌曲已存在</span>
+                        <!-- 根据视频状态显示不同的文本 -->
+                        <span v-if="getSimilarSong(result)?.played" class="similar-text status-played">视频已播放</span>
+                        <span v-else-if="getSimilarSong(result)?.scheduled" class="similar-text status-scheduled">视频已排期</span>
+                        <span v-else class="similar-text">视频已存在</span>
                         
                         <!-- 始终显示点赞按钮，但根据状态设置不同样式 -->
                         <button
@@ -136,8 +136,8 @@
                           @click.stop.prevent="getSimilarSong(result)?.played || getSimilarSong(result)?.scheduled ? null : handleLikeFromSearch(getSimilarSong(result))"
                           :disabled="getSimilarSong(result)?.played || getSimilarSong(result)?.scheduled || getSimilarSong(result)?.voted || submitting"
                           :title="
-                            getSimilarSong(result)?.played ? '已播放的歌曲不能点赞' :
-                            getSimilarSong(result)?.scheduled ? '已排期的歌曲不能点赞' :
+                            getSimilarSong(result)?.played ? '已播放的视频不能点赞' :
+                            getSimilarSong(result)?.scheduled ? '已排期的视频不能点赞' :
                             getSimilarSong(result)?.voted ? '已点赞' : '点赞'
                           "
                         >
@@ -170,7 +170,7 @@
                     class="manual-submit-btn"
                     @click="showManualModal = true"
                   >
-                    以上没有我想要的歌曲，手动输入提交
+                    以上没有我想要的视频，手动输入提交
                   </button>
                 </div>
               </div>
@@ -178,7 +178,7 @@
               <!-- 空状态 -->
               <div v-else-if="!searching && hasSearched" class="empty-state" key="empty">
                 <div class="empty-icon">🔍</div>
-                <p class="empty-text">未找到相关歌曲</p>
+                <p class="empty-text">未找到相关视频</p>
                 <p class="empty-hint">试试其他关键词或切换平台</p>
                 <button
                   type="button"
@@ -192,7 +192,7 @@
               <!-- 初始状态 -->
               <div v-else-if="!searching" class="initial-state" key="initial">
                 <div class="search-illustration">
-                  <img src="/public/images/search.svg" alt="搜索歌曲" class="search-svg" />
+                  <img src="/public/images/search.svg" alt="搜索视频" class="search-svg" />
                 </div>
               </div>
             </Transition>
@@ -227,7 +227,7 @@
         <div class="alert-header">
           <div class="alert-header-left">
             <Icon name="warning" :size="16" class="alert-icon" />
-            <span class="alert-title">发现可能相似的歌曲</span>
+            <span class="alert-title">发现可能相似的视频</span>
           </div>
           <!-- 宽屏时显示在右上角的继续投稿按钮 -->
           <button type="button" class="ignore-btn desktop-continue-btn" @click="ignoreSimilar" :disabled="submitting">
@@ -242,16 +242,16 @@
                 <span v-if="song.played" class="song-status status-played">已播放</span>
                 <span v-else-if="song.scheduled" class="song-status status-scheduled">已排期</span>
               </p>
-              <!-- 根据歌曲状态显示不同的提示 -->
-              <p v-if="song.played" class="alert-hint">该歌曲已播放，无法进行投票操作</p>
-              <p v-else-if="song.scheduled" class="alert-hint">该歌曲已排期，无法进行投票操作</p>
-              <p v-else-if="!song.voted" class="alert-hint">该歌曲已在列表中，是否要投票支持？</p>
+              <!-- 根据视频状态显示不同的提示 -->
+              <p v-if="song.played" class="alert-hint">该视频已播放，无法进行投票操作</p>
+              <p v-else-if="song.scheduled" class="alert-hint">该视频已排期，无法进行投票操作</p>
+              <p v-else-if="!song.voted" class="alert-hint">该视频已在列表中，是否要投票支持？</p>
               <p v-else-if="song.voted" class="voted-status">
                 <Icon name="success" :size="14" style="margin-right: 4px;" />
-                您已为此歌曲投票
+                您已为此视频投票
               </p>
             </div>
-            <!-- 只有在歌曲未排期、未播放且未投票时才显示投票按钮 -->
+            <!-- 只有在视频未排期、未播放且未投票时才显示投票按钮 -->
             <div v-if="!song.voted && !song.played && !song.scheduled" class="song-actions">
               <button
                 type="button"
@@ -274,7 +274,7 @@
 
     </div>
 
-    <!-- 重复歌曲弹窗 -->
+    <!-- 重复视频弹窗 -->
     <DuplicateSongModal
       :show="showDuplicateModal"
       :song="duplicateSong"
@@ -288,12 +288,12 @@
         <div v-if="showManualModal" class="modal-overlay" @click.self="showManualModal = false">
           <div class="modal-content">
             <div class="modal-header">
-              <h3>手动输入歌曲信息</h3>
+              <h3>手动输入视频信息</h3>
               <button @click="showManualModal = false" class="close-btn">&times;</button>
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="modal-title">歌曲名称</label>
+                <label for="modal-title">视频名称</label>
                 <div class="input-wrapper">
                   <input
                     id="modal-title"
@@ -394,7 +394,7 @@ const loadingPlayTimes = ref(false)
 const submissionStatus = ref(null)
 const loadingSubmissionStatus = ref(false)
 
-// 重复歌曲弹窗相关
+// 重复视频弹窗相关
 const showDuplicateModal = ref(false)
 const duplicateSong = ref(null)
 
@@ -443,13 +443,13 @@ onMounted(async () => {
   fetchSubmissionStatus()
   // 获取当前学期
   await fetchCurrentSemester()
-  // 只有在用户已登录时才加载歌曲列表以便检查相似歌曲
+  // 只有在用户已登录时才加载视频列表以便检查相似视频
   if (auth.isAuthenticated.value) {
     try {
       const currentSemesterName = currentSemester.value?.name
       await songService.fetchSongs(false, currentSemesterName)
     } catch (error) {
-      console.error('加载歌曲列表失败:', error)
+      console.error('加载视频列表失败:', error)
     }
   }
   // 音源健康检查功能已移除
@@ -475,11 +475,11 @@ const formatPlayTimeRange = (playTime) => {
   return '不限时间'
 }
 
-// 监听歌曲服务中的相似歌曲
+// 监听视频服务中的相似视频
 watch(
   () => songService.similarSongFound.value,
   (newVal) => {
-    // 保持兼容性，如果有相似歌曲，将其放入数组
+    // 保持兼容性，如果有相似视频，将其放入数组
     if (newVal) {
       similarSongs.value = [newVal]
     } else {
@@ -500,22 +500,22 @@ watch(
   }
 )
 
-// 检查相似歌曲
+// 检查相似视频
 const checkSimilarSongs = async () => {
   if (title.value.trim().length > 2) {
-    console.log('检查相似歌曲:', title.value, artist.value)
+    console.log('检查相似视频:', title.value, artist.value)
     const similar = await songService.checkSimilarSongs(
       title.value.trim(),
       artist.value.trim()
     )
-    console.log('相似歌曲结果:', similar, songService.similarSongFound.value)
+    console.log('相似视频结果:', similar, songService.similarSongFound.value)
     similarSongs.value = similar
   } else {
     similarSongs.value = []
   }
 }
 
-// 投票支持相似歌曲
+// 投票支持相似视频
 const voteForSimilar = async (song) => {
   if (!song || song.voted) return
 
@@ -528,10 +528,10 @@ const voteForSimilar = async (song) => {
     song.voted = true
     song.voteCount = (song.voteCount || 0) + 1
     
-    // 投票成功后刷新歌曲列表
+    // 投票成功后刷新视频列表
     setTimeout(() => {
       songService.refreshSongsSilent().catch(err => {
-        console.error('刷新歌曲列表失败', err)
+        console.error('刷新视频列表失败', err)
       })
     }, 500)
     
@@ -549,14 +549,14 @@ const voteForSimilar = async (song) => {
   }
 }
 
-// 忽略相似歌曲，继续投稿
+// 忽略相似视频，继续投稿
 const ignoreSimilar = () => {
   similarSongs.value = []
 }
 
 
 
-// 检查搜索结果是否已存在完全匹配的歌曲
+// 检查搜索结果是否已存在完全匹配的视频
 // 标准化字符串（与useSongs中的逻辑保持一致）
 const normalizeString = (str) => {
   return str
@@ -579,32 +579,32 @@ const getSimilarSong = (result) => {
   // 获取当前学期名称
   const currentSemesterName = currentSemester.value?.name
   
-  // 检查完全匹配的歌曲（标准化后），只检查当前学期的歌曲
+  // 检查完全匹配的视频（标准化后），只检查当前学期的视频
   return songService.songs.value.find(song => {
     const songTitle = normalizeString(song.title)
     const songArtist = normalizeString(song.artist)
     const titleMatch = songTitle === normalizedTitle && songArtist === normalizedArtist
     
-    // 如果有当前学期信息，只检查当前学期的歌曲
+    // 如果有当前学期信息，只检查当前学期的视频
     if (currentSemesterName) {
       return titleMatch && song.semester === currentSemesterName
     }
     
-    // 如果没有学期信息，检查所有歌曲（向后兼容）
+    // 如果没有学期信息，检查所有视频（向后兼容）
     return titleMatch
   })
 }
 
-// 从搜索结果中点赞已存在的歌曲
+// 从搜索结果中点赞已存在的视频
 const handleLikeFromSearch = async (song) => {
   if (!song || song.voted) {
     return
   }
   
-  // 检查歌曲状态
+  // 检查视频状态
   if (song.played || song.scheduled) {
     if (window.$showNotification) {
-      const message = song.played ? '已播放的歌曲不能点赞' : '已排期的歌曲不能点赞'
+      const message = song.played ? '已播放的视频不能点赞' : '已排期的视频不能点赞'
       window.$showNotification(message, 'warning')
     }
     return
@@ -619,13 +619,13 @@ const handleLikeFromSearch = async (song) => {
   }
 }
 
-// 关闭重复歌曲弹窗
+// 关闭重复视频弹窗
 const closeDuplicateModal = () => {
   showDuplicateModal.value = false
   duplicateSong.value = null
 }
 
-// 处理重复歌曲弹窗中的点赞
+// 处理重复视频弹窗中的点赞
 const handleLikeDuplicate = async (songId) => {
   try {
     await songService.voteSong(songId)
@@ -655,16 +655,16 @@ const switchPlatform = (newPlatform) => {
   }
 }
 
-// 搜索歌曲
+// 搜索视频
 const handleSearch = async () => {
   error.value = ''
   success.value = ''
   searchError.value = ''
 
   if (!title.value.trim()) {
-    error.value = '歌曲名称不能为空'
+    error.value = '视频名称不能为空'
     if (window.$showNotification) {
-      window.$showNotification('歌曲名称不能为空', 'error')
+      window.$showNotification('视频名称不能为空', 'error')
     }
     return
   }
@@ -695,10 +695,10 @@ const handleSearch = async () => {
         actualMusicPlatform: item.musicPlatform || (results.source === 'netease-backup' ? 'netease' : results.source)
       }))
       
-      console.log('搜索成功，找到', results.data.length, '首歌曲')
+      console.log('搜索成功，找到', results.data.length, '首视频')
     } else {
       searchResults.value = []
-      const errorMsg = results && results.error ? results.error : '没有找到匹配的歌曲'
+      const errorMsg = results && results.error ? results.error : '没有找到匹配的视频'
       error.value = errorMsg
       if (window.$showNotification) {
         window.$showNotification(errorMsg, 'info')
@@ -725,7 +725,7 @@ const getAudioUrl = async (result) => {
   try {
     // 根据搜索结果的sourceInfo.source字段判断音源类型
     const sourceType = result.sourceInfo?.source || ''
-    console.log('获取音频URL，音源类型:', sourceType, '歌曲ID:', result.musicId || result.id)
+    console.log('获取音频URL，音源类型:', sourceType, '视频ID:', result.musicId || result.id)
     console.log('完整的result对象:', result)
     
     // 对于vkeys音源的处理
@@ -748,7 +748,7 @@ const getAudioUrl = async (result) => {
             if (songId) {
               params.append('id', songId)
             } else {
-              throw new Error('缺少歌曲ID参数')
+              throw new Error('缺少视频ID参数')
             }
             params.append('quality', '8') // QQ音乐默认音质为8(HQ高音质)
             
@@ -773,7 +773,7 @@ const getAudioUrl = async (result) => {
               if (getUrlResponse.data.cover) result.cover = getUrlResponse.data.cover
               if (getUrlResponse.data.song) result.title = getUrlResponse.data.song
               if (getUrlResponse.data.singer) result.artist = getUrlResponse.data.singer
-              console.log('成功获取歌曲URL (QQ音乐geturl):', getUrlResponse.data.url)
+              console.log('成功获取视频URL (QQ音乐geturl):', getUrlResponse.data.url)
               return result
             } else {
               console.warn('QQ音乐geturl无法获取URL:', getUrlResponse)
@@ -796,7 +796,7 @@ const getAudioUrl = async (result) => {
               result.hasUrl = true
               if (songDetail.cover) result.cover = songDetail.cover
               if (songDetail.duration) result.duration = songDetail.duration
-              console.log('成功获取歌曲URL (vkeys getSongDetail):', songDetail.url)
+              console.log('成功获取视频URL (vkeys getSongDetail):', songDetail.url)
               return result
             }
           } catch (error) {
@@ -816,7 +816,7 @@ const getAudioUrl = async (result) => {
             if (urlResult && urlResult.success && urlResult.url) {
               result.url = urlResult.url
               result.hasUrl = true
-              console.log('成功获取歌曲URL (网易云备用源):', urlResult.url)
+              console.log('成功获取视频URL (网易云备用源):', urlResult.url)
               return result
             } else {
               console.warn('网易云备用源也无法获取URL:', urlResult)
@@ -853,9 +853,9 @@ const getAudioUrl = async (result) => {
             searchResults.value[index] = { ...result }
           }
           
-          console.log('成功获取歌曲URL (网易云备用源):', urlResult.url)
+          console.log('成功获取视频URL (网易云备用源):', urlResult.url)
         } else {
-          console.warn('未能获取到有效的歌曲URL，urlResult:', urlResult)
+          console.warn('未能获取到有效的视频URL，urlResult:', urlResult)
           if (urlResult && urlResult.error) {
             console.error('getSongUrl错误:', urlResult.error)
           }
@@ -876,7 +876,7 @@ const getAudioUrl = async (result) => {
   }
 }
 
-// 播放歌曲
+// 播放视频
 const playSong = async (result) => {
   // 如果还没有获取URL，先获取
   if (!result.hasUrl && !result.url) {
@@ -885,9 +885,9 @@ const playSong = async (result) => {
 
   // 如果没有URL，提示错误
   if (!result.url) {
-    error.value = '该歌曲无法播放，可能是付费内容'
+    error.value = '该视频无法播放，可能是付费内容'
     if (window.$showNotification) {
-      window.$showNotification('该歌曲无法播放，可能是付费内容', 'error')
+      window.$showNotification('该视频无法播放，可能是付费内容', 'error')
     }
     return
   }
@@ -903,7 +903,7 @@ const playSong = async (result) => {
     musicId: result.musicId ? String(result.musicId) : null,
   }
 
-  // 使用全局播放器播放歌曲
+  // 使用全局播放器播放视频
   audioPlayer.playSong(song)
 
   // 如果有音乐平台信息，请求歌词
@@ -940,20 +940,20 @@ const selectResult = async (result) => {
 
   // 如果没有URL，给出提示
   if (!result.url) {
-    success.value = '已选择歌曲，但可能无法播放完整版本'
+    success.value = '已选择视频，但可能无法播放完整版本'
     if (window.$showNotification) {
-      window.$showNotification('已选择歌曲，但可能无法播放完整版本', 'info')
+      window.$showNotification('已选择视频，但可能无法播放完整版本', 'info')
     }
   }
 
-  console.log('已选择歌曲:', songTitle, '- 填充表单但不自动提交')
+  console.log('已选择视频:', songTitle, '- 填充表单但不自动提交')
 }
 
-// 提交选中的歌曲
+// 提交选中的视频
 const submitSong = async (result) => {
   // 防止重复点击和重复提交
   if (submitting.value) return
-  console.log('执行submitSong，提交歌曲:', result.title || result.song)
+  console.log('执行submitSong，提交视频:', result.title || result.song)
 
   // 检查投稿限额
   const limitCheck = checkSubmissionLimit()
@@ -969,14 +969,14 @@ const submitSong = async (result) => {
   const songTitle = result.song || result.title
   const songArtist = result.singer || result.artist
 
-  // 只有在用户已登录且歌曲列表已加载时才检查是否已存在完全匹配的歌曲
+  // 只有在用户已登录且视频列表已加载时才检查是否已存在完全匹配的视频
   if (auth.isAuthenticated.value && songService.songs.value && songService.songs.value.length > 0) {
     const existingSong = songService.songs.value.find(song => 
       song.title.toLowerCase() === songTitle.toLowerCase() && 
       song.artist.toLowerCase() === songArtist.toLowerCase()
     )
     if (existingSong) {
-      // 显示重复歌曲弹窗
+      // 显示重复视频弹窗
       duplicateSong.value = existingSong
       showDuplicateModal.value = true
       return
@@ -1003,7 +1003,7 @@ const submitSong = async (result) => {
 
     if (blacklistCheck.isBlocked) {
       const reasons = blacklistCheck.reasons.map(r => r.reason).join('; ')
-      error.value = `该歌曲无法点歌: ${reasons}`
+      error.value = `该视频无法点歌: ${reasons}`
       if (window.$showNotification) {
         window.$showNotification(error.value, 'error')
       }
@@ -1022,7 +1022,7 @@ const submitSong = async (result) => {
   }
 
   try {
-    // 构建歌曲数据对象
+    // 构建视频数据对象
     const songData = {
       title: title.value,
       artist: artist.value,
@@ -1067,7 +1067,7 @@ const handleSubmit = async () => {
   error.value = ''
 
   try {
-    // 构建歌曲数据对象
+    // 构建视频数据对象
     const songData = {
       title: title.value,
       artist: artist.value,
@@ -1097,9 +1097,9 @@ const handleSubmit = async () => {
 // 手动输入相关方法
 const handleManualSubmit = async () => {
   if (!title.value.trim() || !manualArtist.value.trim()) {
-    error.value = '请输入完整的歌曲信息'
+    error.value = '请输入完整的视频信息'
     if (window.$showNotification) {
-      window.$showNotification('请输入完整的歌曲信息', 'error')
+      window.$showNotification('请输入完整的视频信息', 'error')
     }
     return
   }
@@ -1129,14 +1129,14 @@ const handleManualSubmit = async () => {
 
     if (blacklistCheck.isBlocked) {
       const reasons = blacklistCheck.reasons.map(r => r.reason).join('; ')
-      error.value = `该歌曲无法点歌: ${reasons}`
+      error.value = `该视频无法点歌: ${reasons}`
       if (window.$showNotification) {
         window.$showNotification(error.value, 'error')
       }
       submitting.value = false
       return
     }
-    // 构建歌曲数据对象
+    // 构建视频数据对象
     const songData = {
       title: title.value,
       artist: manualArtist.value,
@@ -1965,7 +1965,7 @@ defineExpose({
   font-size: 12px;
 }
 
-/* 歌曲状态样式 */
+/* 视频状态样式 */
 .song-status {
   display: inline-block;
   font-size: 12px;
@@ -2071,7 +2071,7 @@ defineExpose({
   }
 }
 
-/* 移动端时增加相似歌曲列表高度 */
+/* 移动端时增加相似视频列表高度 */
 @media (max-width: 767px) {
   .similar-songs-list {
     max-height: 150px;
@@ -2809,7 +2809,7 @@ defineExpose({
     z-index: 10;
   }
 
-  /* 确保相似歌曲提示在移动端可见 */
+  /* 确保相似视频提示在移动端可见 */
   .similar-song-alert {
     margin-top: 1rem;
     margin-bottom: 1rem;

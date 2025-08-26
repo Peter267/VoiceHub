@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
         } else {
           throw createError({
             statusCode: 403,
-            statusMessage: '管理员只能设置用户和歌曲管理员角色'
+            statusMessage: '管理员只能设置用户和视频管理员角色'
           })
         }
       }
@@ -116,7 +116,7 @@ export default defineEventHandler(async (event) => {
     try {
       const cacheService = CacheService.getInstance()
       await cacheService.clearSongsCache()
-      console.log('[Cache] 歌曲缓存已清除（用户更新）')
+      console.log('[Cache] 视频缓存已清除（用户更新）')
     } catch (cacheError) {
       console.warn('[Cache] 清除缓存失败:', cacheError)
     }

@@ -75,11 +75,11 @@
             <div class="content-options">
               <label class="checkbox-item">
                 <input type="checkbox" v-model="settings.showCover" />
-                <span>歌曲封面</span>
+                <span>视频封面</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" v-model="settings.showTitle" />
-                <span>歌曲名</span>
+                <span>视频名</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" v-model="settings.showArtist" />
@@ -152,7 +152,7 @@
         <div class="preview-header">
             <h3>打印预览</h3>
             <div class="preview-info">
-              <span>{{ filteredSchedules.length }} 首歌曲</span>
+              <span>{{ filteredSchedules.length }} 首视频</span>
               <span v-if="schedules.length === 0" class="debug-info">无排期数据</span>
               <span v-else-if="filteredSchedules.length === 0" class="debug-info">过滤后无数据</span>
             </div>
@@ -247,7 +247,7 @@
                     </div>
                   </div>
 
-                  <!-- 如果只有一个时段或没有时段，直接显示歌曲列表 -->
+                  <!-- 如果只有一个时段或没有时段，直接显示视频列表 -->
                   <div v-else class="schedule-list">
                     <div
                       v-for="schedule in dateGroup.allSchedules"
@@ -423,7 +423,7 @@ const groupedSchedules = computed(() => {
   Object.keys(groups).sort().forEach(dateKey => {
     const dateGroup = groups[dateKey]
 
-    // 对每个时段内的歌曲按序号排序
+    // 对每个时段内的视频按序号排序
     Object.keys(dateGroup.playTimes).forEach(playTimeKey => {
       dateGroup.playTimes[playTimeKey].schedules.sort((a, b) => (a.sequence || 0) - (b.sequence || 0))
     })
@@ -691,7 +691,7 @@ const downloadImageAsBase64 = async (url) => {
         // 系统Logo按原尺寸显示
         img.style.objectFit = 'contain !important'
       } else if (img.classList.contains('song-cover')) {
-        // 歌曲封面保持固定尺寸
+        // 视频封面保持固定尺寸
         img.style.width = '40px !important'
         img.style.height = '40px !important'
         img.style.objectFit = 'cover !important'
@@ -913,7 +913,7 @@ const generateScheduleItems = (schedules) => {
           flex-shrink: 0;
         ">
           ${schedule.song?.cover ?
-            `<img src="${convertToHttps(schedule.song.cover)}" alt="${schedule.song?.title || '歌曲'}" style="
+            `<img src="${convertToHttps(schedule.song.cover)}" alt="${schedule.song?.title || '视频'}" style="
               width: 100%;
               height: 100%;
               object-fit: cover;
@@ -945,7 +945,7 @@ const generateScheduleItems = (schedules) => {
             overflow: hidden;
             text-overflow: ellipsis;
           ">
-            ${schedule.song?.title || '未知歌曲'}
+            ${schedule.song?.title || '未知视频'}
           </div>
         ` : ''}
 

@@ -3,7 +3,7 @@
     <!-- 统计卡片 -->
     <div class="stats-grid">
       <StatCard
-        label="总歌曲数"
+        label="总视频数"
         :value="stats.totalSongs"
         icon="songs"
         icon-class="primary"

@@ -155,13 +155,13 @@ export const useAudioPlayerEnhanced = () => {
         const qualityResult = await tryQualitySwitch(song)
         
         if (qualityResult.success) {
-          // 更新歌曲的音乐链接
+          // 更新视频的音乐链接
           const updatedSong = {
             ...song,
             musicUrl: qualityResult.url
           }
           
-          // 通知父组件更新歌曲
+          // 通知父组件更新视频
           if (onSongChange) {
             onSongChange(updatedSong)
           }
@@ -171,10 +171,10 @@ export const useAudioPlayerEnhanced = () => {
         }
       }
       
-      // 如果音质切换失败或不可用，尝试重试当前歌曲
+      // 如果音质切换失败或不可用，尝试重试当前视频
       if (retryCount.value < maxRetries.value) {
         retryCount.value++
-        console.log(`重试播放当前歌曲 (${retryCount.value}/${maxRetries.value})`)
+        console.log(`重试播放当前视频 (${retryCount.value}/${maxRetries.value})`)
         
         // 延迟重试
         await new Promise(resolve => setTimeout(resolve, 1000 * retryCount.value))
@@ -185,12 +185,12 @@ export const useAudioPlayerEnhanced = () => {
       
       // 重试次数用完，根据播放模式决定是否自动跳过
       if (isPlaylistMode) {
-        console.log('当前歌曲重试次数用完，尝试下一首')
+        console.log('当前视频重试次数用完，尝试下一首')
         
         if (onNext) {
           const nextResult = await onNext()
           if (nextResult?.success && nextResult?.newSong) {
-            // 重置重试状态，为新歌曲准备
+            // 重置重试状态，为新视频准备
             resetRetryState()
             isRetrying.value = false
             return { handled: true, success: true, newSong: nextResult.newSong }
@@ -198,7 +198,7 @@ export const useAudioPlayerEnhanced = () => {
         }
         
         // 如果没有下一首或下一首也失败，关闭播放器
-        console.log('没有可播放的歌曲，关闭播放器')
+        console.log('没有可播放的视频，关闭播放器')
         
         addNotification({
           type: 'error',
@@ -218,7 +218,7 @@ export const useAudioPlayerEnhanced = () => {
         
         addNotification({
           type: 'error',
-          message: '歌曲播放失败，请检查链接或稍后重试',
+          message: '视频播放失败，请检查链接或稍后重试',
           duration: 5000
         })
         
@@ -238,10 +238,10 @@ export const useAudioPlayerEnhanced = () => {
     if (!song?.musicPlatform || !song?.musicId) {
       addNotification({
         type: 'error',
-        message: '无法切换音质：歌曲信息不完整',
+        message: '无法切换音质：视频信息不完整',
         duration: 3000
       })
-      return { success: false, error: '歌曲信息不完整' }
+      return { success: false, error: '视频信息不完整' }
     }
     
     try {

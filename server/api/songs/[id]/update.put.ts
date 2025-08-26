@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 获取歌曲ID
+    // 获取视频ID
     const songId = parseInt(getRouterParam(event, 'id'))
     if (!songId) {
       throw createError({
@@ -90,7 +90,7 @@ export default defineEventHandler(async (event) => {
       // 如果投稿人为空值，则跳过处理，保持原有投稿人不变
     }
 
-    // 更新歌曲
+    // 更新视频
     const updatedSong = await prisma.song.update({
       where: { id: songId },
       data: updateData,
@@ -105,10 +105,10 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    // 清除歌曲列表缓存
+    // 清除视频列表缓存
     const cacheService = new CacheService()
     await cacheService.clearSongsCache()
-    console.log('[Cache] 歌曲缓存已清除（更新歌曲）')
+    console.log('[Cache] 视频缓存已清除（更新视频）')
     
     return {
       success: true,

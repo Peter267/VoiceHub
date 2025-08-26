@@ -74,7 +74,7 @@ export function broadcastPlaylistUpdate(playlist: any[]) {
   deadConnections.forEach(id => musicConnections.delete(id))
 }
 
-// 发送歌曲切换通知（改进错误处理）
+// 发送视频切换通知（改进错误处理）
 export function broadcastSongChange(songInfo: any) {
   const message = JSON.stringify({
     type: 'song_change',

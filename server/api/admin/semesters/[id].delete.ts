@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // 检查是否有关联的歌曲
+  // 检查是否有关联的视频
   const songCount = await prisma.song.count({
     where: { semester: semester.name }
   })
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
   if (songCount > 0) {
     throw createError({
       statusCode: 400,
-      statusMessage: `该学期下还有 ${songCount} 首歌曲，无法删除`
+      statusMessage: `该学期下还有 ${songCount} 首视频，无法删除`
     })
   }
 

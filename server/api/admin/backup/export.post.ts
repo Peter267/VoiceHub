@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
             preferredPlayTime: true
           }
         }),
-        description: '歌曲数据'
+        description: '视频数据'
       },
       votes: {
         query: () => prisma.vote.findMany({
@@ -122,7 +122,7 @@ export default defineEventHandler(async (event) => {
       },
       songBlacklist: {
         query: () => prisma.songBlacklist.findMany(),
-        description: '歌曲黑名单'
+        description: '视频黑名单'
       }
     }
 

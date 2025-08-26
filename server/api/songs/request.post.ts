@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   if (!body.title || !body.artist) {
     throw createError({
       statusCode: 400,
-      message: '歌曲名称和艺术家不能为空'
+      message: '视频名称和艺术家不能为空'
     })
   }
   
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
     const normalizedTitle = normalizeForMatch(body.title)
     const normalizedArtist = normalizeForMatch(body.artist)
 
-    // 检查是否已有完全相同的歌曲（标准化后完全匹配，仅限当前学期）
+    // 检查是否已有完全相同的视频（标准化后完全匹配，仅限当前学期）
     const currentSemester = await getCurrentSemesterName()
     const allSongs = await prisma.song.findMany({
       where: {
@@ -174,7 +174,7 @@ export default defineEventHandler(async (event) => {
       }
     }
     
-    // 创建歌曲
+    // 创建视频
     const song = await prisma.song.create({
       data: {
         title: body.title,

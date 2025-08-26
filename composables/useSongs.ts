@@ -70,7 +70,7 @@ export const useSongs = () => {
     }
   }
   
-  // 获取歌曲列表
+  // 获取视频列表
   const fetchSongs = async (silent = false, semester?: string, forceRefresh = false) => {
     if (!silent) {
       loading.value = true
@@ -104,7 +104,7 @@ export const useSongs = () => {
         console.warn('API返回的数据格式不正确:', response)
       }
     } catch (err: any) {
-      error.value = err.message || '获取歌曲列表失败'
+      error.value = err.message || '获取视频列表失败'
     } finally {
       if (!silent) {
         loading.value = false
@@ -112,12 +112,12 @@ export const useSongs = () => {
     }
   }
   
-  // 静默刷新歌曲列表 - 不显示加载状态
+  // 静默刷新视频列表 - 不显示加载状态
   const refreshSongsSilent = async () => {
     return fetchSongs(true)
   }
   
-  // 从排期数据中提取歌曲信息
+  // 从排期数据中提取视频信息
   const extractSongsFromSchedules = (schedules: Schedule[]): Song[] => {
     const songsMap = new Map<string, Song>()
     
@@ -125,7 +125,7 @@ export const useSongs = () => {
       if (schedule.song) {
         const songId = String(schedule.song.id)
         if (!songsMap.has(songId)) {
-          // 将排期中的歌曲信息转换为完整的Song对象
+          // 将排期中的视频信息转换为完整的Song对象
           const completeSong: Song = {
             id: schedule.song.id,
             title: schedule.song.title,
@@ -175,9 +175,9 @@ export const useSongs = () => {
         requestParams
       )
       
-      // 确保每个排期的歌曲都有played属性，并处理null/undefined转换
+      // 确保每个排期的视频都有played属性，并处理null/undefined转换
       const processedData = data.map((schedule: any) => {
-        // 处理歌曲属性
+        // 处理视频属性
         if (schedule.song && schedule.song.played === undefined) {
           schedule.song.played = false
         }
@@ -201,7 +201,7 @@ export const useSongs = () => {
       
       publicSchedules.value = processedData
       
-      // 直接从排期数据中提取歌曲信息，避免重复请求
+      // 直接从排期数据中提取视频信息，避免重复请求
       publicSongs.value = extractSongsFromSchedules(processedData)
     } catch (err: any) {
       error.value = err.message || '获取排期失败'
@@ -270,7 +270,7 @@ export const useSongs = () => {
     }
   }
 
-  // 检查相似歌曲
+  // 检查相似视频
   const checkSimilarSongs = async (title: string, artist: string): Promise<Song[]> => {
     similarSongFound.value = null
     
@@ -280,18 +280,18 @@ export const useSongs = () => {
     // 获取当前学期名称
     const currentSemesterName = await getCurrentSemesterName()
     
-    // 1. 检查完全相同的歌曲（标准化后）
+    // 1. 检查完全相同的视频（标准化后）
     const exactSongs = songs.value.filter(song => {
       const songTitle = normalizeString(song.title)
       const songArtist = normalizeString(song.artist)
       const titleMatch = songTitle === normalizedTitle && songArtist === normalizedArtist
       
-      // 如果有当前学期信息，只检查当前学期的歌曲
+      // 如果有当前学期信息，只检查当前学期的视频
       if (currentSemesterName) {
         return titleMatch && song.semester === currentSemesterName
       }
       
-      // 如果没有学期信息，检查所有歌曲（向后兼容）
+      // 如果没有学期信息，检查所有视频（向后兼容）
       return titleMatch
     })
     
@@ -299,11 +299,11 @@ export const useSongs = () => {
       return exactSongs
     }
     
-    // 2. 检查高度相似的歌曲
+    // 2. 检查高度相似的视频
     const similarSongs: Array<{song: Song, similarity: number}> = []
     
     songs.value.forEach(song => {
-      // 如果有当前学期信息，只检查当前学期的歌曲
+      // 如果有当前学期信息，只检查当前学期的视频
       if (currentSemesterName && song.semester !== currentSemesterName) {
         return
       }
@@ -349,11 +349,11 @@ export const useSongs = () => {
       return sortedSimilar
     }
     
-    // 4. 如果没有高度相似的，检查可能的相似歌曲（降低阈值）
+    // 4. 如果没有高度相似的，检查可能的相似视频（降低阈值）
     const possibleSimilar: Array<{song: Song, similarity: number}> = []
     
     songs.value.forEach(song => {
-      // 如果有当前学期信息，只检查当前学期的歌曲
+      // 如果有当前学期信息，只检查当前学期的视频
       if (currentSemesterName && song.semester !== currentSemesterName) {
         return
       }
@@ -385,7 +385,7 @@ export const useSongs = () => {
     if (possibleSimilar.length > 0) {
       const sortedPossible = possibleSimilar
         .sort((a, b) => b.similarity - a.similarity)
-        .slice(0, 3) // 最多返回3个可能相似的歌曲
+        .slice(0, 3) // 最多返回3个可能相似的视频
         .map(item => item.song)
       
       similarSongFound.value = sortedPossible[0] // 保持兼容性
@@ -395,7 +395,7 @@ export const useSongs = () => {
     return []
   }
   
-  // 请求歌曲
+  // 请求视频
   const requestSong = async (songData: {
     title: string,
     artist: string,
@@ -422,7 +422,7 @@ export const useSongs = () => {
         ...authConfig
       })
       
-      // 更新歌曲列表
+      // 更新视频列表
       await fetchSongs()
       
       return data
@@ -478,18 +478,18 @@ export const useSongs = () => {
           ...authConfig
         })
         
-        // 立即更新本地歌曲的投票状态
+        // 立即更新本地视频的投票状态
         if (targetSong) {
           if (isUnvote) {
             // 取消投票
             targetSong.voted = false
             targetSong.voteCount = Math.max(0, (targetSong.voteCount || 1) - 1)
-            showNotification(`已取消对歌曲《${targetSong.title}》的投票`, 'success')
+            showNotification(`已取消对视频《${targetSong.title}》的投票`, 'success')
           } else {
             // 正常投票
             targetSong.voted = true
             targetSong.voteCount = (targetSong.voteCount || 0) + 1
-            showNotification(`为歌曲《${targetSong.title}》投票成功！`, 'success')
+            showNotification(`为视频《${targetSong.title}》投票成功！`, 'success')
           }
         }
         
@@ -523,10 +523,10 @@ export const useSongs = () => {
     }
   }
   
-  // 撤回歌曲（只能撤回自己的投稿）
+  // 撤回视频（只能撤回自己的投稿）
   const withdrawSong = async (songId: number) => {
     if (!isAuthenticated.value) {
-      showNotification('需要登录才能撤回歌曲', 'error')
+      showNotification('需要登录才能撤回视频', 'error')
       return null
     }
     
@@ -534,9 +534,9 @@ export const useSongs = () => {
     error.value = ''
     
     try {
-      // 查找歌曲信息用于通知
+      // 查找视频信息用于通知
       const targetSong = songs.value.find(s => s.id === songId)
-      const songTitle = targetSong ? targetSong.title : '歌曲'
+      const songTitle = targetSong ? targetSong.title : '视频'
       
       // 使用认证配置
       const authConfig = getAuthConfig()
@@ -547,7 +547,7 @@ export const useSongs = () => {
         ...authConfig
       })
       
-      // 更新歌曲列表
+      // 更新视频列表
       await fetchSongs()
       
       // 显示成功通知，包含配额返还信息
@@ -557,7 +557,7 @@ export const useSongs = () => {
       showNotification(message, 'success')
       return data
     } catch (err: any) {
-      const errorMsg = err.data?.message || err.message || '撤回歌曲失败'
+      const errorMsg = err.data?.message || err.message || '撤回视频失败'
       error.value = errorMsg
       showNotification(errorMsg, 'error')
       return null
@@ -566,10 +566,10 @@ export const useSongs = () => {
     }
   }
   
-  // 删除歌曲（管理员专用）
+  // 删除视频（管理员专用）
   const deleteSong = async (songId: number) => {
     if (!isAuthenticated.value) {
-      showNotification('需要登录才能删除歌曲', 'error')
+      showNotification('需要登录才能删除视频', 'error')
       return null
     }
     
@@ -586,13 +586,13 @@ export const useSongs = () => {
         ...authConfig
       })
       
-      // 更新歌曲列表
+      // 更新视频列表
       await fetchSongs()
       
-      showNotification('歌曲已成功删除！', 'success')
+      showNotification('视频已成功删除！', 'success')
       return data
     } catch (err: any) {
-      const errorMsg = err.data?.message || err.message || '删除歌曲失败'
+      const errorMsg = err.data?.message || err.message || '删除视频失败'
       error.value = errorMsg
       showNotification(errorMsg, 'error')
       return null
@@ -601,10 +601,10 @@ export const useSongs = () => {
     }
   }
   
-  // 标记歌曲为已播放（管理员专用）
+  // 标记视频为已播放（管理员专用）
   const markPlayed = async (songId: number) => {
     if (!isAuthenticated.value) {
-      showNotification('需要登录才能标记歌曲', 'error')
+      showNotification('需要登录才能标记视频', 'error')
       return null
     }
     
@@ -621,13 +621,13 @@ export const useSongs = () => {
         ...authConfig
       })
       
-      // 更新歌曲列表
+      // 更新视频列表
       await fetchSongs()
       
-      showNotification('歌曲已成功标记为已播放！', 'success')
+      showNotification('视频已成功标记为已播放！', 'success')
       return data
     } catch (err: any) {
-      const errorMsg = err.data?.message || err.message || '标记歌曲失败'
+      const errorMsg = err.data?.message || err.message || '标记视频失败'
       error.value = errorMsg
       showNotification(errorMsg, 'error')
       return null
@@ -636,10 +636,10 @@ export const useSongs = () => {
     }
   }
   
-  // 撤回歌曲已播放状态（管理员专用）
+  // 撤回视频已播放状态（管理员专用）
   const unmarkPlayed = async (songId: number) => {
     if (!isAuthenticated.value) {
-      showNotification('需要登录才能撤回歌曲已播放状态', 'error')
+      showNotification('需要登录才能撤回视频已播放状态', 'error')
       return null
     }
     
@@ -656,13 +656,13 @@ export const useSongs = () => {
         ...authConfig
       })
       
-      // 更新歌曲列表
+      // 更新视频列表
       await fetchSongs()
       
-      showNotification('歌曲已成功撤回已播放状态！', 'success')
+      showNotification('视频已成功撤回已播放状态！', 'success')
       return data
     } catch (err: any) {
-      const errorMsg = err.data?.message || err.message || '撤回歌曲已播放状态失败'
+      const errorMsg = err.data?.message || err.message || '撤回视频已播放状态失败'
       error.value = errorMsg
       showNotification(errorMsg, 'error')
       return null
@@ -671,35 +671,35 @@ export const useSongs = () => {
     }
   }
   
-  // 按热度排序的歌曲
+  // 按热度排序的视频
   const songsByPopularity = computed(() => {
     return [...songs.value].sort((a, b) => b.voteCount - a.voteCount)
   })
   
-  // 按创建时间排序的歌曲
+  // 按创建时间排序的视频
   const songsByDate = computed(() => {
     return [...songs.value].sort((a, b) => 
       new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )
   })
   
-  // 已播放的歌曲
+  // 已播放的视频
   const playedSongs = computed(() => {
     return songs.value.filter(song => song.played)
   })
   
-  // 未播放的歌曲
+  // 未播放的视频
   const unplayedSongs = computed(() => {
     return songs.value.filter(song => !song.played)
   })
   
-  // 我的投稿歌曲
+  // 我的投稿视频
   const mySongs = computed(() => {
     if (!user.value) return []
     return songs.value.filter(song => song.requesterId === user.value?.id)
   })
   
-  // 所有可见的歌曲（登录用户看到的 + 公共歌曲）
+  // 所有可见的视频（登录用户看到的 + 公共视频）
   const visibleSongs = computed(() => {
     if (songs.value && songs.value.length > 0) {
       return songs.value;
@@ -708,7 +708,7 @@ export const useSongs = () => {
     }
   })
   
-  // 根据播放时间段过滤歌曲排期
+  // 根据播放时间段过滤视频排期
   const filterSchedulesByPlayTime = (schedules: Schedule[], playTimeId: number | null) => {
     if (playTimeId === null) {
       return schedules.filter(s => s.playTimeId === null)
@@ -750,7 +750,7 @@ export const useSongs = () => {
     return displayText
   }
   
-  // 获取歌曲总数（缓存版本）
+  // 获取视频总数（缓存版本）
   const fetchSongCount = async (forceRefresh = false) => {
     try {
       const response = await dedup.dedupedRequest(
@@ -766,12 +766,12 @@ export const useSongs = () => {
         songCount.value = response.count
         return response.count
       } else {
-        console.warn('歌曲总数API返回的数据格式不正确:', response)
+        console.warn('视频总数API返回的数据格式不正确:', response)
         songCount.value = 0
         return 0
       }
     } catch (err: any) {
-      console.error('获取歌曲总数失败:', err)
+      console.error('获取视频总数失败:', err)
       return 0
     }
   }

@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
       await cacheService.clearSongsCache()
       await cacheService.clearSchedulesCache()
       await cacheService.clearStatsCache()
-      console.log('[Cache] 歌曲、排期和统计缓存已清除（用户删除）')
+      console.log('[Cache] 视频、排期和统计缓存已清除（用户删除）')
     } catch (cacheError) {
       console.warn('[Cache] 清除缓存失败:', cacheError)
     }

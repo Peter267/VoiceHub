@@ -25,7 +25,7 @@ export interface Song {
   preferredPlayTime?: PlayTime | null
   cover?: string | null        // 音乐封面URL
   musicPlatform?: string | null // 音乐平台（netease, tencent等）
-  musicId?: string | null      // 平台上的歌曲ID
+  musicId?: string | null      // 平台上的视频ID
   createdAt: string
   voted?: boolean
 }

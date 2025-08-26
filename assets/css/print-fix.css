@@ -110,7 +110,7 @@
     border-radius: 4px !important;
   }
 
-  /* 歌曲信息 */
+  /* 视频信息 */
   .schedule-item-print .song-info {
     flex: 1 !important;
     min-width: 0 !important;
@@ -242,7 +242,7 @@
     page-break-before: avoid !important;
   }
 
-  /* 确保歌曲信息完整显示 */
+  /* 确保视频信息完整显示 */
   .schedule-item-print .item-content {
     page-break-inside: avoid !important;
   }
@@ -252,7 +252,7 @@
     page-break-inside: avoid !important;
   }
 
-  /* 防止歌曲标题和艺术家信息被截断 */
+  /* 防止视频标题和艺术家信息被截断 */
   .schedule-item-print .song-info {
     page-break-inside: avoid !important;
   }

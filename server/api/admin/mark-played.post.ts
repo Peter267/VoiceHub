@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   if (!user) {
     throw createError({
       statusCode: 401,
-      message: '需要登录才能标记歌曲'
+      message: '需要登录才能标记视频'
     })
   }
   
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!['ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
     throw createError({
       statusCode: 403,
-      message: '只有管理员可以标记歌曲为已播放'
+      message: '只有管理员可以标记视频为已播放'
     })
   }
   
@@ -26,11 +26,11 @@ export default defineEventHandler(async (event) => {
   if (!body.songId) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID不能为空'
+      message: '视频ID不能为空'
     })
   }
   
-  // 查找歌曲
+  // 查找视频
   const song = await prisma.song.findUnique({
     where: {
       id: body.songId
@@ -40,27 +40,27 @@ export default defineEventHandler(async (event) => {
   if (!song) {
     throw createError({
       statusCode: 404,
-      message: '歌曲不存在'
+      message: '视频不存在'
     })
   }
   
   // 检查是否是撤回操作
   const isUnmark = body.unmark === true
   
-  // 检查歌曲播放状态
+  // 检查视频播放状态
   if (!isUnmark && song.played) {
     throw createError({
       statusCode: 400,
-      message: '歌曲已经标记为已播放'
+      message: '视频已经标记为已播放'
     })
   } else if (isUnmark && !song.played) {
     throw createError({
       statusCode: 400,
-      message: '歌曲尚未标记为已播放'
+      message: '视频尚未标记为已播放'
     })
   }
   
-  // 更新歌曲状态
+  // 更新视频状态
   const updatedSong = await prisma.song.update({
     where: {
       id: body.songId
@@ -71,23 +71,23 @@ export default defineEventHandler(async (event) => {
     }
   })
 
-  // 清除歌曲相关缓存
+  // 清除视频相关缓存
   try {
     const cacheService = new CacheService()
     await cacheService.clearSongsCache()
   } catch (error) {
-    console.error('清除歌曲缓存失败:', error)
+    console.error('清除视频缓存失败:', error)
   }
   
   // 如果是标记为已播放，则发送通知
   if (!isUnmark) {
     createSongPlayedNotification(body.songId).catch(err => {
-      console.error('发送歌曲已播放通知失败:', err)
+      console.error('发送视频已播放通知失败:', err)
     })
   }
   
   return {
-    message: isUnmark ? '歌曲已成功撤回已播放状态' : '歌曲已成功标记为已播放',
+    message: isUnmark ? '视频已成功撤回已播放状态' : '视频已成功标记为已播放',
     song: {
       id: updatedSong.id,
       title: updatedSong.title,

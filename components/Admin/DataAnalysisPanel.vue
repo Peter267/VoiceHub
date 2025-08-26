@@ -89,11 +89,11 @@
       />
       
       <StatCard
-        label="总歌曲数"
+        label="总视频数"
         :value="analysisData.totalSongs"
         :change="analysisData.songsChange"
         change-label="较上周"
-        subtitle="活跃歌曲库"
+        subtitle="活跃视频库"
         icon="songs"
         icon-class="primary"
         :trend-data="analysisData.songsTrend"
@@ -155,7 +155,7 @@
     <div class="charts-grid">
       <div class="chart-card enhanced">
         <div class="chart-header">
-          <h3>歌曲点播趋势</h3>
+          <h3>视频点播趋势</h3>
           <div class="chart-actions">
             <button class="chart-btn" title="查看详情">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -222,7 +222,7 @@
       
       <div class="chart-card enhanced">
         <div class="chart-header">
-          <h3>热门歌曲排行</h3>
+          <h3>热门视频排行</h3>
         </div>
         <div class="chart-container">
           <div v-if="topSongs.length > 0" class="chart-content">
@@ -257,7 +257,7 @@
                 <circle cx="18" cy="16" r="3"/>
               </svg>
             </div>
-            <p>暂无热门歌曲</p>
+            <p>暂无热门视频</p>
             <span class="placeholder-subtext">等待用户点播...</span>
           </div>
         </div>
@@ -369,7 +369,7 @@
                     </div>
                     <div class="metric-content">
                       <div class="metric-value">{{ semester.totalSongs }}</div>
-                      <div class="metric-label">歌曲总数</div>
+                      <div class="metric-label">视频总数</div>
                     </div>
                   </div>
                   <div class="metric-item">
@@ -698,7 +698,7 @@ const loadChartData = async () => {
     }
   }
   
-  // 独立加载热门歌曲数据
+  // 独立加载热门视频数据
   const loadTopSongs = async () => {
     try {
       const topSongsData = await $fetch(`/api/admin/stats/top-songs?limit=10&${params.toString()}`, {
@@ -707,8 +707,8 @@ const loadChartData = async () => {
       topSongs.value = topSongsData || []
       panelStates.value.topSongs.error = null
     } catch (err) {
-      console.warn('获取热门歌曲数据失败:', err)
-      panelStates.value.topSongs.error = '加载热门歌曲失败'
+      console.warn('获取热门视频数据失败:', err)
+      panelStates.value.topSongs.error = '加载热门视频失败'
       topSongs.value = []
     } finally {
       panelStates.value.topSongs.loading = false

@@ -2,7 +2,7 @@
   <div v-if="show" class="download-dialog-overlay" @click="closeDialog">
     <div class="download-dialog" @click.stop>
       <div class="dialog-header">
-        <h3>下载歌曲</h3>
+        <h3>下载视频</h3>
         <button class="close-btn" @click="closeDialog">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"/>
@@ -34,10 +34,10 @@
           </div>
         </div>
 
-        <!-- 歌曲选择 -->
+        <!-- 视频选择 -->
         <div class="songs-section">
           <div class="section-header">
-            <h4>选择要下载的歌曲</h4>
+            <h4>选择要下载的视频</h4>
             <div class="select-actions">
               <button @click="selectAll" class="select-btn">全选</button>
               <button @click="selectNone" class="select-btn">取消全选</button>
@@ -74,7 +74,7 @@
 
       <div class="dialog-footer">
         <div class="download-info">
-          <span>已选择 {{ selectedSongs.size }} 首歌曲</span>
+          <span>已选择 {{ selectedSongs.size }} 首视频</span>
         </div>
         <div class="dialog-actions">
           <button @click="closeDialog" class="cancel-btn">取消</button>
@@ -105,7 +105,7 @@
         </div>
         <div v-if="downloadErrors.length > 0" class="download-errors">
           <details>
-            <summary>下载失败的歌曲 ({{ downloadErrors.length }})</summary>
+            <summary>下载失败的视频 ({{ downloadErrors.length }})</summary>
             <ul>
               <li v-for="error in downloadErrors" :key="error.id">
                 {{ error.title }} - {{ error.artist }}: {{ error.error }}
@@ -146,7 +146,7 @@ const qualityOptions = computed(() => {
 
 const selectedQuality = ref(getQuality('netease'))
 
-// 歌曲选择
+// 视频选择
 const selectedSongs = ref(new Set())
 
 // 下载状态
@@ -168,17 +168,17 @@ const getPlatformName = (platform) => {
   }
 }
 
-// 选择所有歌曲
+// 选择所有视频
 const selectAll = () => {
   selectedSongs.value = new Set(props.songs.map(song => song.song.id))
 }
 
-// 取消选择所有歌曲
+// 取消选择所有视频
 const selectNone = () => {
   selectedSongs.value = new Set()
 }
 
-// 切换歌曲选择状态
+// 切换视频选择状态
 const toggleSongSelection = (songId) => {
   if (selectedSongs.value.has(songId)) {
     selectedSongs.value.delete(songId)
@@ -247,7 +247,7 @@ const startDownload = async () => {
       // 获取音频URL
       const audioUrl = await getMusicUrl(song.musicPlatform, song.musicId, selectedQuality.value)
       
-      // 生成文件名：歌手名 - 歌曲名.mp3
+      // 生成文件名：歌手名 - 视频名.mp3
       const filename = `${song.artist} - ${song.title}.mp3`
         .replace(/[<>:"/\\|?*]/g, '_') // 替换不合法的文件名字符
       
@@ -276,7 +276,7 @@ const startDownload = async () => {
   if (window.$showNotification) {
     const successCount = downloadedCount.value - downloadErrors.value.length
     if (downloadErrors.value.length === 0) {
-      window.$showNotification(`成功下载 ${successCount} 首歌曲`, 'success')
+      window.$showNotification(`成功下载 ${successCount} 首视频`, 'success')
     } else {
       window.$showNotification(`下载完成，成功 ${successCount} 首，失败 ${downloadErrors.value.length} 首`, 'warning')
     }

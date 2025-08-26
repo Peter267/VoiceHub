@@ -3,7 +3,7 @@ import { sendMeowNotificationToUser, sendBatchMeowNotifications } from './meowNo
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 /**
- * 创建歌曲被选中的通知
+ * 创建视频被选中的通知
  */
 export async function createSongSelectedNotification(
   userId: number, 
@@ -35,7 +35,7 @@ export async function createSongSelectedNotification(
     }
     
     // 创建通知，添加播出时段信息
-    let message = `您投稿的歌曲《${songInfo.title}》已被安排播放，播放日期：${formatDate(songInfo.playDate)}。`
+    let message = `您投稿的视频《${songInfo.title}》已被安排播放，播放日期：${formatDate(songInfo.playDate)}。`
     
     // 如果有播出时段信息，添加到通知中
     if (schedule?.playTime) {
@@ -94,11 +94,11 @@ function formatDate(date: Date): string {
 }
 
 /**
- * 创建歌曲已播放的通知
+ * 创建视频已播放的通知
  */
 export async function createSongPlayedNotification(songId: number) {
   try {
-    // 获取歌曲信息
+    // 获取视频信息
     const song = await prisma.song.findUnique({
       where: {
         id: songId
@@ -122,7 +122,7 @@ export async function createSongPlayedNotification(songId: number) {
     }
     
     // 创建通知
-    const message = `您投稿的歌曲《${song.title}》已播放。`
+    const message = `您投稿的视频《${song.title}》已播放。`
     let notification
     try {
       notification = await prisma.notification.create({
@@ -141,7 +141,7 @@ export async function createSongPlayedNotification(songId: number) {
     try {
       await sendMeowNotificationToUser(
         song.requesterId,
-        '歌曲已播放',
+        '视频已播放',
         message
       )
     } catch (error) {
@@ -155,11 +155,11 @@ export async function createSongPlayedNotification(songId: number) {
 }
 
 /**
- * 创建歌曲获得投票的通知
+ * 创建视频获得投票的通知
  */
 export async function createSongVotedNotification(songId: number, voterId: number) {
   try {
-    // 获取歌曲信息
+    // 获取视频信息
     const song = await prisma.song.findUnique({
       where: {
         id: songId
@@ -201,9 +201,9 @@ export async function createSongVotedNotification(songId: number, voterId: numbe
       return null
     }
     
-    const message = `您投稿的歌曲《${song.title}》获得了一个新的投票，当前共有 ${song.votes.length} 个投票。`
+    const message = `您投稿的视频《${song.title}》获得了一个新的投票，当前共有 ${song.votes.length} 个投票。`
     
-    // 防重复通知：检查最近5分钟内是否有相同歌曲的投票通知
+    // 防重复通知：检查最近5分钟内是否有相同视频的投票通知
     const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000)
     
     const existingNotification = await prisma.notification.findFirst({

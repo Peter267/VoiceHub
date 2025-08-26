@@ -29,11 +29,11 @@
           </div>
 
           <div class="settings-grid">
-            <!-- 歌曲被选中通知 -->
+            <!-- 视频被选中通知 -->
             <div class="setting-card">
               <div class="setting-info">
-                <h3>歌曲被选中通知</h3>
-                <p>当您投稿的歌曲被选中播放时通知您</p>
+                <h3>视频被选中通知</h3>
+                <p>当您投稿的视频被选中播放时通知您</p>
               </div>
               <div class="setting-control">
                 <label class="toggle-switch">
@@ -46,11 +46,11 @@
               </div>
             </div>
 
-            <!-- 歌曲已播放通知 -->
+            <!-- 视频已播放通知 -->
             <div class="setting-card">
               <div class="setting-info">
-                <h3>歌曲已播放通知</h3>
-                <p>当您投稿的歌曲播放完成时通知您</p>
+                <h3>视频已播放通知</h3>
+                <p>当您投稿的视频播放完成时通知您</p>
               </div>
               <div class="setting-control">
                 <label class="toggle-switch">
@@ -63,11 +63,11 @@
               </div>
             </div>
 
-            <!-- 歌曲获得投票通知 -->
+            <!-- 视频获得投票通知 -->
             <div class="setting-card">
               <div class="setting-info">
-                <h3>歌曲获得投票通知</h3>
-                <p>当您投稿的歌曲获得投票时通知您</p>
+                <h3>视频获得投票通知</h3>
+                <p>当您投稿的视频获得投票时通知您</p>
               </div>
               <div class="setting-control">
                 <label class="toggle-switch">

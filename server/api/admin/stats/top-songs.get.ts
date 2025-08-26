@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     // 构建查询条件
     const where = semester && semester !== 'all' ? { semester: semester } : {}
 
-    // 获取热门歌曲排行
+    // 获取热门视频排行
     const topSongs = await prisma.song.findMany({
       where,
       orderBy: {
@@ -50,10 +50,10 @@ export default defineEventHandler(async (event) => {
 
     return formattedData
   } catch (error) {
-    console.error('获取热门歌曲排行失败:', error)
+    console.error('获取热门视频排行失败:', error)
     throw createError({
       statusCode: 500,
-      message: '获取热门歌曲排行失败'
+      message: '获取热门视频排行失败'
     })
   }
 })

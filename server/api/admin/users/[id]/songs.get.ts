@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 检查是否为管理员、歌曲管理员或超级管理员
+    // 检查是否为管理员、视频管理员或超级管理员
     const allowedRoles = ['ADMIN', 'SONG_ADMIN', 'SUPER_ADMIN']
     if (!allowedRoles.includes(currentUser.role)) {
       throw createError({
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 获取用户投稿的歌曲
+    // 获取用户投稿的视频
     const submittedSongs = await prisma.song.findMany({
       where: { requesterId: userId },
       select: {
@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
       orderBy: { createdAt: 'desc' }
     })
 
-    // 获取用户投票的歌曲
+    // 获取用户投票的视频
     const votedSongs = await prisma.vote.findMany({
       where: { userId: userId },
       include: {
@@ -131,7 +131,7 @@ export default defineEventHandler(async (event) => {
       }))
     }
   } catch (error) {
-    console.error('获取用户歌曲信息失败:', error)
+    console.error('获取用户视频信息失败:', error)
     
     if (error.statusCode) {
       throw error

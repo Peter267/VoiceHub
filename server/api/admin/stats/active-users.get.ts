@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       songWhere = { semester: semester }
     }
 
-    // 获取活跃用户数据 - 有投稿歌曲的用户
+    // 获取活跃用户数据 - 有投稿视频的用户
     const activeUsers = await prisma.user.findMany({
       where: {
         songs: {

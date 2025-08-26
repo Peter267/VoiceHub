@@ -16,14 +16,14 @@ export default defineEventHandler(async (event) => {
   if (!body.songId) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID不能为空'
+      message: '视频ID不能为空'
     })
   }
   
   try {
     // 使用事务确保删除操作的原子性
     const result = await prisma.$transaction(async (tx) => {
-      // 在事务中重新检查歌曲是否存在
+      // 在事务中重新检查视频是否存在
       const song = await tx.song.findUnique({
         where: {
           id: body.songId
@@ -33,13 +33,13 @@ export default defineEventHandler(async (event) => {
       if (!song) {
         throw createError({
           statusCode: 404,
-          message: '歌曲不存在或已被删除'
+          message: '视频不存在或已被删除'
         })
       }
       
-      console.log(`开始删除歌曲: ${song.title} (ID: ${body.songId})`)
+      console.log(`开始删除视频: ${song.title} (ID: ${body.songId})`)
       
-      // 删除歌曲的所有投票
+      // 删除视频的所有投票
       const deletedVotes = await tx.vote.deleteMany({
         where: {
           songId: body.songId
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
       })
       console.log(`删除了 ${deletedVotes.count} 个投票记录`)
       
-      // 删除歌曲的所有排期
+      // 删除视频的所有排期
       const deletedSchedules = await tx.schedule.deleteMany({
         where: {
           songId: body.songId
@@ -55,17 +55,17 @@ export default defineEventHandler(async (event) => {
       })
       console.log(`删除了 ${deletedSchedules.count} 个排期记录`)
       
-      // 删除歌曲
+      // 删除视频
       const deletedSong = await tx.song.delete({
         where: {
           id: body.songId
         }
       })
       
-      console.log(`成功删除歌曲: ${deletedSong.title}`)
+      console.log(`成功删除视频: ${deletedSong.title}`)
       
       return {
-        message: '歌曲已成功删除',
+        message: '视频已成功删除',
         songId: body.songId,
         deletedVotes: deletedVotes.count,
         deletedSchedules: deletedSchedules.count
@@ -79,7 +79,7 @@ export default defineEventHandler(async (event) => {
       if (result.deletedSchedules > 0) {
         await cacheService.clearSchedulesCache()
       }
-      console.log('[Cache] 歌曲和排期缓存已清除（删除歌曲）')
+      console.log('[Cache] 视频和排期缓存已清除（删除视频）')
     } catch (cacheError) {
       console.warn('[Cache] 清除缓存失败:', cacheError)
     }
@@ -87,7 +87,7 @@ export default defineEventHandler(async (event) => {
     return result
     
   } catch (error: any) {
-    console.error('删除歌曲时发生错误:', error)
+    console.error('删除视频时发生错误:', error)
     
     // 如果是已经格式化的错误，直接抛出
     if (error.statusCode) {
@@ -98,14 +98,14 @@ export default defineEventHandler(async (event) => {
     if (error.code === 'P2025') {
       throw createError({
         statusCode: 404,
-        message: '歌曲不存在或已被删除'
+        message: '视频不存在或已被删除'
       })
     }
     
     // 其他未知错误
     throw createError({
       statusCode: 500,
-      message: '删除歌曲时发生未知错误'
+      message: '删除视频时发生未知错误'
     })
   }
 })

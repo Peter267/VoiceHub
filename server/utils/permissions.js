@@ -7,12 +7,12 @@ const ROLES = {
     canAccessAdmin: false
   },
   'SONG_ADMIN': {
-    displayName: '歌曲管理员',
-    description: '负责歌曲和排期管理',
+    displayName: '视频管理员',
+    description: '负责视频和排期管理',
     pages: [
       'schedule',    // 排期管理
       'print',       // 打印排期
-      'songs'        // 歌曲管理
+      'songs'        // 视频管理
     ],
     canAccessAdmin: true
   },
@@ -23,7 +23,7 @@ const ROLES = {
       'overview',    // 数据概览
       'schedule',    // 排期管理
       'print',       // 打印排期
-      'songs',       // 歌曲管理
+      'songs',       // 视频管理
       'users',       // 用户管理
       'data-analysis' // 数据分析
     ],
@@ -36,7 +36,7 @@ const ROLES = {
       'overview',      // 数据概览
       'schedule',      // 排期管理
       'print',         // 打印排期
-      'songs',         // 歌曲管理
+      'songs',         // 视频管理
       'users',         // 用户管理
       'notifications', // 通知管理
       'playtimes',     // 播出时段

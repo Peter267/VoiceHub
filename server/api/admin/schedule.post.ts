@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!['SONG_ADMIN', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
     throw createError({
       statusCode: 403,
-      message: '只有歌曲管理员及以上权限才能创建排期'
+      message: '只有视频管理员及以上权限才能创建排期'
     })
   }
   
@@ -26,12 +26,12 @@ export default defineEventHandler(async (event) => {
   if (!body.songId || !body.playDate) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID和播放日期不能为空'
+      message: '视频ID和播放日期不能为空'
     })
   }
   
   try {
-    // 检查歌曲是否存在
+    // 检查视频是否存在
     const song = await prisma.song.findUnique({
       where: {
         id: body.songId
@@ -41,11 +41,11 @@ export default defineEventHandler(async (event) => {
     if (!song) {
       throw createError({
         statusCode: 404,
-        message: '歌曲不存在'
+        message: '视频不存在'
       })
     }
     
-    // 检查是否已经为该歌曲创建过排期，如果有则删除旧的排期
+    // 检查是否已经为该视频创建过排期，如果有则删除旧的排期
     const existingSchedule = await prisma.schedule.findFirst({
       where: {
         songId: body.songId

@@ -14,7 +14,7 @@
     <div v-else class="settings-form">
       <div class="form-group">
         <label class="toggle-label">
-          <span class="label-text">歌曲被选中通知</span>
+          <span class="label-text">视频被选中通知</span>
           <div class="toggle-switch">
             <input 
               type="checkbox" 
@@ -24,12 +24,12 @@
             <span class="toggle-slider"></span>
           </div>
         </label>
-        <p class="setting-description">当您投稿的歌曲被选中安排播放时通知您</p>
+        <p class="setting-description">当您投稿的视频被选中安排播放时通知您</p>
       </div>
       
       <div class="form-group">
         <label class="toggle-label">
-          <span class="label-text">歌曲已播放通知</span>
+          <span class="label-text">视频已播放通知</span>
           <div class="toggle-switch">
             <input 
               type="checkbox" 
@@ -39,12 +39,12 @@
             <span class="toggle-slider"></span>
           </div>
         </label>
-        <p class="setting-description">当您投稿的歌曲被播放时通知您</p>
+        <p class="setting-description">当您投稿的视频被播放时通知您</p>
       </div>
       
       <div class="form-group">
         <label class="toggle-label">
-          <span class="label-text">歌曲获得投票通知</span>
+          <span class="label-text">视频获得投票通知</span>
           <div class="toggle-switch">
             <input 
               type="checkbox" 
@@ -54,7 +54,7 @@
             <span class="toggle-slider"></span>
           </div>
         </label>
-        <p class="setting-description">当您投稿的歌曲获得新投票时通知您</p>
+        <p class="setting-description">当您投稿的视频获得新投票时通知您</p>
         
         <div v-if="localSettings.songVotedNotify" class="sub-setting">
           <label class="range-label">

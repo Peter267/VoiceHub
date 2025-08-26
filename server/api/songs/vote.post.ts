@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   if (!body.songId) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID不能为空'
+      message: '视频ID不能为空'
     })
   }
   
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
   
   try {
     return await executeWithPool(async () => {
-      // 检查歌曲是否存在
+      // 检查视频是否存在
       const song = await prisma.song.findUnique({
         where: {
           id: body.songId
@@ -41,27 +41,27 @@ export default defineEventHandler(async (event) => {
       if (!song) {
         throw createError({
           statusCode: 404,
-          message: '歌曲不存在'
+          message: '视频不存在'
         })
       }
 
-      // 检查歌曲是否已播放
+      // 检查视频是否已播放
       if (song.played) {
         throw createError({
           statusCode: 400,
-          message: '该歌曲已播放，无法进行投票操作'
+          message: '该视频已播放，无法进行投票操作'
         })
       }
 
-      // 检查歌曲是否已排期
+      // 检查视频是否已排期
       if (song.schedules && song.schedules.length > 0) {
         throw createError({
           statusCode: 400,
-          message: '该歌曲已排期，无法进行投票操作'
+          message: '该视频已排期，无法进行投票操作'
         })
       }
 
-      // 检查是否是自己的歌曲
+      // 检查是否是自己的视频
       if (song.requesterId === user.id) {
         throw createError({
           statusCode: 400,

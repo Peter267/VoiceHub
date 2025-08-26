@@ -25,7 +25,7 @@ export const usePermissions = () => {
       return ['overview', 'schedule', 'print', 'songs', 'users', 'data-analysis'].includes(page)
     }
     
-    // 歌曲管理员可以访问的页面
+    // 视频管理员可以访问的页面
     if (role === 'SONG_ADMIN') {
       return ['schedule', 'print', 'songs'].includes(page)
     }

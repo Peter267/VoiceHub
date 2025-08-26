@@ -100,8 +100,8 @@
           <div class="form-group">
             <label class="checkbox-option">
               <input type="checkbox" v-model="createForm.includeSongs" />
-              <span>包含歌曲数据</span>
-              <small>包含所有歌曲和投稿记录</small>
+              <span>包含视频数据</span>
+              <small>包含所有视频和投稿记录</small>
             </label>
           </div>
           <div class="form-group">
@@ -207,7 +207,7 @@
             <select v-model="sequenceForm.table" class="form-select">
               <option value="">请选择数据表</option>
               <option value="all">重置所有表 (All)</option>
-              <option value="Song">歌曲表 (Song)</option>
+              <option value="Song">视频表 (Song)</option>
               <option value="User">用户表 (User)</option>
               <option value="Vote">投票表 (Vote)</option>
               <option value="Schedule">排期表 (Schedule)</option>
@@ -216,7 +216,7 @@
               <option value="PlayTime">播放时段表 (PlayTime)</option>
               <option value="Semester">学期表 (Semester)</option>
               <option value="SystemSettings">系统设置表 (SystemSettings)</option>
-              <option value="SongBlacklist">歌曲黑名单表 (SongBlacklist)</option>
+              <option value="SongBlacklist">视频黑名单表 (SongBlacklist)</option>
             </select>
           </div>
 
@@ -266,7 +266,7 @@
               <h4>危险操作警告</h4>
               <p>此操作将永久删除数据库中的所有内容，包括：</p>
               <ul>
-                <li>所有歌曲和投稿记录</li>
+                <li>所有视频和投稿记录</li>
                 <li>所有用户账户（除当前管理员）</li>
                 <li>所有排期和播放记录</li>
                 <li>所有通知和黑名单数据</li>

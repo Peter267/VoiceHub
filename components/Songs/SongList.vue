@@ -28,7 +28,7 @@
           <input 
             type="text" 
             v-model="searchQuery" 
-            placeholder="输入想要搜索的歌曲" 
+            placeholder="输入想要搜索的视频" 
             class="search-input"
           />
           <span class="search-icon">🔍</span>
@@ -64,7 +64,7 @@
           class="refresh-button"
           @click="handleRefresh"
           :disabled="loading"
-          :title="loading ? '正在刷新...' : '刷新歌曲列表'"
+          :title="loading ? '正在刷新...' : '刷新视频列表'"
         >
           <svg class="refresh-icon" :class="{ 'rotating': loading }" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
@@ -84,7 +84,7 @@
       </div>
       
       <div v-else-if="displayedSongs.length === 0" class="empty" :key="'empty-' + activeTab">
-        {{ activeTab === 'mine' ? '您还没有投稿歌曲，马上去点歌吧！' : '暂无歌曲，马上去点歌吧！' }}
+        {{ activeTab === 'mine' ? '您还没有投稿视频，马上去点歌吧！' : '暂无视频，马上去点歌吧！' }}
       </div>
       
       <div v-else class="songs-container" :key="'songs-' + activeTab">
@@ -99,9 +99,9 @@
             class="song-card"
             :class="{ 'played': song.played, 'scheduled': song.scheduled }"
           >
-            <!-- 歌曲卡片主体 -->
+            <!-- 视频卡片主体 -->
             <div class="song-card-main">
-              <!-- 添加歌曲封面 -->
+              <!-- 添加视频封面 -->
               <div class="song-cover">
                 <template v-if="song.cover">
                   <img
@@ -149,7 +149,7 @@
                     :class="{ 'liked': song.voted, 'disabled': song.played || song.scheduled || isMySong(song) || voteInProgress }"
                     @click="handleVote(song)"
                     :disabled="song.played || song.scheduled || voteInProgress"
-                    :title="song.played ? '已播放的歌曲不能点赞' : song.scheduled ? '已排期的歌曲不能点赞' : isMySong(song) ? '不允许自己给自己点赞' : (song.voted ? '点击取消点赞' : '点赞')"
+                    :title="song.played ? '已播放的视频不能点赞' : song.scheduled ? '已排期的视频不能点赞' : isMySong(song) ? '不允许自己给自己点赞' : (song.voted ? '点击取消点赞' : '点赞')"
                   >
                     <img src="/images/thumbs-up.svg" alt="点赞" class="like-icon" />
                   </button>
@@ -291,7 +291,7 @@ const availableSemesters = ref([])
 const selectedSemester = ref('')
 const showSemesterDropdown = ref(false)
 
-// 获取完整歌曲数据源
+// 获取完整视频数据源
 const songsComposable = useSongs()
 const allSongsData = computed(() => songsComposable?.visibleSongs?.value || [])
 
@@ -300,7 +300,7 @@ const audioPlayer = useAudioPlayer()
 
 // 分页相关
 const currentPage = ref(1)
-const pageSize = ref(12) // 每页显示12首歌曲，适合横向布局
+const pageSize = ref(12) // 每页显示12首视频，适合横向布局
 const isMobile = ref(false)
 
 // 组件初始化状态
@@ -387,7 +387,7 @@ onUnmounted(() => {
   window.removeEventListener('semester-filter-change', handleSemesterFilterChange)
 })
 
-// 监听歌曲数据变化，更新学期信息
+// 监听视频数据变化，更新学期信息
 watch(() => props.songs, () => {
   // 只有在组件完全初始化后且不在获取学期信息时才处理数据更新
   if (isComponentInitialized.value && !isDataLoading.value && !isFetchingSemesters.value) {
@@ -441,7 +441,7 @@ const formatDateTime = (dateString) => {
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${hours}:${minutes}`
 }
 
-// 判断是否是自己投稿的歌曲
+// 判断是否是自己投稿的视频
 const isMySong = (song) => {
   return auth && auth.user && auth.user.value && song.requesterId === auth.user.value.id
 }
@@ -498,7 +498,7 @@ const displayedSongs = computed(() => {
     return songs
   }
   
-  // 返回按顺序排列的歌曲：未排期 → 已排期 → 已播放
+  // 返回按顺序排列的视频：未排期 → 已排期 → 已播放
   return [
     ...sortSongs(unscheduledSongs),
     ...sortSongs(scheduledSongs),
@@ -511,7 +511,7 @@ const totalPages = computed(() => {
   return Math.max(1, Math.ceil(displayedSongs.value.length / pageSize.value))
 })
 
-// 获取当前页的歌曲
+// 获取当前页的视频
 const paginatedSongs = computed(() => {
   const startIndex = (currentPage.value - 1) * pageSize.value
   const endIndex = startIndex + pageSize.value
@@ -572,12 +572,12 @@ const handleVote = async (song) => {
     return
   }
   
-  // 检查歌曲状态
+  // 检查视频状态
   if (song.played || song.scheduled) {
-    return // 已播放或已排期的歌曲不能点赞
+    return // 已播放或已排期的视频不能点赞
   }
   
-  // 检查是否是自己的歌曲
+  // 检查是否是自己的视频
   if (isMySong(song)) {
     if (window.$showNotification) {
       window.$showNotification('不允许自己给自己点赞', 'error')
@@ -604,13 +604,13 @@ const handleVote = async (song) => {
 // 处理撤回
 const handleWithdraw = (song) => {
   if (song.scheduled) {
-    return // 已排期的歌曲不能撤回
+    return // 已排期的视频不能撤回
   }
   
   confirmDialog.value = {
     show: true,
     title: '撤回投稿',
-    message: `确认撤回歌曲《${song.title}》的投稿吗？`,
+    message: `确认撤回视频《${song.title}》的投稿吗？`,
     action: 'withdraw',
     data: song
   }
@@ -648,7 +648,7 @@ const handleImageError = (event, song) => {
   event.target.parentNode.textContent = getFirstChar(song.title)
 }
 
-// 获取歌曲标题的第一个字符作为封面
+// 获取视频标题的第一个字符作为封面
 const getFirstChar = (title) => {
   if (!title) return '音'
   return title.trim().charAt(0)
@@ -656,18 +656,18 @@ const getFirstChar = (title) => {
 
 
 
-// 切换歌曲播放/暂停
+// 切换视频播放/暂停
 const togglePlaySong = async (song) => {
-  // 检查是否为当前歌曲且正在播放
+  // 检查是否为当前视频且正在播放
   if (audioPlayer.isCurrentSong(song.id) && audioPlayer.getPlayingStatus().value) {
     // 如果正在播放，则暂停
     audioPlayer.pauseSong()
     return
   }
 
-  // 如果是当前歌曲但已暂停，则恢复播放
+  // 如果是当前视频但已暂停，则恢复播放
   if (audioPlayer.isCurrentSong(song.id) && !audioPlayer.getPlayingStatus().value) {
-    // 检查当前全局歌曲是否有URL
+    // 检查当前全局视频是否有URL
     const currentGlobalSong = audioPlayer.getCurrentSong().value
     if (currentGlobalSong && currentGlobalSong.musicUrl) {
       // 如果有URL，直接恢复播放
@@ -682,7 +682,7 @@ const togglePlaySong = async (song) => {
               ...song,
               musicUrl: url
             }
-            // 构建播放列表并设置当前歌曲索引
+            // 构建播放列表并设置当前视频索引
             const playlist = await buildPlayablePlaylist(song)
             const currentIndex = playlist.findIndex(item => item.id === song.id)
             audioPlayer.playSong(playableSong, playlist, currentIndex)
@@ -710,7 +710,7 @@ const togglePlaySong = async (song) => {
           ...song,
           musicUrl: url
         }
-        // 构建播放列表并设置当前歌曲索引
+        // 构建播放列表并设置当前视频索引
         const playlist = await buildPlayablePlaylist(song)
         const currentIndex = playlist.findIndex(item => item.id === song.id)
         audioPlayer.playSong(playableSong, playlist, currentIndex)
@@ -729,15 +729,15 @@ const togglePlaySong = async (song) => {
 
 // 构建可播放的播放列表
 const buildPlayablePlaylist = async (currentSong) => {
-  // 获取当前显示的歌曲列表（已经过滤和排序）
+  // 获取当前显示的视频列表（已经过滤和排序）
   const songsToProcess = paginatedSongs.value.filter(song => 
     song.musicPlatform && song.musicId && song.id !== currentSong.id
   )
   
-  // 将当前歌曲添加到列表中正确的位置
+  // 将当前视频添加到列表中正确的位置
   const allSongs = [...paginatedSongs.value]
   
-  // 只返回有播放信息的歌曲，保持原有顺序
+  // 只返回有播放信息的视频，保持原有顺序
   return allSongs.filter(song => song.musicPlatform && song.musicId)
 }
 
@@ -797,7 +797,7 @@ const getMusicUrl = async (platform, musicId) => {
   }
 }
 
-// 判断当前是否正在播放指定ID的歌曲
+// 判断当前是否正在播放指定ID的视频
 const isCurrentPlaying = (songId) => {
   return audioPlayer.isCurrentPlaying(songId)
 }
@@ -895,7 +895,7 @@ const fetchAvailableSemesters = async () => {
     return
   }
   
-  // 检查是否有歌曲数据，如果没有则等待
+  // 检查是否有视频数据，如果没有则等待
   if (!props.songs || props.songs.length === 0) {
     return
   }
@@ -910,7 +910,7 @@ const fetchAvailableSemesters = async () => {
   }
   
   try {
-    // 使用完整的歌曲数据源而不是过滤后的props.songs
+    // 使用完整的视频数据源而不是过滤后的props.songs
     let completeSongs = allSongsData.value || []
     
     // 检查数据源状态
@@ -926,14 +926,14 @@ const fetchAvailableSemesters = async () => {
       return
     }
     
-    // 从完整歌曲数据中提取学期信息，并过滤乱码
+    // 从完整视频数据中提取学期信息，并过滤乱码
     const rawSemesters = [...new Set(completeSongs.map(song => song.semester).filter(Boolean))]
     const cleanSemesters = rawSemesters
       .filter(semester => !containsCorruptedText(semester))
       .map(semester => cleanCorruptedText(semester))
       .filter(semester => semester.length > 0)
     
-    // 统计每个学期的歌曲数量，只保留有数据的学期
+    // 统计每个学期的视频数量，只保留有数据的学期
     const semesterStats = {}
     completeSongs.forEach(song => {
       if (song.semester && !containsCorruptedText(song.semester)) {
@@ -1509,7 +1509,7 @@ const vRipple = {
   opacity: 0.6;
 }
 
-/* 歌曲封面样式 */
+/* 视频封面样式 */
 .song-cover {
   width: 55px;
   height: 55px;
@@ -1583,7 +1583,7 @@ const vRipple = {
 
 /* 播放图标样式已移至Icon组件 */
 
-/* 修改歌曲信息区域的CSS样式 */
+/* 修改视频信息区域的CSS样式 */
 .song-info {
   flex: 1;
   width: 100%; /* 使用100%宽度 */
@@ -1604,7 +1604,7 @@ const vRipple = {
   align-items: center;
 }
 
-/* 添加一个包装器来处理歌曲标题和歌手的文本溢出 */
+/* 添加一个包装器来处理视频标题和歌手的文本溢出 */
 .song-title-text {
   white-space: nowrap;
   overflow: hidden;

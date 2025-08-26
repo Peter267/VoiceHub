@@ -57,13 +57,13 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    // 清除歌曲缓存（黑名单变更可能影响歌曲提交验证）
+    // 清除视频缓存（黑名单变更可能影响视频提交验证）
     try {
       const cacheService = CacheService.getInstance()
       await cacheService.clearSongsCache()
-      console.log('黑名单添加后歌曲缓存已清除')
+      console.log('黑名单添加后视频缓存已清除')
     } catch (cacheError) {
-      console.warn('清除歌曲缓存失败:', cacheError)
+      console.warn('清除视频缓存失败:', cacheError)
     }
 
     return {

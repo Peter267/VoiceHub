@@ -84,22 +84,22 @@ export interface MusicSearchResult {
 }
 
 /**
- * 歌曲详情参数接口
+ * 视频详情参数接口
  */
 export interface SongDetailParams {
-  /** 歌曲ID，可以是单个或多个 */
+  /** 视频ID，可以是单个或多个 */
   ids: string | string[]
 }
 
 /**
- * 歌曲详情结果接口
+ * 视频详情结果接口
  */
 export interface SongDetailResult {
   /** 是否成功 */
   success: boolean
   /** 使用的音源ID */
   source: string
-  /** 歌曲详情数据 */
+  /** 视频详情数据 */
   data: {
     songs: any[]
   }

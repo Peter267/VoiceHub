@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
             }
           })
           
-          // 获取最近1小时内点赞过歌曲的用户
+          // 获取最近1小时内点赞过视频的用户
           const recentVoteUsers = await prisma.vote.findMany({
             where: {
               createdAt: {

@@ -1,6 +1,6 @@
 <template>
   <div class="schedule-form">
-    <h3>为歌曲 "{{ song?.title }}" 创建排期</h3>
+    <h3>为视频 "{{ song?.title }}" 创建排期</h3>
     
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
@@ -86,7 +86,7 @@ const { playTimeEnabled } = useSongs()
 onMounted(async () => {
   await fetchPlayTimes()
   
-  // 如果歌曲有期望的播出时段，默认选择该时段
+  // 如果视频有期望的播出时段，默认选择该时段
   if (props.song?.preferredPlayTimeId) {
     playTimeId.value = props.song.preferredPlayTimeId
   }

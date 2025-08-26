@@ -70,13 +70,13 @@
                :class="{ 'active': activeTab === 'songs' }" 
                @click="handleTabClick('songs')"
                v-ripple>
-            歌曲列表
+            视频列表
           </div>
           <div class="section-tab" 
                :class="{ 'active': activeTab === 'request' }" 
                @click="handleTabClick('request')"
                v-ripple>
-            投稿歌曲
+            投稿视频
           </div>
           <ClientOnly>
             <div class="section-tab" 
@@ -114,7 +114,7 @@
               </ClientOnly>
             </div>
             
-            <!-- 歌曲列表内容 -->
+            <!-- 视频列表内容 -->
             <div v-else-if="activeTab === 'songs'" class="tab-pane" key="songs">
               <div class="song-list-container">
                 <ClientOnly>
@@ -132,7 +132,7 @@
               </div>
             </div>
             
-            <!-- 投稿歌曲内容 -->
+            <!-- 投稿视频内容 -->
             <div v-else-if="activeTab === 'request'" class="tab-pane request-pane" key="request">
               <LazySongsRequestForm
                 ref="requestFormRef"
@@ -199,8 +199,8 @@
                         </div>
                         <div class="notification-title-row">
                           <div class="notification-title">
-                            <span v-if="notification.type === 'SONG_SELECTED'">歌曲已选中</span>
-                            <span v-else-if="notification.type === 'SONG_PLAYED'">歌曲已播放</span>
+                            <span v-if="notification.type === 'SONG_SELECTED'">视频已选中</span>
+                            <span v-else-if="notification.type === 'SONG_PLAYED'">视频已播放</span>
                             <span v-else-if="notification.type === 'SONG_VOTED'">收到新投票</span>
                             <span v-else>系统通知</span>
                             <span v-if="!notification.read" class="unread-indicator"></span>
@@ -560,23 +560,23 @@ const requestFormRef = ref(null)
 
 // 旧的showNotification函数已移除，使用全局通知系统
 
-// 更新歌曲数量统计（优化版本，避免重复请求）
+// 更新视频数量统计（优化版本，避免重复请求）
 const updateSongCounts = async (semester = null) => {
   try {
-    // 更新排期歌曲数量
+    // 更新排期视频数量
     const schedules = songs?.publicSchedules?.value || []
     scheduleCount.value = schedules.length
 
-    // 更新总歌曲数量
+    // 更新总视频数量
     if (isClientAuthenticated.value && songs?.songs?.value) {
-      // 已登录用户：使用完整歌曲列表
+      // 已登录用户：使用完整视频列表
       songCount.value = songs.songs.value.length
     } else {
-      // 未登录用户：使用缓存的歌曲总数
+      // 未登录用户：使用缓存的视频总数
       songCount.value = songs?.songCount?.value || 0
     }
   } catch (e) {
-    console.error('更新歌曲统计失败', e)
+    console.error('更新视频统计失败', e)
   }
 }
 
@@ -587,7 +587,7 @@ watch(siteTitle, (newSiteTitle) => {
   }
 }, { immediate: true })
 
-// 在组件挂载后初始化认证和歌曲（只会在客户端执行）
+// 在组件挂载后初始化认证和视频（只会在客户端执行）
 onMounted(async () => {
   // 初始化站点配置
   await initSiteConfig()
@@ -656,7 +656,7 @@ onMounted(async () => {
 
   // 优化数据加载流程：根据用户状态加载不同数据
   if (isClientAuthenticated.value) {
-    // 已登录用户：并行加载完整歌曲列表、公共排期、通知和设置
+    // 已登录用户：并行加载完整视频列表、公共排期、通知和设置
     await Promise.all([
       songs.fetchSongs(),
       songs.fetchPublicSchedules(),
@@ -667,7 +667,7 @@ onMounted(async () => {
     // 检查用户是否需要修改密码并显示提示
     await checkPasswordChangeRequired(currentUser)
   } else {
-    // 未登录用户：并行加载歌曲总数和公共排期
+    // 未登录用户：并行加载视频总数和公共排期
     await Promise.all([
       songs.fetchSongCount(),
       songs.fetchPublicSchedules()
@@ -694,14 +694,14 @@ onMounted(async () => {
       try {
         // 定期刷新数据
         if (isClientAuthenticated.value) {
-          // 已登录用户：刷新歌曲列表、公共排期和通知
+          // 已登录用户：刷新视频列表、公共排期和通知
           await Promise.allSettled([
             songs.fetchSongs(true),
             songs.fetchPublicSchedules(true),
             loadNotifications()
           ])
         } else {
-          // 未登录用户：刷新公共排期和歌曲总数
+          // 未登录用户：刷新公共排期和视频总数
           await Promise.allSettled([
             songs.fetchPublicSchedules(true),
             songs.fetchSongCount()
@@ -739,7 +739,7 @@ onUnmounted(() => {
   }
 })
 
-// 实时计算歌曲总数
+// 实时计算视频总数
 const realSongCount = computed(() => {
   return songs?.visibleSongs?.value?.length || 0
 })
@@ -748,7 +748,7 @@ const realSongCount = computed(() => {
 const publicSchedules = computed(() => songs?.publicSchedules?.value || [])
 const allSongs = computed(() => songs?.visibleSongs?.value || [])
 const filteredSongs = computed(() => {
-  // 返回所有歌曲，但将已播放的歌曲排在最后
+  // 返回所有视频，但将已播放的视频排在最后
   if (allSongs.value && allSongs.value.length > 0) {
     const unplayedSongs = allSongs.value.filter(song => !song.played);
     const playedSongs = allSongs.value.filter(song => song.played);
@@ -787,7 +787,7 @@ const handleRequest = async (songData) => {
   }
 
   try {
-    console.log("处理歌曲请求:", songData.title)
+    console.log("处理视频请求:", songData.title)
     // 直接传递整个songData对象，确保JSON格式正确
     const result = await songs.requestSong(songData)
     if (result) {
@@ -796,8 +796,8 @@ const handleRequest = async (songData) => {
         window.$showNotification(`《${songData.title} - ${songData.artist}》投稿成功！`, 'success')
       }
 
-      // 强制刷新歌曲列表
-      console.log("投稿成功，刷新歌曲列表")
+      // 强制刷新视频列表
+      console.log("投稿成功，刷新视频列表")
       await refreshSongs()
 
       // 刷新投稿状态
@@ -805,7 +805,7 @@ const handleRequest = async (songData) => {
         await requestFormRef.value.refreshSubmissionStatus()
       }
 
-      // 如果当前在歌曲列表页，自动切换到该页面
+      // 如果当前在视频列表页，自动切换到该页面
       if (activeTab.value !== 'songs') {
         setTimeout(() => {
           handleTabClick('songs')
@@ -843,10 +843,10 @@ const handleVote = async (song) => {
       await songs.voteSong(song.id)
     }
     
-    // 静默刷新歌曲列表以获取最新状态，但不影响当前视图
+    // 静默刷新视频列表以获取最新状态，但不影响当前视图
     setTimeout(() => {
       songs.refreshSongsSilent().catch(err => {
-        console.error('刷新歌曲列表失败', err)
+        console.error('刷新视频列表失败', err)
       })
     }, 500)
   } catch (err) {
@@ -875,7 +875,7 @@ const handleWithdraw = async (song) => {
   }
 }
 
-// 刷新歌曲列表（优化版本）
+// 刷新视频列表（优化版本）
 const refreshSongs = async () => {
   try {
     if (isClientAuthenticated.value) {
@@ -886,7 +886,7 @@ const refreshSongs = async () => {
 
     updateSongCounts()
   } catch (err) {
-    console.error('刷新歌曲列表失败', err)
+    console.error('刷新视频列表失败', err)
   }
 }
 
@@ -905,7 +905,7 @@ const handleSemesterChange = async (semester) => {
     
     console.log('学期切换事件已发送:', semester)
     
-    // 更新歌曲计数（基于当前已有数据）
+    // 更新视频计数（基于当前已有数据）
     await updateSongCounts(semester)
   } catch (err) {
     console.error('切换学期失败', err)
@@ -1004,7 +1004,7 @@ const navigateToLogin = () => {
 // 显示登录提示
 const showLoginNotice = () => {
   if (window.$showNotification) {
-    const message = activeTab.value === 'request' ? '需要登录才能投稿歌曲' : '需要登录才能查看通知'
+    const message = activeTab.value === 'request' ? '需要登录才能投稿视频' : '需要登录才能查看通知'
     window.$showNotification(message, 'info')
   }
 }
@@ -1388,7 +1388,7 @@ if (notificationsService && notificationsService.unreadCount && notificationsSer
   letter-spacing: 4%;
 }
 
-/* 歌曲时段 */
+/* 视频时段 */
 .time-label {
   font-family: 'MiSans', sans-serif;
   font-weight: 400;

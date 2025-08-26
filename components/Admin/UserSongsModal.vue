@@ -4,7 +4,7 @@
       <transition name="modal">
         <div v-if="show" class="modal" @click.stop>
           <div class="modal-header">
-            <h3>用户歌曲信息</h3>
+            <h3>用户视频信息</h3>
             <button @click="$emit('close')" class="close-btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18"/>
@@ -43,21 +43,21 @@
                   :class="['tab-btn', { active: activeTab === 'submitted' }]"
                   @click="activeTab = 'submitted'"
                 >
-                  投稿歌曲 ({{ userSongs.submittedSongs.length }})
+                  投稿视频 ({{ userSongs.submittedSongs.length }})
                 </button>
                 <button 
                   :class="['tab-btn', { active: activeTab === 'voted' }]"
                   @click="activeTab = 'voted'"
                 >
-                  投票歌曲 ({{ userSongs.votedSongs.length }})
+                  投票视频 ({{ userSongs.votedSongs.length }})
                 </button>
               </div>
 
-              <!-- 投稿歌曲列表 -->
+              <!-- 投稿视频列表 -->
               <div v-if="activeTab === 'submitted'" class="song-list">
                 <div v-if="userSongs.submittedSongs.length === 0" class="empty-state">
                   <div class="empty-icon">🎵</div>
-                  <p>该用户还没有投稿任何歌曲</p>
+                  <p>该用户还没有投稿任何视频</p>
                 </div>
                 <div v-else class="songs">
                   <div 
@@ -80,11 +80,11 @@
                 </div>
               </div>
 
-              <!-- 投票歌曲列表 -->
+              <!-- 投票视频列表 -->
               <div v-if="activeTab === 'voted'" class="song-list">
                 <div v-if="userSongs.votedSongs.length === 0" class="empty-state">
                   <div class="empty-icon">❤️</div>
-                  <p>该用户还没有投票任何歌曲</p>
+                  <p>该用户还没有投票任何视频</p>
                 </div>
                 <div v-else class="songs">
                   <div 
@@ -175,8 +175,8 @@ const fetchUserSongs = async () => {
 
     userSongs.value = response
   } catch (err) {
-    console.error('获取用户歌曲信息失败:', err)
-    error.value = err.data?.message || '获取用户歌曲信息失败'
+    console.error('获取用户视频信息失败:', err)
+    error.value = err.data?.message || '获取用户视频信息失败'
   } finally {
     loading.value = false
   }
@@ -199,14 +199,14 @@ const formatDate = (dateString) => {
   })
 }
 
-// 获取歌曲状态文本
+// 获取视频状态文本
 const getStatusText = (song) => {
   if (song.played) return '已播放'
   if (song.scheduled) return '已排期'
   return '待排期'
 }
 
-// 获取歌曲状态样式类
+// 获取视频状态样式类
 const getStatusClass = (song) => {
   if (song.played) return 'played'
   if (song.scheduled) return 'scheduled'

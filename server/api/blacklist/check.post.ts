@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!title) {
     throw createError({
       statusCode: 400,
-      message: '歌曲标题不能为空'
+      message: '视频标题不能为空'
     })
   }
 
@@ -27,12 +27,12 @@ export default defineEventHandler(async (event) => {
 
     for (const item of blacklistItems) {
       if (item.type === 'SONG') {
-        // 检查具体歌曲
+        // 检查具体视频
         if (songFullName.includes(item.value.toLowerCase())) {
           blocked.push({
             type: 'song',
             value: item.value,
-            reason: item.reason || '该歌曲已被加入黑名单'
+            reason: item.reason || '该视频已被加入黑名单'
           })
         }
       } else if (item.type === 'KEYWORD') {

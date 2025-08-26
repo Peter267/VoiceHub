@@ -163,7 +163,7 @@ export function useMusicWebSocket() {
     }
   }
 
-  // 发送歌曲切换通知
+  // 发送视频切换通知
   const sendSongChange = async (songInfo: Partial<SongInfo>) => {
     try {
       await $fetch('/api/music/state', {

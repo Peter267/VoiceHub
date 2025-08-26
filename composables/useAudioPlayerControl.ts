@@ -150,7 +150,7 @@ export const useAudioPlayerControl = () => {
     })
   }
 
-  // 加载新歌曲
+  // 加载新视频
   const loadSong = async (songUrlOrSong: string | any, retryCount: number = 0): Promise<boolean> => {
     if (!audioPlayer.value) return false
     
@@ -165,7 +165,7 @@ export const useAudioPlayerControl = () => {
       let songInfo: any = null
       let lyricsPromise: Promise<void> | null = null
       
-      // 如果传入的是歌曲对象，检查是否有音乐平台信息
+      // 如果传入的是视频对象，检查是否有音乐平台信息
       if (typeof songUrlOrSong === 'object' && songUrlOrSong !== null) {
         songInfo = songUrlOrSong
         
@@ -186,24 +186,24 @@ export const useAudioPlayerControl = () => {
         } else if (songUrlOrSong.musicPlatform && songUrlOrSong.musicId) {
           // 检查是否是网易云备用源，如果是则不应该调用getMusicUrl
           if (songUrlOrSong.sourceInfo?.source === 'netease-backup') {
-            throw new Error('网易云备用源歌曲缺少播放URL，请重新获取')
+            throw new Error('网易云备用源视频缺少播放URL，请重新获取')
           }
           
-          console.log('正在获取歌曲URL:', songUrlOrSong.musicPlatform, songUrlOrSong.musicId)
+          console.log('正在获取视频URL:', songUrlOrSong.musicPlatform, songUrlOrSong.musicId)
           songUrl = await getMusicUrl(songUrlOrSong.musicPlatform, songUrlOrSong.musicId)
           if (!songUrl) {
-            throw new Error('无法获取歌曲URL')
+            throw new Error('无法获取视频URL')
           }
           
           // 并行加载歌词（不阻塞音频加载）
           lyricsPromise = lyrics.fetchLyrics(songUrlOrSong.musicPlatform, songUrlOrSong.musicId)
         } else {
-          throw new Error('歌曲缺少播放信息（音乐平台ID或直接URL）')
+          throw new Error('视频缺少播放信息（音乐平台ID或直接URL）')
         }
       } else if (typeof songUrlOrSong === 'string') {
         songUrl = songUrlOrSong
       } else {
-        throw new Error('无效的歌曲参数')
+        throw new Error('无效的视频参数')
       }
       
       console.log('设置音频源:', songUrl)
@@ -223,7 +223,7 @@ export const useAudioPlayerControl = () => {
         }
       }
       
-      console.log('歌曲加载成功:', songInfo?.title || songUrl)
+      console.log('视频加载成功:', songInfo?.title || songUrl)
       isLoadingNewSong.value = false
       
       // 自动开始播放
@@ -236,11 +236,11 @@ export const useAudioPlayerControl = () => {
       
       return true
     } catch (error) {
-      console.error('加载歌曲失败:', error)
+      console.error('加载视频失败:', error)
       
       // 重试逻辑
       if (retryCount < 2 && typeof songUrlOrSong === 'object' && songUrlOrSong?.musicPlatform) {
-        console.log(`第 ${retryCount + 1} 次重试加载歌曲...`)
+        console.log(`第 ${retryCount + 1} 次重试加载视频...`)
         await new Promise(resolve => setTimeout(resolve, 1000)) // 等待1秒后重试
         return await loadSong(songUrlOrSong, retryCount + 1)
       }
@@ -249,7 +249,7 @@ export const useAudioPlayerControl = () => {
       isLoadingNewSong.value = false
       
       // 显示详细错误信息
-      let errorMessage = '加载歌曲失败'
+      let errorMessage = '加载视频失败'
       if (error instanceof Error) {
         errorMessage = error.message
       }

@@ -161,7 +161,7 @@ export const useLyrics = () => {
         return null
       }
 
-      console.log(`[fetchLyricsFromNetease] 开始获取歌词，歌曲ID: ${musicId}`)
+      console.log(`[fetchLyricsFromNetease] 开始获取歌词，视频ID: ${musicId}`)
       
       // 同时请求普通歌词和逐字歌词
       const [lrcResponse, yrcResponse] = await Promise.allSettled([
