@@ -8,7 +8,7 @@
       <div class="top-bar">
         <div class="logo-section">
           <NuxtLink to="/" class="logo-link">
-            <img src="https://i.p-i.vip/88/20250826-68adb5be5709e.png" alt="VoiceHub Logo" class="logo-image" />
+            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="VoiceHub Logo" class="logo-image" />
           </NuxtLink>
           <!-- 横线和学校logo -->
           <div v-if="schoolLogoHomeUrl && schoolLogoHomeUrl.trim()" class="logo-divider-container">
@@ -76,7 +76,7 @@
                :class="{ 'active': activeTab === 'request' }" 
                @click="handleTabClick('request')"
                v-ripple>
-            投稿视频
+            点播视频
           </div>
           <ClientOnly>
             <div class="section-tab" 
@@ -132,7 +132,7 @@
               </div>
             </div>
             
-            <!-- 投稿视频内容 -->
+            <!-- 点播视频内容 -->
             <div v-else-if="activeTab === 'request'" class="tab-pane request-pane" key="request">
               <LazySongsRequestForm
                 ref="requestFormRef"
@@ -1004,7 +1004,7 @@ const navigateToLogin = () => {
 // 显示登录提示
 const showLoginNotice = () => {
   if (window.$showNotification) {
-    const message = activeTab.value === 'request' ? '需要登录才能投稿视频' : '需要登录才能查看通知'
+    const message = activeTab.value === 'request' ? '需要登录才能点播视频' : '需要登录才能查看通知'
     window.$showNotification(message, 'info')
   }
 }

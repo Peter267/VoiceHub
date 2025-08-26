@@ -56,7 +56,7 @@
                 <div class="notification-header">
                   <div class="notification-type">
                     <span v-if="notification.type === 'SONG_SELECTED'">🎯 视频被选中</span>
-                    <span v-else-if="notification.type === 'SONG_PLAYED'">🎵 视频已播放</span>
+                    <span v-else-if="notification.type === 'SONG_PLAYED'">📽 视频已播放</span>
                     <span v-else-if="notification.type === 'SONG_VOTED'">👍 视频获得投票</span>
                     <span v-else>📢 系统通知</span>
                   </div>

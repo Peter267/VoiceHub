@@ -693,7 +693,7 @@ export const useSongs = () => {
     return songs.value.filter(song => !song.played)
   })
   
-  // 我的投稿视频
+  // 我的点播视频
   const mySongs = computed(() => {
     if (!user.value) return []
     return songs.value.filter(song => song.requesterId === user.value?.id)

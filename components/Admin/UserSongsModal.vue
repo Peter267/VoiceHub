@@ -43,7 +43,7 @@
                   :class="['tab-btn', { active: activeTab === 'submitted' }]"
                   @click="activeTab = 'submitted'"
                 >
-                  投稿视频 ({{ userSongs.submittedSongs.length }})
+                  点播视频 ({{ userSongs.submittedSongs.length }})
                 </button>
                 <button 
                   :class="['tab-btn', { active: activeTab === 'voted' }]"
@@ -53,10 +53,10 @@
                 </button>
               </div>
 
-              <!-- 投稿视频列表 -->
+              <!-- 点播视频列表 -->
               <div v-if="activeTab === 'submitted'" class="song-list">
                 <div v-if="userSongs.submittedSongs.length === 0" class="empty-state">
-                  <div class="empty-icon">🎵</div>
+                  <div class="empty-icon">📽</div>
                   <p>该用户还没有投稿任何视频</p>
                 </div>
                 <div v-else class="songs">

@@ -38,7 +38,7 @@
         <aside :class="['sidebar', { 'sidebar-open': sidebarOpen }]">
           <div class="sidebar-header">
             <NuxtLink to="/" class="logo-link">
-              <img src="https://i.p-i.vip/88/20250826-68adb5be5709e.png" alt="VoiceHub Logo" class="logo-image" />
+              <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="VoiceHub Logo" class="logo-image" />
               <div class="logo-content">
                 <span v-if="$config.public.siteTitle" class="logo-text">{{ $config.public.siteTitle }}</span>
                 <span v-else class="logo-text">VoiceHub</span>
