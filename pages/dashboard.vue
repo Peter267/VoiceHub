@@ -38,7 +38,7 @@
         <aside :class="['sidebar', { 'sidebar-open': sidebarOpen }]">
           <div class="sidebar-header">
             <NuxtLink to="/" class="logo-link">
-              <img src="/images/logo.svg" alt="VoiceHub Logo" class="logo-image" />
+              <img src="https://i.p-i.vip/88/20250826-68adb5be5709e.png" alt="VoiceHub Logo" class="logo-image" />
               <div class="logo-content">
                 <span v-if="$config.public.siteTitle" class="logo-text">{{ $config.public.siteTitle }}</span>
                 <span v-else class="logo-text">VoiceHub</span>
@@ -377,7 +377,7 @@ const dynamicTitle = computed(() => {
   if (siteTitle && siteTitle.value) {
     return `${currentPageTitle} | ${siteTitle.value}`
   }
-  return `${currentPageTitle} | 校园广播站点歌系统`
+  return `${currentPageTitle} | 班级多媒体点播系统`
 })
 
 // 监听activeTab变化，更新页面标题

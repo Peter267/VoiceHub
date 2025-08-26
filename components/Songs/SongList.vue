@@ -84,7 +84,7 @@
       </div>
       
       <div v-else-if="displayedSongs.length === 0" class="empty" :key="'empty-' + activeTab">
-        {{ activeTab === 'mine' ? '您还没有投稿视频，马上去点歌吧！' : '暂无视频，马上去点歌吧！' }}
+        {{ activeTab === 'mine' ? '您还没有投稿视频，马上去点播吧！' : '暂无视频，马上去点播吧！' }}
       </div>
       
       <div v-else class="songs-container" :key="'songs-' + activeTab">

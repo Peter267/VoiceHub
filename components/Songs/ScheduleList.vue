@@ -99,7 +99,7 @@
           <div v-else-if="!schedules || schedules.length === 0" class="empty" key="empty-all">
             <div class="icon mb-4">🎵</div>
             <p>暂无排期信息</p>
-            <p class="text-sm text-gray">点歌后等待管理员安排播出时间</p>
+            <p class="text-sm text-gray">点播后等待管理员安排播出时间</p>
           </div>
 
           <div v-else-if="currentDateSchedules.length === 0" class="empty" key="empty-date">

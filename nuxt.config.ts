@@ -24,9 +24,9 @@ export default defineNuxtConfig({
     // 公共键（会暴露到客户端）
     public: {
       apiBase: '/api',
-      siteTitle: process.env.NUXT_PUBLIC_SITE_TITLE || '校园广播站点歌系统',
+      siteTitle: process.env.NUXT_PUBLIC_SITE_TITLE || '班级多媒体点播系统',
       siteLogo: process.env.NUXT_PUBLIC_SITE_LOGO || '',
-      siteDescription: process.env.NUXT_PUBLIC_SITE_DESCRIPTION || '校园广播站点歌系统 - 让你的声音被听见'
+      siteDescription: process.env.NUXT_PUBLIC_SITE_DESCRIPTION || '班级多媒体点播系统 - 让你的声音被听见'
     }
   },
   
@@ -35,11 +35,11 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' },
     head: {
-      title: process.env.NUXT_PUBLIC_SITE_TITLE || '校园广播站点歌系统',
+      title: process.env.NUXT_PUBLIC_SITE_TITLE || '班级多媒体点播系统',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover' },
-        { name: 'description', content: process.env.NUXT_PUBLIC_SITE_DESCRIPTION || '校园广播站点歌系统 - 让你的声音被听见' },
+        { name: 'description', content: process.env.NUXT_PUBLIC_SITE_DESCRIPTION || '班级多媒体点播系统 - 让你的声音被听见' },
         // 移动端优化
         { name: 'theme-color', content: '#111111' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },

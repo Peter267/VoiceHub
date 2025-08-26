@@ -2,7 +2,7 @@
   <div class="blacklist-manager">
     <div class="header">
       <h3>视频黑名单管理</h3>
-      <p class="description">管理禁止点歌的视频和关键词</p>
+      <p class="description">管理禁止点播的视频和关键词</p>
     </div>
 
     <!-- 添加黑名单项 -->

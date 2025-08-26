@@ -405,7 +405,7 @@ export const useSongs = () => {
     musicId?: string | null
   }) => {
     if (!isAuthenticated.value) {
-      showNotification('需要登录才能点歌', 'error')
+      showNotification('需要登录才能点播', 'error')
       return null
     }
     
@@ -427,7 +427,7 @@ export const useSongs = () => {
       
       return data
     } catch (err: any) {
-      const errorMsg = err.data?.message || err.message || '点歌失败'
+      const errorMsg = err.data?.message || err.message || '点播失败'
       // 如果是重复投稿错误，只显示通知而不设置全局错误
       if (errorMsg.includes('已经在列表中') || errorMsg.includes('不能重复投稿')) {
         showNotification(errorMsg, 'info')

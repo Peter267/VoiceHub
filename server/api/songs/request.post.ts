@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   if (!user) {
     throw createError({
       statusCode: 401,
-      message: '需要登录才能点歌'
+      message: '需要登录才能点播'
     })
   }
   
@@ -192,14 +192,14 @@ export default defineEventHandler(async (event) => {
     
     return song
   } catch (error: any) {
-    console.error('点歌失败:', error)
+    console.error('点播失败:', error)
 
     if (error.statusCode) {
       throw error
     } else {
       throw createError({
         statusCode: 500,
-        message: '点歌失败，请稍后重试'
+        message: '点播失败，请稍后重试'
       })
         }
       }

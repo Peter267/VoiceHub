@@ -115,7 +115,7 @@
       />
       
       <StatCard
-        label="点歌总数"
+        label="点播总数"
         :value="analysisData.totalRequests"
         :change="analysisData.requestsChange"
         change-label="较上周"

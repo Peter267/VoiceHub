@@ -8,7 +8,7 @@
       <div class="top-bar">
         <div class="logo-section">
           <NuxtLink to="/" class="logo-link">
-            <img src="/images/logo.svg" alt="VoiceHub Logo" class="logo-image" />
+            <img src="https://i.p-i.vip/88/20250826-68adb5be5709e.png" alt="VoiceHub Logo" class="logo-image" />
           </NuxtLink>
           <!-- 横线和学校logo -->
           <div v-if="schoolLogoHomeUrl && schoolLogoHomeUrl.trim()" class="logo-divider-container">
@@ -288,7 +288,7 @@
     <div v-if="showRules" class="modal-overlay" @click.self="showRules = false">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 class="text-xl font-bold">点歌规则</h2>
+          <h2 class="text-xl font-bold">点播规则</h2>
           <button @click="showRules = false" class="close-button">×</button>
         </div>
 
@@ -817,7 +817,7 @@ const handleRequest = async (songData) => {
     return false
   } catch (err) {
     if (window.$showNotification) {
-      window.$showNotification(err.message || '点歌失败', 'error')
+      window.$showNotification(err.message || '点播失败', 'error')
     }
     return false
   }

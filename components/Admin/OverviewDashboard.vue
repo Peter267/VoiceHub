@@ -25,7 +25,7 @@
       />
 
       <StatCard
-        label="本周点歌"
+        label="本周点播"
         :value="stats.weeklyRequests"
         icon="votes"
         icon-class="warning"

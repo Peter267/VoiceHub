@@ -785,7 +785,7 @@ class CacheService {
             siteLogoUrl: '/favicon.ico',
             schoolLogoHomeUrl: null,
             schoolLogoPrintUrl: null,
-            siteDescription: '校园广播站点歌系统 - 让你的声音被听见',
+            siteDescription: '班级多媒体点播系统 - 让你的声音被听见',
             submissionGuidelines: '请遵守校园规定，提交健康向上的视频。',
             icpNumber: null,
             enableSubmissionLimit: false,

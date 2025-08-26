@@ -5,7 +5,7 @@
       <div class="info-section">
         <div class="info-content">
           <div class="logo-section">
-            <img src="/images/logo.svg" alt="VoiceHub Logo" class="brand-logo" />
+            <img src="https://i.p-i.vip/88/20250826-68adb5be5709e.png" alt="VoiceHub Logo" class="brand-logo" />
             <h1 v-if="siteTitle" class="brand-title">{{ siteTitle || 'VoiceHub' }}</h1>
           </div>
 

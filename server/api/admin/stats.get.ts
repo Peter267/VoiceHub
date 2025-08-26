@@ -90,7 +90,7 @@ export default defineEventHandler(async (event) => {
       return uniqueDates.size;
     })(),
       
-      // 本周点歌数
+      // 本周点播数
       prisma.song.count({
         where: {
           ...where,
@@ -100,7 +100,7 @@ export default defineEventHandler(async (event) => {
         }
       }),
       
-      // 上周点歌数
+      // 上周点播数
       prisma.song.count({
         where: {
           ...where,
@@ -254,7 +254,7 @@ export default defineEventHandler(async (event) => {
         return trends
       })(),
       
-      // 点歌请求趋势
+      // 点播请求趋势
       (async () => {
         const trends = []
         for (let i = 6; i >= 0; i--) {
