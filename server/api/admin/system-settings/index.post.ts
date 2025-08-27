@@ -123,7 +123,7 @@ export default defineEventHandler(async (event) => {
       settings = await prisma.systemSettings.create({
         data: {
           enablePlayTimeSelection: updateData.enablePlayTimeSelection ?? false,
-          siteTitle: updateData.siteTitle ?? 'VoiceHub',
+          siteTitle: updateData.siteTitle ?? 'MovieHub',
           siteLogoUrl: updateData.siteLogoUrl ?? '/favicon.ico',
           schoolLogoHomeUrl: updateData.schoolLogoHomeUrl ?? null,
           schoolLogoPrintUrl: updateData.schoolLogoPrintUrl ?? null,

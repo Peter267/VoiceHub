@@ -1,4 +1,4 @@
-# VoiceHub - 班级多媒体点播系统
+# MovieHub - 班级多媒体点播系统
 
 这是一个使用Nuxt 3全栈框架开发的现代化班级多媒体点播管理系统。系统提供完整的点播、投票、排期管理、通知推送、数据分析、权限控制和数据库管理功能，支持多角色权限管理和灵活的系统配置。
 
@@ -85,8 +85,8 @@
 
 本项目可以一键部署到Vercel/Netlify平台：
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/laoshuikaixue/VoiceHub&env=DATABASE_URL,JWT_SECRET&envDescription=需要配置数据库连接和JWT密钥&envLink=https://github.com/laoshuikaixue/VoiceHub#环境变量说明)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/laoshuikaixue/VoiceHub)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/laoshuikaixue/MovieHub&env=DATABASE_URL,JWT_SECRET&envDescription=需要配置数据库连接和JWT密钥&envLink=https://github.com/laoshuikaixue/MovieHub#环境变量说明)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/laoshuikaixue/MovieHub)
 
 在部署过程中，需要输入必要的环境变量：
 1. `DATABASE_URL`：PostgreSQL数据库连接字符串
@@ -210,8 +210,8 @@ volumes:
 
 1. 克隆仓库
 ```bash
-git clone https://github.com/laoshuikaixue/VoiceHub.git
-cd VoiceHub
+git clone https://github.com/laoshuikaixue/MovieHub.git
+cd MovieHub
 ```
 
 2. 安装依赖
@@ -267,7 +267,7 @@ npm start
 ## 系统配置
 
 ### 站点配置管理
-VoiceHub 提供了完整的站点配置管理功能，支持通过管理后台动态配置系统参数：
+MovieHub 提供了完整的站点配置管理功能，支持通过管理后台动态配置系统参数：
 
 #### 基本信息配置
 - **站点标题**：自定义系统显示名称
@@ -299,7 +299,7 @@ VoiceHub 提供了完整的站点配置管理功能，支持通过管理后台�
 - **数据验证**：恢复前自动验证备份文件完整性
 
 ### 权限与角色管理
-VoiceHub 实现了细粒度的权限控制系统：
+MovieHub 实现了细粒度的权限控制系统：
 
 #### 角色类型
 - **超级管理员 (SUPER_ADMIN)**：拥有所有系统权限，包括用户管理、系统配置、数据库管理等
@@ -337,7 +337,7 @@ VoiceHub 实现了细粒度的权限控制系统：
 ## 项目结构
 
 ```
-VoiceHub/
+MovieHub/
 ├── app.vue                # 应用入口文件
 ├── assets/                # 静态资源目录
 │   └── css/               # CSS样式文件
@@ -835,7 +835,7 @@ Error: @prisma/client did not initialize yet. Please run "prisma generate" and t
 
 ### 音源扩展开发指南
 
-VoiceHub 采用了模块化的音源架构，支持多音源故障转移和动态扩展。开发者可以轻松添加新的音乐API源，提高系统的可用性和音乐资源覆盖率。
+MovieHub 采用了模块化的音源架构，支持多音源故障转移和动态扩展。开发者可以轻松添加新的音乐API源，提高系统的可用性和音乐资源覆盖率。
 
 #### 音源架构概述
 
@@ -1038,7 +1038,7 @@ export const MUSIC_SOURCE_CONFIG: MusicSourceConfig = {
   enabled: true,
   timeout: 8000,
   headers: {
-    'User-Agent': 'VoiceHub/1.0',
+    'User-Agent': 'MovieHub/1.0',
     'X-API-Key': 'your-api-key'
   }
 }
@@ -1125,7 +1125,7 @@ VoiceHub是一个开源的班级多媒体点播管理系统，本项目：
 
 Thanks goes to these wonderful people:
 
-[![Contributors](https://contrib.rocks/image?repo=laoshuikaixue/VoiceHub&repo=laoshuikaixue/VoiceHub-docs&repo=laoshuikaixue/VoiceHub-hmos)](https://github.com/laoshuikaixue/VoiceHub/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=laoshuikaixue/MovieHub&repo=laoshuikaixue/MovieHub-docs&repo=laoshuikaixue/MovieHub-hmos)](https://github.com/laoshuikaixue/MovieHub/graphs/contributors)
 
 ### 参考项目
 
@@ -1142,9 +1142,9 @@ Thanks goes to these wonderful people:
 ## 星标历史
 
 <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=laoshuikaixue/VoiceHub&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=laoshuikaixue/VoiceHub&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=laoshuikaixue/VoiceHub&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=laoshuikaixue/MovieHub&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=laoshuikaixue/MovieHub&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=laoshuikaixue/MovieHub&type=Date" />
  </picture>
 
 Powered By LaoShui @ 2025

@@ -316,7 +316,7 @@ export const useMusicSources = () => {
   }
 
   /**
-   * 将VoiceHub音质数值映射到网易云API的level参数
+   * 将MovieHub音质数值映射到网易云API的level参数
    */
   const mapQualityToLevel = (quality: number): string => {
     // 根据网易云API文档映射音质等级

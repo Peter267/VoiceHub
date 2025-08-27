@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     if (!settings) {
       // 如果不存在设置，返回默认值
       return {
-        siteTitle: process.env.NUXT_PUBLIC_SITE_TITLE || 'VoiceHub',
+        siteTitle: process.env.NUXT_PUBLIC_SITE_TITLE || 'MovieHub',
         siteLogoUrl: process.env.NUXT_PUBLIC_SITE_LOGO || '/favicon.ico',
         schoolLogoHomeUrl: '',
         schoolLogoPrintUrl: '',
@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
     
     // 只返回公开的站点配置信息
     return {
-      siteTitle: settings.siteTitle || 'VoiceHub',
+      siteTitle: settings.siteTitle || 'MovieHub',
       siteLogoUrl: settings.siteLogoUrl || '/favicon.ico',
       schoolLogoHomeUrl: settings.schoolLogoHomeUrl || '',
       schoolLogoPrintUrl: settings.schoolLogoPrintUrl || '',
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
     
     // 发生错误时返回默认配置
     return {
-      siteTitle: 'VoiceHub',
+      siteTitle: 'MovieHub',
       siteLogoUrl: '/favicon.ico',
       schoolLogoHomeUrl: '',
       schoolLogoPrintUrl: '',

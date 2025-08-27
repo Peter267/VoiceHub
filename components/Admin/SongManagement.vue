@@ -329,7 +329,7 @@
               v-model="editForm.artist"
               type="text"
               class="form-input"
-              placeholder="请输入歌手名称"
+              placeholder="请输入演员名称"
               required
             />
           </div>
@@ -441,7 +441,7 @@
               v-model="addForm.artist"
               type="text"
               class="form-input"
-              placeholder="请输入歌手名称"
+              placeholder="请输入演员名称"
               required
             />
           </div>

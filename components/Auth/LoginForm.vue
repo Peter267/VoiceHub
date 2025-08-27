@@ -2,7 +2,7 @@
   <div class="login-form">
     <div class="form-header">
       <h2>欢迎回来</h2>
-      <p>登录您的VoiceHub账户</p>
+      <p>登录您的MovieHub账户</p>
     </div>
 
     <form @submit.prevent="handleLogin" class="auth-form">
@@ -81,7 +81,7 @@
 
     <div class="form-footer">
       <p class="help-text">
-        不同VoiceHub平台的账号不互通
+        不同MovieHub平台的账号不互通
       </p>
     </div>
   </div>

@@ -1,5 +1,5 @@
 name: 🔒 安全问题报告
-description: 报告VoiceHub系统中的安全漏洞或安全相关问题
+description: 报告MovieHub系统中的安全漏洞或安全相关问题
 title: "[Security]: "
 labels: ["security", "高优先级"]
 assignees: []
@@ -10,7 +10,7 @@ body:
         ⚠️ **重要提醒**：如果您发现了严重的安全漏洞，请不要在公开的Issue中详细描述。
         请发送邮件至 `contact@lao-shui.top` 。
         
-        感谢您帮助我们保护VoiceHub系统的安全！
+        感谢您帮助我们保护MovieHub系统的安全！
 
   - type: dropdown
     id: security-type

@@ -39,7 +39,7 @@
           type="url"
           placeholder="请输入首页用的学校Logo图片URL"
         />
-        <small class="help-text">设置后将在首页VoiceHub Logo旁边显示学校Logo（大尺寸）</small>
+        <small class="help-text">设置后将在首页MovieHub Logo旁边显示学校Logo（大尺寸）</small>
       </div>
 
       <div class="form-group">
@@ -284,7 +284,7 @@ const loadConfig = async () => {
     console.error('加载配置失败:', error)
     // 使用默认值
     formData.value = {
-      siteTitle: 'VoiceHub',
+      siteTitle: 'MovieHub',
       siteLogoUrl: '/favicon.ico',
       schoolLogoHomeUrl: '',
       schoolLogoPrintUrl: '',

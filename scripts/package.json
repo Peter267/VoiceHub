@@ -1,7 +1,7 @@
 {
   "name": "voicehub-scripts",
   "version": "1.0.0",
-  "description": "VoiceHub管理脚本",
+  "description": "MovieHub管理脚本",
   "type": "module",
   "scripts": {
     "create-admin": "node create-admin.js",

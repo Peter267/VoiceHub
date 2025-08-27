@@ -39,15 +39,15 @@ export default defineEventHandler(async (event) => {
     }
 
     // 发送测试通知
-    const message = `这是来自 VoiceHub 的测试通知！您的账号 ${userData.username} 已成功绑定 MeoW。`
-    const title = 'VoiceHub 测试通知'
+    const message = `这是来自 MovieHub 的测试通知！您的账号 ${userData.username} 已成功绑定 MeoW。`
+    const title = 'MovieHub 测试通知'
     
     const meowUrl = `https://api.chuckfang.com/${encodeURIComponent(userData.meowNickname)}/${encodeURIComponent(title)}/${encodeURIComponent(message)}`
     
     const response = await fetch(meowUrl, {
       method: 'GET',
       headers: {
-        'User-Agent': 'VoiceHub/1.0'
+        'User-Agent': 'MovieHub/1.0'
       }
     })
 

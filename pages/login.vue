@@ -5,8 +5,8 @@
       <div class="brand-section">
         <div class="brand-content">
           <div class="logo-section">
-            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="VoiceHub Logo" class="brand-logo" />
-            <h1 v-if="siteTitle" class="brand-title">{{ siteTitle || 'VoiceHub' }}</h1>
+            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="MovieHub Logo" class="brand-logo" />
+            <h1 v-if="siteTitle" class="brand-title">{{ siteTitle || 'MovieHub' }}</h1>
           </div>
           <p class="brand-description">
             班级多媒体点播管理系统

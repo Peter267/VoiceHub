@@ -235,7 +235,7 @@ export async function performDatabaseMaintenance() {
         await prisma.systemSettings.create({
           data: {
             enablePlayTimeSelection: false,
-            siteTitle: 'VoiceHub',
+            siteTitle: 'MovieHub',
             siteLogoUrl: '/favicon.ico',
             schoolLogoUrl: null,
             siteDescription: '班级多媒体点播系统 - 让你的声音被听见',
@@ -330,7 +330,7 @@ export async function initializeFirstDeployment() {
     await prisma.systemSettings.create({
       data: {
         enablePlayTimeSelection: false,
-        siteTitle: 'VoiceHub',
+        siteTitle: 'MovieHub',
         siteLogoUrl: '/favicon.ico',
         siteDescription: '班级多媒体点播系统 - 让你的声音被听见',
         submissionGuidelines: `1. 投稿时无需加入书名号

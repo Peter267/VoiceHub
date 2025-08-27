@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
       settings = await prisma.systemSettings.create({
         data: {
           enablePlayTimeSelection: false,
-          siteTitle: process.env.NUXT_PUBLIC_SITE_TITLE || 'VoiceHub',
+          siteTitle: process.env.NUXT_PUBLIC_SITE_TITLE || 'MovieHub',
           siteLogoUrl: process.env.NUXT_PUBLIC_SITE_LOGO || '/favicon.ico',
           schoolLogoHomeUrl: null,
           schoolLogoPrintUrl: null,

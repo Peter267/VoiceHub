@@ -44,7 +44,7 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#111111' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-        { name: 'apple-mobile-web-app-title', content: 'VoiceHub管理' },
+        { name: 'apple-mobile-web-app-title', content: 'MovieHub管理' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'format-detection', content: 'telephone=no' }
       ],

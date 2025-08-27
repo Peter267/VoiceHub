@@ -170,7 +170,7 @@
             <!-- 页面头部 -->
             <div class="page-header">
               <div class="logo-section">
-                <img :src="logoUrl" alt="VoiceHub Logo" class="logo" />
+                <img :src="logoUrl" alt="MovieHub Logo" class="logo" />
                 <!-- 竖线分割 -->
                 <div class="logo-divider"></div>
                 <!-- 学校logo -->
@@ -267,7 +267,7 @@
                 <span>生成时间：{{ new Date().toLocaleString() }}</span>
                 <span v-if="settings.remark" class="remark-text">备注：{{ settings.remark }}</span>
               </div>
-              <span class="footer-right">VoiceHub 广播管理系统</span>
+              <span class="footer-right">MovieHub 广播管理系统</span>
             </div>
           </div>
         </div>

@@ -5,12 +5,12 @@
       <div class="info-section">
         <div class="info-content">
           <div class="logo-section">
-            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="VoiceHub Logo" class="brand-logo" />
-            <h1 v-if="siteTitle" class="brand-title">{{ siteTitle || 'VoiceHub' }}</h1>
+            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="MovieHub Logo" class="brand-logo" />
+            <h1 v-if="siteTitle" class="brand-title">{{ siteTitle || 'MovieHub' }}</h1>
           </div>
 
           <div v-if="isFirstLogin" class="welcome-message">
-            <h2>欢迎使用VoiceHub</h2>
+            <h2>欢迎使用MovieHub</h2>
             <p>为了保障您的账号安全，请设置一个新的密码</p>
           </div>
           <div v-else class="security-message">

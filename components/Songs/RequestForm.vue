@@ -306,14 +306,14 @@
               </div>
 
               <div class="form-group">
-                <label for="modal-artist">歌手名称</label>
+                <label for="modal-artist">演员名称</label>
                 <div class="input-wrapper">
                   <input
                     id="modal-artist"
                     v-model="manualArtist"
                     type="text"
                     required
-                    placeholder="请输入歌手名称"
+                    placeholder="请输入演员名称"
                     class="form-input"
                   />
                 </div>

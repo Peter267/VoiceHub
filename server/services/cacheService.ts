@@ -781,7 +781,7 @@ class CacheService {
         settings = await prisma.systemSettings.create({
           data: {
             enablePlayTimeSelection: false,
-            siteTitle: 'VoiceHub',
+            siteTitle: 'MovieHub',
             siteLogoUrl: '/favicon.ico',
             schoolLogoHomeUrl: null,
             schoolLogoPrintUrl: null,

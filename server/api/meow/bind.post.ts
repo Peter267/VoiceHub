@@ -135,8 +135,8 @@ export default defineEventHandler(async (event) => {
       })
 
       // 发送验证码到 MeoW
-      const message = `VoiceHub 账号绑定验证码：${code}（5分钟内有效）`
-      const title = 'VoiceHub 账号绑定'
+      const message = `MovieHub 账号绑定验证码：${code}（5分钟内有效）`
+      const title = 'MovieHub 账号绑定'
       
       try {
         // 使用 GET 请求发送验证码
@@ -145,7 +145,7 @@ export default defineEventHandler(async (event) => {
       const response = await fetch(meowUrl, {
         method: 'GET',
         headers: {
-          'User-Agent': 'VoiceHub/1.0'
+          'User-Agent': 'MovieHub/1.0'
         }
       })
 

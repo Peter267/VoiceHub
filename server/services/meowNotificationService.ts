@@ -6,10 +6,10 @@ import { prisma } from '../models/schema'
 async function getSiteTitle(): Promise<string> {
   try {
     const settings = await prisma.systemSettings.findFirst()
-    return settings?.siteTitle || process.env.NUXT_PUBLIC_SITE_TITLE || 'VoiceHub'
+    return settings?.siteTitle || process.env.NUXT_PUBLIC_SITE_TITLE || 'MovieHub'
   } catch (error) {
     console.error('获取站点标题失败:', error)
-    return 'VoiceHub'
+    return 'MovieHub'
   }
 }
 
@@ -38,7 +38,7 @@ async function sendMeowNotification(
     const response = await fetch(meowUrl, {
       method: 'GET',
       headers: {
-        'User-Agent': 'VoiceHub-Notification-Service'
+        'User-Agent': 'MovieHub-Notification-Service'
       }
     })
     

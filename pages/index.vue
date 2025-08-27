@@ -8,7 +8,7 @@
       <div class="top-bar">
         <div class="logo-section">
           <NuxtLink to="/" class="logo-link">
-            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="VoiceHub Logo" class="logo-image" />
+            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="MovieHub Logo" class="logo-image" />
           </NuxtLink>
           <!-- 横线和学校logo -->
           <div v-if="schoolLogoHomeUrl && schoolLogoHomeUrl.trim()" class="logo-divider-container">
@@ -53,7 +53,7 @@
       </div>
 
       <div v-if="siteTitle" class="site-title">
-        <h2>{{ siteTitle }} | VoiceHub</h2>
+        <h2>{{ siteTitle }} | MovieHub</h2>
       </div>
 
       <!-- 中间主体内容区域 -->
@@ -274,7 +274,11 @@
            <span v-else class="footer-item">© {{ currentYear }} LaoShui</span>
            <span class="footer-item">Worker in {{ responseTime }}ms</span>
           <span class="footer-item">
-            <a href="https://github.com/laoshuikaixue/VoiceHub" target="_blank" rel="noopener noreferrer" class="voicehub-link">
+            <a href="https://github.com/Peter267/VoiceHub" target="_blank" rel="noopener noreferrer" class="moviehub-link">
+              MovieHub
+            </a>
+           powered by 
+            <a href="https://github.com/laoshuikaixue/VoiecHub" target="_blank" rel="noopener noreferrer" class="voicehub-link">
               VoiceHub v{{ systemVersion }}
             </a>
           </span>
