@@ -65,7 +65,7 @@ export interface MusicSearchParams {
   limit?: number
   /** 偏移量 */
   offset?: number
-  /** 搜索类型：1=单曲, 10=专辑, 100=歌手, 1000=歌单 */
+  /** 搜索类型：1=单曲, 10=专辑, 100=豆瓣链接, 1000=歌单 */
   type?: number
 }
 
@@ -84,22 +84,22 @@ export interface MusicSearchResult {
 }
 
 /**
- * 歌曲详情参数接口
+ * 电影详情参数接口
  */
 export interface SongDetailParams {
-  /** 歌曲ID，可以是单个或多个 */
+  /** 电影ID，可以是单个或多个 */
   ids: string | string[]
 }
 
 /**
- * 歌曲详情结果接口
+ * 电影详情结果接口
  */
 export interface SongDetailResult {
   /** 是否成功 */
   success: boolean
   /** 使用的音源ID */
   source: string
-  /** 歌曲详情数据 */
+  /** 电影详情数据 */
   data: {
     songs: any[]
   }

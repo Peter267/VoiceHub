@@ -36,7 +36,7 @@ export const useMusicSources = () => {
   const lastUsedSource = ref<string>('')
 
   /**
-   * 搜索歌曲（带故障转移）
+   * 搜索电影（带故障转移）
    */
   const searchSongs = async (params: MusicSearchParams, signal?: AbortSignal): Promise<MusicSearchResult> => {
     // 检查请求是否已被取消
@@ -191,7 +191,7 @@ export const useMusicSources = () => {
   }
 
   /**
-   * 获取歌曲详情
+   * 获取电影详情
    */
   const getSongDetail = async (params: SongDetailParams): Promise<SongDetailResult> => {
     const enabledSources = getEnabledSources()
@@ -209,7 +209,7 @@ export const useMusicSources = () => {
           error: undefined
         }
       } catch (error: any) {
-        console.warn(`音源 ${source.name} 获取歌曲详情失败:`, error.message)
+        console.warn(`音源 ${source.name} 获取电影详情失败:`, error.message)
         updateSourceStatus(source.id, 'error', error.message)
         continue
       }
@@ -219,28 +219,28 @@ export const useMusicSources = () => {
   }
 
   /**
-   * 使用指定音源获取歌曲详情
+   * 使用指定音源获取电影详情
    */
   const getSongDetailWithSource = async (source: MusicSource, params: SongDetailParams): Promise<any[]> => {
     const startTime = Date.now()
     
     // 验证参数
     if (!params.ids || (Array.isArray(params.ids) && params.ids.length === 0)) {
-      throw new Error('歌曲ID参数不能为空')
+      throw new Error('电影ID参数不能为空')
     }
     
     const ids = Array.isArray(params.ids) ? params.ids.join(',') : params.ids
     
     // 再次验证处理后的ids
     if (!ids || ids === 'undefined' || ids === 'null') {
-      throw new Error(`无效的歌曲ID: ${ids}`)
+      throw new Error(`无效的电影ID: ${ids}`)
     }
     
     let url: string
     let transformResponse: (data: any) => any[]
 
     if (source.id === 'vkeys') {
-      // Vkeys API - 使用搜索接口，包含了歌曲详情
+      // Vkeys API - 使用搜索接口，包含了电影详情
       // 默认使用网易云端点进行详情搜索
       url = `${source.baseUrl}/netease?word=${encodeURIComponent(ids)}&num=50`
       transformResponse = (data: any) => transformVkeysResponse(data, 'netease')
@@ -295,8 +295,8 @@ export const useMusicSources = () => {
 
 
   /**
-   * 获取歌曲封面URL（网易云备用源）
-   * 实现两步搜索：先通过歌曲ID获取详情，然后提取封面URL
+   * 获取电影封面URL（网易云备用源）
+   * 实现两步搜索：先通过电影ID获取详情，然后提取封面URL
    */
   const getSongPicUrl = async (id: number): Promise<string> => {
     try {
@@ -309,7 +309,7 @@ export const useMusicSources = () => {
         return ''
       }
       
-      // 直接调用/song/detail接口获取歌曲详情
+      // 直接调用/song/detail接口获取电影详情
       const response = await $fetch(`${neteaseSource.baseUrl}/song/detail`, {
         params: { ids: id },
         timeout: neteaseSource.timeout || 8000
@@ -324,7 +324,7 @@ export const useMusicSources = () => {
   }
 
   /**
-   * 将VoiceHub音质数值映射到网易云API的level参数
+   * 将MoivieHub音质数值映射到网易云API的level参数
    */
   const mapQualityToLevel = (quality: number): string => {
     // 根据网易云API文档映射音质等级
@@ -339,7 +339,7 @@ export const useMusicSources = () => {
   }
 
   /**
-   * 获取歌曲播放URL（网易云备用源）
+   * 获取电影播放URL（网易云备用源）
    * 优先使用meeting接口，失败后回退到/song/url/v1接口
    */
   const getSongUrl = async (id: number | string, quality?: number): Promise<{ success: boolean; url?: string; error?: string }> => {
@@ -408,7 +408,7 @@ export const useMusicSources = () => {
       // 支持多个ID的批量查询（用逗号分隔）
       const idParam = Array.isArray(id) ? id.join(',') : id.toString()
       
-      console.log(`[getSongUrl] 开始获取歌曲播放链接: id=${idParam}, level=${level}`)
+      console.log(`[getSongUrl] 开始获取电影播放链接: id=${idParam}, level=${level}`)
       
       // 调用/song/url/v1接口获取播放链接
       const response = await $fetch(`${neteaseSource.baseUrl}/song/url/v1`, {
@@ -438,8 +438,8 @@ export const useMusicSources = () => {
       
       const songData = response.data[0]
       if (!songData.url) {
-        console.error('[getSongUrl] 歌曲播放链接为空，可能是VIP歌曲或地区限制')
-        return { success: false, error: '歌曲播放链接为空，可能是VIP歌曲或地区限制' }
+        console.error('[getSongUrl] 电影播放链接为空，可能是VIP电影或地区限制')
+        return { success: false, error: '电影播放链接为空，可能是VIP电影或地区限制' }
       }
       
       // 清理URL字符串：去除前后空格和反引号
@@ -561,7 +561,7 @@ export const useMusicSources = () => {
     if (platform === 'tencent') {
       // QQ音乐返回数组格式
       const songs = Array.isArray(response.data) ? response.data : [response.data]
-      console.log(`[transformVkeysResponse] QQ音乐处理 ${songs.length} 首歌曲`)
+      console.log(`[transformVkeysResponse] QQ音乐处理 ${songs.length} 首电影`)
       
       return songs.map((song: any, index: number) => {
         const transformedSong = {
@@ -590,13 +590,13 @@ export const useMusicSources = () => {
             grp: song.grp
           }
         }
-        console.log(`[transformVkeysResponse] QQ音乐转换歌曲 ${index + 1}:`, transformedSong)
+        console.log(`[transformVkeysResponse] QQ音乐转换电影 ${index + 1}:`, transformedSong)
         return transformedSong
       })
     } else {
       // 网易云返回数组格式
       const songs = Array.isArray(response.data) ? response.data : [response.data]
-      console.log(`[transformVkeysResponse] 网易云处理 ${songs.length} 首歌曲`)
+      console.log(`[transformVkeysResponse] 网易云处理 ${songs.length} 首电影`)
       
       return songs.map((song: any, index: number) => {
         const transformedSong = {
@@ -622,7 +622,7 @@ export const useMusicSources = () => {
             time: song.time
           }
         }
-        console.log(`[transformVkeysResponse] 网易云转换歌曲 ${index + 1}:`, transformedSong)
+        console.log(`[transformVkeysResponse] 网易云转换电影 ${index + 1}:`, transformedSong)
         return transformedSong
       })
     }
@@ -630,7 +630,7 @@ export const useMusicSources = () => {
 
   /**
    * 转换网易云 API 搜索响应
-   * 实现两步搜索：处理搜索结果，然后批量获取歌曲详情和封面
+   * 实现两步搜索：处理搜索结果，然后批量获取电影详情和封面
    */
   const transformNeteaseResponse = async (response: any): Promise<any[]> => {
     console.log('[transformNeteaseResponse] 开始转换数据:', response)
@@ -657,7 +657,7 @@ export const useMusicSources = () => {
     }
 
     const songs = response.result.songs
-    console.log(`[transformNeteaseResponse] 找到 ${songs.length} 首歌曲`)
+    console.log(`[transformNeteaseResponse] 找到 ${songs.length} 首电影`)
 
     if (songs.length === 0) {
       return []
@@ -681,13 +681,13 @@ export const useMusicSources = () => {
         throw new Error('未找到网易云备用源')
       }
 
-      // 提取所有歌曲ID，准备批量获取详情
+      // 提取所有电影ID，准备批量获取详情
       const songIds = songs.map(song => song.id).filter(id => id)
-      console.log(`[transformNeteaseResponse] 准备批量获取 ${songIds.length} 首歌曲的详情`)
+      console.log(`[transformNeteaseResponse] 准备批量获取 ${songIds.length} 首电影的详情`)
       
       if (songIds.length > 0) {
         try {
-          // 批量获取歌曲详情，包含封面信息
+          // 批量获取电影详情，包含封面信息
           detailResponse = await $fetch(`${neteaseSource.baseUrl}/song/detail`, {
             params: { ids: songIds.join(',') },
             timeout: neteaseSource.timeout || 8000
@@ -747,11 +747,11 @@ export const useMusicSources = () => {
             interface: hasCompleteInfo ? 'cloudsearch' : 'search' // 标记使用的接口类型
           }
         }
-        console.log(`[transformNeteaseResponse] 转换歌曲 ${index + 1}:`, transformedSong)
+        console.log(`[transformNeteaseResponse] 转换电影 ${index + 1}:`, transformedSong)
         return transformedSong
       } catch (error: any) {
-        console.error(`[transformNeteaseResponse] 转换第 ${index + 1} 首歌曲失败:`, error.message, song)
-        throw new Error(`转换第 ${index + 1} 首歌曲失败: ${error.message}`)
+        console.error(`[transformNeteaseResponse] 转换第 ${index + 1} 首电影失败:`, error.message, song)
+        throw new Error(`转换第 ${index + 1} 首电影失败: ${error.message}`)
       }
     })
   }

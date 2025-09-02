@@ -37,7 +37,7 @@ export const playTimes = pgTable('PlayTime', {
   description: text('description'),
 });
 
-// 歌曲表
+// 电影表
 export const songs = pgTable('Song', {
   id: serial('id').primaryKey(),
   createdAt: timestamp('createdAt').default(sql`${getBeijingTimestamp()}`).notNull(),
@@ -129,7 +129,7 @@ export const systemSettings = pgTable('SystemSettings', {
   hideStudentInfo: boolean('hideStudentInfo').default(true).notNull(),
 });
 
-// 歌曲黑名单表
+// 电影黑名单表
 export const songBlacklists = pgTable('SongBlacklist', {
   id: serial('id').primaryKey(),
   createdAt: timestamp('createdAt').default(sql`${getBeijingTimestamp()}`).notNull(),

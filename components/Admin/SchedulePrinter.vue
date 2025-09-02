@@ -75,15 +75,15 @@
             <div class="content-options">
               <label class="checkbox-item">
                 <input type="checkbox" v-model="settings.showCover" />
-                <span>歌曲封面</span>
+                <span>电影封面</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" v-model="settings.showTitle" />
-                <span>歌曲名</span>
+                <span>电影名</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" v-model="settings.showArtist" />
-                <span>歌手</span>
+                <span>豆瓣链接</span>
               </label>
               <label class="checkbox-item">
                 <input type="checkbox" v-model="settings.showRequester" />
@@ -160,7 +160,7 @@
         <div class="preview-header">
             <h3>打印预览</h3>
             <div class="preview-info">
-              <span>{{ filteredSchedules.length }} 首歌曲</span>
+              <span>{{ filteredSchedules.length }} 首电影</span>
               <span v-if="schedules.length === 0" class="debug-info">无排期数据</span>
               <span v-else-if="filteredSchedules.length === 0" class="debug-info">过滤后无数据</span>
             </div>
@@ -178,7 +178,7 @@
             <!-- 页面头部 -->
             <div class="page-header">
               <div class="logo-section">
-                <img :src="logoUrl" alt="VoiceHub Logo" class="logo" />
+                <img :src="logoUrl" alt="MovieHub Logo" class="logo" />
                 <!-- 竖线分割 -->
                 <div class="logo-divider"></div>
                 <!-- 学校logo -->
@@ -255,7 +255,7 @@
                     </div>
                   </div>
 
-                  <!-- 如果只有一个时段或没有时段，直接显示歌曲列表 -->
+                  <!-- 如果只有一个时段或没有时段，直接显示电影列表 -->
                   <div v-else class="schedule-list">
                     <div
                       v-for="schedule in dateGroup.allSchedules"
@@ -275,7 +275,7 @@
                 <span>生成时间：{{ new Date().toLocaleString() }}</span>
                 <span v-if="settings.remark" class="remark-text">备注：{{ settings.remark }}</span>
               </div>
-              <span class="footer-right">Powered By LaoShui @ 2025 | VoiceHub 广播管理系统</span>
+              <span class="footer-right">Powered By LaoShui @ 2025 | MovieHub 广播管理系统</span>
             </div>
           </div>
         </div>
@@ -433,7 +433,7 @@ const groupedSchedules = computed(() => {
   Object.keys(groups).sort().forEach(dateKey => {
     const dateGroup = groups[dateKey]
 
-    // 对每个时段内的歌曲按序号排序
+    // 对每个时段内的电影按序号排序
     Object.keys(dateGroup.playTimes).forEach(playTimeKey => {
       dateGroup.playTimes[playTimeKey].schedules.sort((a, b) => (a.sequence || 0) - (b.sequence || 0))
     })
@@ -711,7 +711,7 @@ const downloadImageAsBase64 = async (url) => {
         img.style.objectFit = 'contain !important'
         img.style.borderRadius = '4px !important'
       } else if (img.classList.contains('song-cover')) {
-        // 歌曲封面保持固定尺寸
+        // 电影封面保持固定尺寸
         img.style.width = '40px !important'
         img.style.height = '40px !important'
         img.style.objectFit = 'cover !important'
@@ -1056,7 +1056,7 @@ const generateScheduleItems = (schedules) => {
           flex-shrink: 0;
         ">
           ${schedule.song?.cover ?
-            `<img src="${convertToHttps(schedule.song.cover)}" alt="${schedule.song?.title || '歌曲'}" style="
+            `<img src="${convertToHttps(schedule.song.cover)}" alt="${schedule.song?.title || '电影'}" style="
               width: 100%;
               height: 100%;
               object-fit: cover;
@@ -1088,7 +1088,7 @@ const generateScheduleItems = (schedules) => {
             overflow: hidden;
             text-overflow: ellipsis;
           ">
-            ${schedule.song?.title || '未知歌曲'}
+            ${schedule.song?.title || '未知电影'}
           </div>
         ` : ''}
 

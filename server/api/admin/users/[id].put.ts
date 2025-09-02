@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
         } else {
           throw createError({
             statusCode: 403,
-            statusMessage: '管理员只能设置用户和歌曲管理员角色'
+            statusMessage: '管理员只能设置用户和电影管理员角色'
           })
         }
       }
@@ -121,7 +121,7 @@ export default defineEventHandler(async (event) => {
       await cache.deletePattern('songs:*')
       // 清除该用户的认证缓存（角色或权限可能已变更）
       await cache.delete(`auth:user:${parseInt(userId)}`)
-      console.log('[Cache] 歌曲和用户认证缓存已清除（用户更新）')
+      console.log('[Cache] 电影和用户认证缓存已清除（用户更新）')
     } catch (cacheError) {
       console.warn('[Cache] 清除缓存失败:', cacheError)
     }

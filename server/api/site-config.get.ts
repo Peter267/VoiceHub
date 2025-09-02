@@ -22,12 +22,12 @@ export default defineEventHandler(async (event) => {
       // 如果不存在，创建默认设置
       const newSettings = await db.insert(systemSettings).values({
         enablePlayTimeSelection: false,
-        siteTitle: 'VoiceHub',
+        siteTitle: 'MovieHub',
         siteLogoUrl: '/favicon.ico',
         schoolLogoHomeUrl: null,
         schoolLogoPrintUrl: null,
-        siteDescription: '校园广播站点歌系统 - 让你的声音被听见',
-        submissionGuidelines: '请遵守校园规定，提交健康向上的歌曲。',
+        siteDescription: '校园广播站点播系统 - 让你的声音被听见',
+        submissionGuidelines: '请遵守校园规定，提交健康向上的电影。',
         icpNumber: null,
         enableSubmissionLimit: false,
         dailySubmissionLimit: null,

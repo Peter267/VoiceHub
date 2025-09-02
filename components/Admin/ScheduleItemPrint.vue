@@ -6,7 +6,7 @@
         {{ schedule.sequence || 1 }}
       </div>
 
-      <!-- 歌曲封面 -->
+      <!-- 电影封面 -->
       <div v-if="settings.showCover" class="cover-section">
         <img 
           v-if="schedule.song.cover" 
@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <!-- 歌曲信息 -->
+      <!-- 电影信息 -->
       <div class="song-info">
         <div v-if="settings.showTitle" class="song-title">
           {{ schedule.song.title }}

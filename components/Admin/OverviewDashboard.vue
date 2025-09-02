@@ -3,7 +3,7 @@
     <!-- 统计卡片 -->
     <div class="stats-grid">
       <StatCard
-        label="总歌曲数"
+        label="总电影数"
         :value="stats.totalSongs"
         icon="songs"
         icon-class="primary"
@@ -25,7 +25,7 @@
       />
 
       <StatCard
-        label="本周点歌"
+        label="本周点播"
         :value="stats.weeklyRequests"
         icon="votes"
         icon-class="warning"

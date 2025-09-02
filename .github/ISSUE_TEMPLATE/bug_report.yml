@@ -1,5 +1,5 @@
 name: 🐛 问题反馈
-description: 报告VoiceHub系统中的问题或错误
+description: 报告MovieHub系统中的问题或错误
 title: "[Bug]: "
 labels: ["bug", "需要确认"]
 assignees: []
@@ -17,7 +17,7 @@ body:
       options:
         - 音乐播放相关
         - 用户登录/注册
-        - 点歌功能
+        - 点播功能
         - 通知系统
         - 管理员功能
         - 界面显示

@@ -101,10 +101,10 @@
 
     <!-- 排期内容 -->
     <div v-else class="schedule-content">
-      <!-- 待排歌曲列表 -->
+      <!-- 待排电影列表 -->
       <div class="song-list-panel">
         <div class="panel-header">
-          <h3>待排歌曲</h3>
+          <h3>待排电影</h3>
           <div class="header-controls">
             <div class="search-section">
               <div class="search-input-wrapper">
@@ -115,7 +115,7 @@
                 <input
                   v-model="searchQuery"
                   type="text"
-                  placeholder="搜索歌曲标题、艺术家或投稿人..."
+                  placeholder="搜索电影标题、艺术家或投稿人..."
                   class="search-input"
                 />
                 <button
@@ -209,14 +209,14 @@
           </div>
           
           <div v-if="filteredUnscheduledSongs.length === 0" class="empty-message">
-            没有待排歌曲
+            没有待排电影
           </div>
         </div>
         
         <!-- 分页控件 -->
         <div v-if="totalPages > 1" class="pagination-container">
           <div class="pagination-info">
-            共 {{ allUnscheduledSongs.length }} 首歌曲，第 {{ currentPage }} / {{ totalPages }} 页
+            共 {{ allUnscheduledSongs.length }} 首电影，第 {{ currentPage }} / {{ totalPages }} 页
           </div>
           <div class="pagination-controls">
             <button 
@@ -276,7 +276,7 @@
               class="download-btn" 
               :disabled="localScheduledSongs.length === 0"
             >
-              下载歌曲
+              下载电影
             </button>
             <button 
               @click="markAllAsPlayed" 
@@ -297,7 +297,7 @@
           @drop.stop.prevent="dropToSequence"
         >
           <div v-if="localScheduledSongs.length === 0" class="empty-message">
-            将歌曲拖到此处安排播放顺序
+            将电影拖到此处安排播放顺序
           </div>
 
           <TransitionGroup
@@ -465,7 +465,7 @@ const availableDates = computed(() => {
   return dates
 })
 
-// 过滤未排期歌曲（所有）
+// 过滤未排期电影（所有）
 const allUnscheduledSongs = computed(() => {
   if (!songs.value) return []
   
@@ -503,7 +503,7 @@ const allUnscheduledSongs = computed(() => {
   })
 })
 
-// 分页后的未排期歌曲
+// 分页后的未排期电影
 const filteredUnscheduledSongs = computed(() => {
   const startIndex = (currentPage.value - 1) * pageSize.value
   const endIndex = startIndex + pageSize.value
@@ -626,7 +626,7 @@ watch(searchQuery, () => {
 const loadData = async () => {
   loading.value = true
   try {
-    // 使用选中的学期过滤歌曲，如果选择"全部"则不传递学期参数
+    // 使用选中的学期过滤电影，如果选择"全部"则不传递学期参数
     const semester = selectedSemester.value === '全部' ? undefined : selectedSemester.value
     await songsService.fetchSongs(false, semester, false, true) // 添加 bypassCache: true
     await songsService.fetchPublicSchedules(false, semester, false, true) // 添加 bypassCache: true
@@ -1182,7 +1182,7 @@ const saveSequence = async () => {
 
 const markAllAsPlayed = async () => {
   confirmDialogTitle.value = '标记已播放'
-  confirmDialogMessage.value = '确定要将所有排期歌曲标记为已播放吗？'
+  confirmDialogMessage.value = '确定要将所有排期电影标记为已播放吗？'
   confirmDialogType.value = 'info'
   confirmDialogConfirmText.value = '标记'
   confirmAction.value = async () => {
@@ -1198,7 +1198,7 @@ const markAllAsPlayed = async () => {
       await loadData()
 
       if (window.$showNotification) {
-        window.$showNotification('所有歌曲已标记为已播放', 'success')
+        window.$showNotification('所有电影已标记为已播放', 'success')
       }
     } catch (error) {
       console.error('标记已播放失败:', error)
@@ -1697,7 +1697,7 @@ const openDownloadDialog = () => {
   border: 2px dashed #667eea;
 }
 
-/* 歌曲项 */
+/* 电影项 */
 .draggable-song,
 .scheduled-song {
   display: flex;

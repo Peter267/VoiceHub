@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
     // 尝试从普通API缓存获取基础数据
     const cachedSongsData = await cache.get<any>(normalApiCacheKey)
     if (cachedSongsData !== null) {
-      console.log(`[OpenAPI Cache] 使用普通API歌曲缓存数据: ${normalApiCacheKey}`)
+      console.log(`[OpenAPI Cache] 使用普通API电影缓存数据: ${normalApiCacheKey}`)
       
       // 转换为开放API格式
       const songs = cachedSongsData.data?.songs || []
@@ -130,14 +130,14 @@ export default defineEventHandler(async (event) => {
     // 计算偏移量
     const offset = (page - 1) * limit
     
-    // 查询歌曲总数
+    // 查询电影总数
     const totalResult = await db.select({ count: count() })
       .from(songs)
       .leftJoin(users, eq(songs.requesterId, users.id))
       .where(whereCondition)
     const total = totalResult[0].count
 
-    // 获取歌曲数据
+    // 获取电影数据
     const songsData = await db.select({
       id: songs.id,
       title: songs.title,
@@ -242,7 +242,7 @@ export default defineEventHandler(async (event) => {
         }
       }
 
-      // 创建歌曲对象
+      // 创建电影对象
       const songObject: any = {
         id: song.id,
         title: song.title,
@@ -330,7 +330,7 @@ export default defineEventHandler(async (event) => {
     // 使用与普通API相同的缓存键格式（变量已在前面声明）
   
     await cache.set(normalApiCacheKey, normalApiResult, 180) // 3分钟缓存
-    console.log(`[OpenAPI Cache] 歌曲数据已缓存到普通API缓存: ${normalApiCacheKey}，数量: ${songsWithDetails.length}`)
+    console.log(`[OpenAPI Cache] 电影数据已缓存到普通API缓存: ${normalApiCacheKey}，数量: ${songsWithDetails.length}`)
     
     // 可选：也缓存到开放API专用缓存（保留原有逻辑，但优先级较低）
     const openApiCacheKey = openApiCache.generateKey('songs', {
@@ -346,14 +346,14 @@ export default defineEventHandler(async (event) => {
     return result
 
   } catch (error: any) {
-    console.error('[Open API] 获取歌曲列表失败:', error)
+    console.error('[Open API] 获取电影列表失败:', error)
 
     if (error.statusCode) {
       throw error
     } else {
       throw createError({
         statusCode: 500,
-        message: '获取歌曲列表失败'
+        message: '获取电影列表失败'
       })
     }
   }

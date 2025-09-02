@@ -5,7 +5,7 @@ import { sendMeowNotificationToUser, sendBatchMeowNotifications } from './meowNo
 import { formatBeijingTime, getBeijingTime } from '~/utils/timeUtils'
 
 /**
- * 创建歌曲被选中的通知
+ * 创建电影被选中的通知
  */
 export async function createSongSelectedNotification(
   userId: number, 
@@ -42,7 +42,7 @@ export async function createSongSelectedNotification(
     }
     
     // 创建通知，添加播出时段信息
-    let message = `您投稿的歌曲《${songInfo.title}》已被安排播放，播放日期：${formatDate(songInfo.playDate)}。`
+    let message = `您投稿的电影《${songInfo.title}》已被安排播放，播放日期：${formatDate(songInfo.playDate)}。`
     
     // 如果有播出时段信息，添加到通知中
     if (schedule?.playTime) {
@@ -96,11 +96,11 @@ function formatDate(date: Date): string {
 }
 
 /**
- * 创建歌曲已播放的通知
+ * 创建电影已播放的通知
  */
 export async function createSongPlayedNotification(songId: number) {
   try {
-    // 获取歌曲信息
+    // 获取电影信息
     const songResult = await db.select().from(songs).where(eq(songs.id, songId)).limit(1)
     const song = songResult[0]
     
@@ -118,7 +118,7 @@ export async function createSongPlayedNotification(songId: number) {
     }
     
     // 创建通知
-    const message = `您投稿的歌曲《${song.title}》已播放。`
+    const message = `您投稿的电影《${song.title}》已播放。`
     let notification
     try {
       const notificationResult = await db.insert(notifications).values({
@@ -136,7 +136,7 @@ export async function createSongPlayedNotification(songId: number) {
     try {
       await sendMeowNotificationToUser(
         song.requesterId,
-        '歌曲已播放',
+        '电影已播放',
         message
       )
     } catch (error) {
@@ -150,11 +150,11 @@ export async function createSongPlayedNotification(songId: number) {
 }
 
 /**
- * 创建歌曲获得投票的通知
+ * 创建电影获得投票的通知
  */
 export async function createSongVotedNotification(songId: number, voterId: number) {
   try {
-    // 获取歌曲信息
+    // 获取电影信息
     const songResult = await db.select().from(songs).where(eq(songs.id, songId)).limit(1)
     const song = songResult[0]
     
@@ -162,7 +162,7 @@ export async function createSongVotedNotification(songId: number, voterId: numbe
       return null
     }
     
-    // 获取歌曲的投票信息
+    // 获取电影的投票信息
     const songVotes = await db.select().from(votes).where(eq(votes.songId, songId))
     
     // 获取投票用户信息
@@ -187,9 +187,9 @@ export async function createSongVotedNotification(songId: number, voterId: numbe
       return null
     }
     
-    const message = `您投稿的歌曲《${song.title}》获得了一个新的投票，当前共有 ${songVotes.length} 个投票。`
+    const message = `您投稿的电影《${song.title}》获得了一个新的投票，当前共有 ${songVotes.length} 个投票。`
     
-    // 防重复通知：检查最近5分钟内是否有相同歌曲的投票通知
+    // 防重复通知：检查最近5分钟内是否有相同电影的投票通知
     const fiveMinutesAgo = new Date(getBeijingTime().getTime() - 5 * 60 * 1000)
     
     const existingNotificationResult = await db.select().from(notifications)

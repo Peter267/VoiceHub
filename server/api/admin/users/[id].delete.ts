@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
       await cache.deletePattern('stats:*')
       // 清除该用户的认证缓存
       await cache.delete(`auth:user:${existingUser.id}`)
-      console.log('[Cache] 歌曲、排期、统计和用户认证缓存已清除（用户删除）')
+      console.log('[Cache] 电影、排期、统计和用户认证缓存已清除（用户删除）')
     } catch (cacheError) {
       console.warn('[Cache] 清除缓存失败:', cacheError)
     }

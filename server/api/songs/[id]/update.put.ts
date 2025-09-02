@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 获取歌曲ID
+    // 获取电影ID
     const songId = parseInt(getRouterParam(event, 'id'))
     if (!songId) {
       throw createError({
@@ -96,7 +96,7 @@ export default defineEventHandler(async (event) => {
       // 如果投稿人为空值，则跳过处理，保持原有投稿人不变
     }
 
-    // 更新歌曲
+    // 更新电影
     const updatedSongResult = await db.update(songs)
       .set(updateData)
       .where(eq(songs.id, songId))
@@ -105,11 +105,11 @@ export default defineEventHandler(async (event) => {
     if (updatedSongResult.length === 0) {
       throw createError({
         statusCode: 404,
-        statusMessage: '歌曲不存在'
+        statusMessage: '电影不存在'
       })
     }
     
-    // 获取完整的歌曲信息（包含投稿人）
+    // 获取完整的电影信息（包含投稿人）
     const updatedSong = await db.select({
       id: songs.id,
       title: songs.title,
@@ -132,12 +132,12 @@ export default defineEventHandler(async (event) => {
       .where(eq(songs.id, songId))
       .limit(1)
 
-    // 清除歌曲相关缓存
+    // 清除电影相关缓存
     try {
       await cacheService.clearSongsCache()
-      console.log('[Cache] 歌曲缓存已清除（更新歌曲）')
+      console.log('[Cache] 电影缓存已清除（更新电影）')
     } catch (cacheError) {
-      console.error('[Cache] 清除歌曲缓存失败:', cacheError)
+      console.error('[Cache] 清除电影缓存失败:', cacheError)
     }
     
     return {

@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     // 构建查询条件
     const where = semester && semester !== 'all' ? { semester: semester } : {}
 
-    // 获取最近30天的歌曲点播趋势
+    // 获取最近30天的电影点播趋势
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
     

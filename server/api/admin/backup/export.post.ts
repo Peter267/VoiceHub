@@ -73,7 +73,7 @@ export default defineEventHandler(async (event) => {
             preferredPlayTime: playTimesData.find(pt => pt.id === song.preferredPlayTimeId)
           }))
         },
-        description: '歌曲数据'
+        description: '电影数据'
       },
       votes: {
         query: async () => {
@@ -139,7 +139,7 @@ export default defineEventHandler(async (event) => {
       },
       songBlacklist: {
         query: () => db.select().from(songBlacklists),
-        description: '歌曲黑名单'
+        description: '电影黑名单'
       }
     }
 

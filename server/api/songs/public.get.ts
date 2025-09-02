@@ -136,7 +136,7 @@ export default defineEventHandler(async (event) => {
       return resultData
     }
     
-    // 获取排期的歌曲，包含播放时段信息（查询所有学期的数据）
+    // 获取排期的电影，包含播放时段信息（查询所有学期的数据）
     const schedulesData = await db.select({
       id: schedules.id,
       playDate: schedules.playDate,

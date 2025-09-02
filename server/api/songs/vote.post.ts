@@ -20,14 +20,14 @@ export default defineEventHandler(async (event) => {
   if (!body.songId) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID不能为空'
+      message: '电影ID不能为空'
     })
   }
   
   const isUnvote = body.unvote === true
   
   try {
-    // 检查歌曲是否存在
+    // 检查电影是否存在
     const songResult = await db.select()
       .from(songs)
       .where(eq(songs.id, body.songId))
@@ -38,19 +38,19 @@ export default defineEventHandler(async (event) => {
       if (!song) {
         throw createError({
           statusCode: 404,
-          message: '歌曲不存在'
+          message: '电影不存在'
         })
       }
 
-      // 检查歌曲是否已播放
+      // 检查电影是否已播放
       if (song.played) {
         throw createError({
           statusCode: 400,
-          message: '该歌曲已播放，无法进行投票操作'
+          message: '该电影已播放，无法进行投票操作'
         })
       }
 
-      // 检查歌曲是否已排期
+      // 检查电影是否已排期
       const schedulesResult = await db.select()
         .from(schedules)
         .where(eq(schedules.songId, body.songId))
@@ -59,11 +59,11 @@ export default defineEventHandler(async (event) => {
       if (schedulesResult.length > 0) {
         throw createError({
           statusCode: 400,
-          message: '该歌曲已排期，无法进行投票操作'
+          message: '该电影已排期，无法进行投票操作'
         })
       }
 
-      // 检查是否是自己的歌曲
+      // 检查是否是自己的电影
       if (song.requesterId === user.id) {
         throw createError({
           statusCode: 400,
@@ -102,11 +102,11 @@ export default defineEventHandler(async (event) => {
         
         const voteCount = voteCountResult[0].count
 
-        // 清除统计缓存和歌曲缓存
+        // 清除统计缓存和电影缓存
         try {
           await cacheService.clearStatsCache()
           await cacheService.clearSongsCache()
-          console.log('[Cache] 统计缓存和歌曲缓存已清除（取消投票）')
+          console.log('[Cache] 统计缓存和电影缓存已清除（取消投票）')
         } catch (cacheError) {
           console.error('[Cache] 缓存清除失败（取消投票）:', cacheError)
         }
@@ -152,11 +152,11 @@ export default defineEventHandler(async (event) => {
           })
         }
 
-        // 清除统计缓存和歌曲缓存
+        // 清除统计缓存和电影缓存
         try {
           await cacheService.clearStatsCache()
           await cacheService.clearSongsCache()
-          console.log('[Cache] 统计缓存和歌曲缓存已清除（投票）')
+          console.log('[Cache] 统计缓存和电影缓存已清除（投票）')
         } catch (cacheError) {
           console.error('[Cache] 缓存清除失败（投票）:', cacheError)
         }

@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
       cachedData = await cacheService.getCache<any>(cacheKey)
     }
     if (cachedData !== null) {
-      console.log(`[Cache] 歌曲列表缓存命中: ${cacheKey}, 歌曲数: ${cachedData.data?.songs?.length || 0}`)
+      console.log(`[Cache] 电影列表缓存命中: ${cacheKey}, 电影数: ${cachedData.data?.songs?.length || 0}`)
       
       // 重新获取动态状态数据（scheduled状态可能已变化）
       const schedulesQuery = await db.select({
@@ -89,7 +89,7 @@ export default defineEventHandler(async (event) => {
       return cachedData
     }
     
-    console.log(`[Cache] 歌曲列表${bypassCache ? '绕过缓存' : '缓存未命中'}，查询数据库: ${cacheKey}`)
+    console.log(`[Cache] 电影列表${bypassCache ? '绕过缓存' : '缓存未命中'}，查询数据库: ${cacheKey}`)
 
     // 构建查询条件
     const conditions = []
@@ -113,14 +113,14 @@ export default defineEventHandler(async (event) => {
     
     const whereCondition = conditions.length > 0 ? and(...conditions) : undefined
     
-    // 查询歌曲总数
+    // 查询电影总数
     const totalResult = await db.select({ count: count() })
       .from(songs)
       .leftJoin(users, eq(songs.requesterId, users.id))
       .where(whereCondition)
     const total = totalResult[0].count
 
-    // 获取歌曲数据
+    // 获取电影数据
     const songsData = await db.select({
       id: songs.id,
       title: songs.title,
@@ -234,7 +234,7 @@ export default defineEventHandler(async (event) => {
           }
         }
 
-        // 创建基本歌曲对象
+        // 创建基本电影对象
         const songObject: any = {
           id: song.id,
           title: song.title,
@@ -307,7 +307,7 @@ export default defineEventHandler(async (event) => {
     // 如果不绕过缓存，缓存基础数据（3分钟，与开放API保持一致）
     if (!bypassCache) {
       await cacheService.setCache(cacheKey, baseResult, 180) // 180秒 = 3分钟
-      console.log(`[Cache] 歌曲列表设置缓存: ${cacheKey}, 歌曲数: ${baseResult.data.songs.length}`)
+      console.log(`[Cache] 电影列表设置缓存: ${cacheKey}, 电影数: ${baseResult.data.songs.length}`)
     }
     
     // 如果用户已登录，添加投票状态到返回结果
@@ -319,12 +319,12 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    console.log(`[Songs API] 成功返回 ${result.data.songs.length} 首歌曲，用户类型: ${user ? '登录用户' : '未登录用户'}`)
+    console.log(`[Songs API] 成功返回 ${result.data.songs.length} 首电影，用户类型: ${user ? '登录用户' : '未登录用户'}`)
 
     return result
 
   } catch (error: any) {
-    console.error('[Songs API] 获取歌曲列表失败:', error)
+    console.error('[Songs API] 获取电影列表失败:', error)
 
     // 检查是否是数据库连接错误
     const isDbError = error.message?.includes('ECONNRESET') ||
@@ -342,7 +342,7 @@ export default defineEventHandler(async (event) => {
     } else {
       throw createError({
         statusCode: isDbError ? 503 : 500,
-        message: isDbError ? '数据库连接暂时不可用，请稍后重试' : '获取歌曲列表失败，请稍后重试'
+        message: isDbError ? '数据库连接暂时不可用，请稍后重试' : '获取电影列表失败，请稍后重试'
       })
     }
   }

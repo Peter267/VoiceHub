@@ -53,13 +53,13 @@ export default defineEventHandler(async (event) => {
       .where(eq(songBlacklists.id, id))
       .returning()
 
-    // 清除歌曲缓存（黑名单变更可能影响歌曲提交验证）
+    // 清除电影缓存（黑名单变更可能影响电影提交验证）
     try {
       const cacheService = CacheService.getInstance()
       await cacheService.clearSongsCache()
-      console.log('黑名单更新后歌曲缓存已清除')
+      console.log('黑名单更新后电影缓存已清除')
     } catch (cacheError) {
-      console.warn('清除歌曲缓存失败:', cacheError)
+      console.warn('清除电影缓存失败:', cacheError)
     }
 
     return {

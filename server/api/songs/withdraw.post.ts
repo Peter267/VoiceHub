@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   if (!user) {
     throw createError({
       statusCode: 401,
-      message: '需要登录才能撤回歌曲'
+      message: '需要登录才能撤回电影'
     })
   }
 
@@ -19,18 +19,18 @@ export default defineEventHandler(async (event) => {
   if (!body.songId) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID不能为空'
+      message: '电影ID不能为空'
     })
   }
 
-  // 查找歌曲
+  // 查找电影
   const songResult = await db.select().from(songs).where(eq(songs.id, body.songId)).limit(1)
   const song = songResult[0]
 
   if (!song) {
     throw createError({
       statusCode: 404,
-      message: '歌曲不存在'
+      message: '电影不存在'
     })
   }
 
@@ -42,22 +42,22 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // 检查歌曲是否已经播放
+  // 检查电影是否已经播放
   if (song.played) {
     throw createError({
       statusCode: 400,
-      message: '已播放的歌曲不能撤回'
+      message: '已播放的电影不能撤回'
     })
   }
 
-  // 检查歌曲是否已排期
+  // 检查电影是否已排期
   const scheduleResult = await db.select().from(schedules).where(eq(schedules.songId, body.songId)).limit(1)
   const schedule = scheduleResult[0]
 
   if (schedule) {
     throw createError({
       statusCode: 400,
-      message: '已排期的歌曲不能撤回'
+      message: '已排期的电影不能撤回'
     })
   }
 
@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
   const dailyLimit = settings?.dailySubmissionLimit || 0
   const weeklyLimit = settings?.weeklySubmissionLimit || 0
 
-  // 检查撤销的歌曲是否在当前限制期间内（用于返还配额）
+  // 检查撤销的电影是否在当前限制期间内（用于返还配额）
   let canReturnQuota = false
   const now = new Date()
 
@@ -94,18 +94,18 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // 删除歌曲的所有投票
+  // 删除电影的所有投票
   await db.delete(votes).where(eq(votes.songId, body.songId))
 
-  // 删除歌曲
+  // 删除电影
   await db.delete(songs).where(eq(songs.id, body.songId))
 
-  // 清除歌曲列表缓存
+  // 清除电影列表缓存
   await cacheService.clearSongsCache()
-  console.log('[Cache] 歌曲缓存已清除（撤回歌曲）')
+  console.log('[Cache] 电影缓存已清除（撤回电影）')
 
   return {
-    message: canReturnQuota ? '歌曲已成功撤回，投稿配额已返还' : '歌曲已成功撤回',
+    message: canReturnQuota ? '电影已成功撤回，投稿配额已返还' : '电影已成功撤回',
     songId: body.songId,
     quotaReturned: canReturnQuota
   }

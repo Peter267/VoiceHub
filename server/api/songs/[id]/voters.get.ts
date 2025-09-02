@@ -23,17 +23,17 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 获取歌曲ID
+    // 获取电影ID
     const songId = parseInt(getRouterParam(event, 'id') || '0')
     
     if (!songId || isNaN(songId)) {
       throw createError({
         statusCode: 400,
-        message: '无效的歌曲ID'
+        message: '无效的电影ID'
       })
     }
 
-    // 检查歌曲是否存在
+    // 检查电影是否存在
     const songResult = await db.select({
       id: songs.id,
       title: songs.title,
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
       if (!song) {
         throw createError({
           statusCode: 404,
-          message: '歌曲不存在'
+          message: '电影不存在'
         })
       }
 

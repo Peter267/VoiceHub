@@ -18,18 +18,18 @@ export default defineEventHandler(async (event) => {
     // 获取每个学期的统计数据
     const semesterStats = await Promise.all(
       semesterList.map(async (semester) => {
-        // 统计该学期的歌曲数量
+        // 统计该学期的电影数量
         const totalSongsResult = await db.select({ count: count() })
           .from(songs)
           .where(eq(songs.semester, semester.name))
         
-        // 统计该学期的排期数量（通过关联歌曲）
+        // 统计该学期的排期数量（通过关联电影）
         const totalSchedulesResult = await db.select({ count: count() })
           .from(schedules)
           .innerJoin(songs, eq(schedules.songId, songs.id))
           .where(eq(songs.semester, semester.name))
         
-        // 统计该学期有投票的歌曲数量
+        // 统计该学期有投票的电影数量
         const totalRequestsResult = await db.select({ count: count() })
           .from(songs)
           .where(

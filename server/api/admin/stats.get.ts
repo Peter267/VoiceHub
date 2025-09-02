@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
       currentSemester,
       blacklistCount
     ] = await Promise.all([
-      // 总歌曲数
+      // 总电影数
       (async () => {
         const whereCondition = semester && semester !== 'all' ? eq(songs.semester, semester) : undefined
         const result = await db.select({ count: count() }).from(songs).where(whereCondition)
@@ -96,7 +96,7 @@ export default defineEventHandler(async (event) => {
       return uniqueDates.size
     })(),
       
-      // 本周点歌数
+      // 本周点播数
       (async () => {
         const whereConditions = [gte(songs.createdAt, weekAgo)]
         if (semester && semester !== 'all') {
@@ -106,7 +106,7 @@ export default defineEventHandler(async (event) => {
         return result[0].count
       })(),
       
-      // 上周点歌数
+      // 上周点播数
       (async () => {
         const whereConditions = [gte(songs.createdAt, twoWeeksAgo), lt(songs.createdAt, weekAgo)]
         if (semester && semester !== 'all') {
@@ -116,7 +116,7 @@ export default defineEventHandler(async (event) => {
         return result[0].count
       })(),
       
-      // 本周新增歌曲
+      // 本周新增电影
       (async () => {
         const whereConditions = [gte(songs.createdAt, weekAgo)]
         if (semester && semester !== 'all') {
@@ -126,7 +126,7 @@ export default defineEventHandler(async (event) => {
         return result[0].count
       })(),
       
-      // 上周新增歌曲
+      // 上周新增电影
       (async () => {
         const whereConditions = [gte(songs.createdAt, twoWeeksAgo), lt(songs.createdAt, weekAgo)]
         if (semester && semester !== 'all') {
@@ -171,7 +171,7 @@ export default defineEventHandler(async (event) => {
 
     // 获取趋势数据 (最近7天)
     const trendData = await Promise.all([
-      // 歌曲趋势
+      // 电影趋势
       (async () => {
         const trends = []
         for (let i = 6; i >= 0; i--) {
@@ -239,7 +239,7 @@ export default defineEventHandler(async (event) => {
         return trends
       })(),
       
-      // 点歌请求趋势
+      // 点播请求趋势
       (async () => {
         const trends = []
         for (let i = 6; i >= 0; i--) {

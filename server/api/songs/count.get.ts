@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     // 尝试从缓存获取
     const cachedCount = await cache.get<{ count: number }>(cacheKey)
     if (cachedCount !== null) {
-      console.log(`[Cache] 歌曲数量缓存命中: ${cacheKey}, 数量: ${cachedCount.count}`)
+      console.log(`[Cache] 电影数量缓存命中: ${cacheKey}, 数量: ${cachedCount.count}`)
       return cachedCount
     }
     
@@ -35,14 +35,14 @@ export default defineEventHandler(async (event) => {
     
     // 缓存结果（5分钟）
     await cache.set(cacheKey, response)
-    console.log(`[Cache] 歌曲数量设置缓存: ${cacheKey}, 数量: ${totalCount}`)
+    console.log(`[Cache] 电影数量设置缓存: ${cacheKey}, 数量: ${totalCount}`)
     
     return response
   } catch (error) {
-    console.error('获取歌曲数量失败:', error)
+    console.error('获取电影数量失败:', error)
     throw createError({
       statusCode: 500,
-      message: '获取歌曲数量失败'
+      message: '获取电影数量失败'
     })
   }
 })

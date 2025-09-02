@@ -207,7 +207,7 @@ export default defineEventHandler(async (event) => {
     }
   } else if (method === 'DELETE') {
     try {
-      // 检查该播出时段是否有关联的歌曲或排期
+      // 检查该播出时段是否有关联的电影或排期
       const songsCountResult = await db.select({ count: count() }).from(songs)
         .where(eq(songs.preferredPlayTimeId, id))
       const songsCount = songsCountResult[0].count
@@ -222,7 +222,7 @@ export default defineEventHandler(async (event) => {
         .returning()
       const deletedPlayTime = deletedPlayTimeResult[0]
       
-      // 如果有关联的歌曲或排期，将它们的playTimeId设为null
+      // 如果有关联的电影或排期，将它们的playTimeId设为null
       if (songsCount > 0) {
         await db.update(songs)
           .set({ preferredPlayTimeId: null })

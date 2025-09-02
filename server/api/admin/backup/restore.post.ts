@@ -327,12 +327,12 @@ export default defineEventHandler(async (event) => {
                           where: { id: record.requesterId }
                         })
                         if (!userExists) {
-                          console.warn(`歌曲 ${record.title} 的请求者ID ${record.requesterId} 不存在，跳过此记录`)
+                          console.warn(`电影 ${record.title} 的请求者ID ${record.requesterId} 不存在，跳过此记录`)
                           return // 跳过此记录，因为requesterId是必需的
                         }
                       }
                     } else {
-                      console.warn(`歌曲 ${record.title} 缺少requesterId，跳过此记录`)
+                      console.warn(`电影 ${record.title} 缺少requesterId，跳过此记录`)
                       return // 跳过此记录，因为requesterId是必需的
                     }
                     
@@ -342,12 +342,12 @@ export default defineEventHandler(async (event) => {
                         where: { id: record.preferredPlayTimeId }
                       })
                       if (!playTimeExists) {
-                        console.warn(`歌曲 ${record.title} 的播放时间ID ${record.preferredPlayTimeId} 不存在，将设为null`)
+                        console.warn(`电影 ${record.title} 的播放时间ID ${record.preferredPlayTimeId} 不存在，将设为null`)
                         validPreferredPlayTimeId = null
                       }
                     }
                     
-                    // 动态构建歌曲数据，自动跳过不存在的字段
+                    // 动态构建电影数据，自动跳过不存在的字段
                     const songData = {
                       requesterId: validRequesterId, // 必需字段
                       preferredPlayTimeId: validPreferredPlayTimeId // 已验证的字段
@@ -385,7 +385,7 @@ export default defineEventHandler(async (event) => {
                     
                     let createdSong
                     if (mode === 'merge') {
-                      // 检查是否存在相同的歌曲（按标题和艺术家）
+                      // 检查是否存在相同的电影（按标题和艺术家）
                       const existingSong = await tx.song.findFirst({
                         where: {
                           title: { equals: record.title, mode: 'insensitive' },
@@ -394,7 +394,7 @@ export default defineEventHandler(async (event) => {
                       })
                       
                       if (existingSong) {
-                        // 如果存在相同歌曲，更新它
+                        // 如果存在相同电影，更新它
                         createdSong = await tx.song.update({
                           where: { id: existingSong.id },
                           data: songData
@@ -423,7 +423,7 @@ export default defineEventHandler(async (event) => {
                           }
                         } catch (error) {
                           // 如果创建失败（可能是ID冲突），让数据库自动生成ID
-                          console.warn(`歌曲 ${record.title} 使用原始ID创建失败，使用自动生成ID: ${error.message}`)
+                          console.warn(`电影 ${record.title} 使用原始ID创建失败，使用自动生成ID: ${error.message}`)
                           createdSong = await tx.song.create({ 
                             data: songData
                           })
@@ -436,8 +436,8 @@ export default defineEventHandler(async (event) => {
                       })
                       
                       if (existingSongWithId) {
-                        // ID已存在，使用upsert策略更新现有歌曲
-                        console.warn(`歌曲ID ${record.id} (${record.title} - ${record.artist}) 已存在，将更新现有歌曲`)
+                        // ID已存在，使用upsert策略更新现有电影
+                        console.warn(`电影ID ${record.id} (${record.title} - ${record.artist}) 已存在，将更新现有电影`)
                         createdSong = await tx.song.update({
                           where: { id: record.id },
                           data: songData
@@ -452,7 +452,7 @@ export default defineEventHandler(async (event) => {
                         })
                       }
                     }
-                    // 建立歌曲ID映射
+                    // 建立电影ID映射
                     if (record.id && createdSong.id) {
                       songIdMapping.set(record.id, createdSong.id)
                     }
@@ -634,18 +634,18 @@ export default defineEventHandler(async (event) => {
                       return
                     }
                     
-                    // 使用ID映射查找实际的歌曲ID
+                    // 使用ID映射查找实际的电影ID
                     let validSongId = record.songId
                     const mappedSongId = songIdMapping.get(record.songId)
                     if (mappedSongId) {
                       validSongId = mappedSongId
                     } else {
-                      // 尝试直接查找歌曲ID
+                      // 尝试直接查找电影ID
                       const songExists = await tx.song.findUnique({
                         where: { id: record.songId }
                       })
                       if (!songExists) {
-                        console.warn(`排期记录的歌曲ID ${record.songId} 不存在，跳过此记录`)
+                        console.warn(`排期记录的电影ID ${record.songId} 不存在，跳过此记录`)
                         return
                       }
                     }
@@ -676,7 +676,7 @@ export default defineEventHandler(async (event) => {
                     scheduleData.sequence = record.hasOwnProperty('sequence') ? record.sequence : 1
                     
                     if (mode === 'merge') {
-                      // 检查是否存在相同的排期（按歌曲ID和播放日期）
+                      // 检查是否存在相同的排期（按电影ID和播放日期）
                       const existingSchedule = await tx.schedule.findFirst({
                         where: {
                           songId: validSongId,
@@ -980,18 +980,18 @@ export default defineEventHandler(async (event) => {
                       return // 跳过此记录，因为userId是必需的
                     }
                     
-                    // 使用ID映射查找实际的歌曲ID
+                    // 使用ID映射查找实际的电影ID
                     if (record.songId) {
                       const mappedSongId = songIdMapping.get(record.songId)
                       if (mappedSongId) {
                         validVoteSongId = mappedSongId
                       } else {
-                        // 尝试直接查找歌曲ID
+                        // 尝试直接查找电影ID
                         const songExists = await tx.song.findUnique({
                           where: { id: record.songId }
                         })
                         if (!songExists) {
-                          console.warn(`投票记录的歌曲ID ${record.songId} 不存在，跳过此记录`)
+                          console.warn(`投票记录的电影ID ${record.songId} 不存在，跳过此记录`)
                           return // 跳过此记录，因为songId是必需的
                         }
                       }
@@ -1008,7 +1008,7 @@ export default defineEventHandler(async (event) => {
                     }
                     
                     if (mode === 'merge') {
-                      // 检查是否存在相同的投票（同一用户对同一歌曲的投票）
+                      // 检查是否存在相同的投票（同一用户对同一电影的投票）
                       const existingVote = await tx.vote.findFirst({
                         where: {
                           userId: validVoteUserId,
@@ -1027,7 +1027,7 @@ export default defineEventHandler(async (event) => {
                         await tx.vote.create({ data: voteData })
                       }
                     } else {
-                      // 完全恢复模式，检查是否存在相同的投票（同一用户对同一歌曲的投票）
+                      // 完全恢复模式，检查是否存在相同的投票（同一用户对同一电影的投票）
                       const existingVote = await tx.vote.findFirst({
                         where: {
                           userId: validVoteUserId,

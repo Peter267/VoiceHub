@@ -133,7 +133,7 @@ export const SORT_CONSTANTS = {
   // 排期排序字段
   SCHEDULE_SORT_FIELDS: ['playDate', 'createdAt'] as const,
   
-  // 歌曲排序字段
+  // 电影排序字段
   SONG_SORT_FIELDS: ['createdAt', 'title', 'artist', 'playedAt', 'votes'] as const
 } as const
 

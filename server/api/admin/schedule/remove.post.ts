@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   if (!user || !['SONG_ADMIN', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
     throw createError({
       statusCode: 403,
-      statusMessage: '需要歌曲管理员及以上权限'
+      statusMessage: '需要电影管理员及以上权限'
     })
   }
   
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
       }
     }
     
-    console.log(`找到排期 ID=${scheduleIdNumber}, 歌曲=${existingSchedule.songTitle || '未知歌曲'}`)
+    console.log(`找到排期 ID=${scheduleIdNumber}, 电影=${existingSchedule.songTitle || '未知电影'}`)
     
     // 删除排期
     const deletedSchedule = await db.delete(schedules)
@@ -58,8 +58,8 @@ export default defineEventHandler(async (event) => {
     // 清除相关缓存
     try {
       await cacheService.clearSchedulesCache()
-      await cacheService.clearSongsCache()  // 清除歌曲列表缓存，确保scheduled状态更新
-      console.log('[Cache] 排期缓存和歌曲列表缓存已清除（移除排期）')
+      await cacheService.clearSongsCache()  // 清除电影列表缓存，确保scheduled状态更新
+      console.log('[Cache] 排期缓存和电影列表缓存已清除（移除排期）')
     } catch (cacheError) {
       console.error('[Cache] 清除缓存失败:', cacheError)
     }

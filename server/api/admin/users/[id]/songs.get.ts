@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 检查是否为管理员、歌曲管理员或超级管理员
+    // 检查是否为管理员、电影管理员或超级管理员
     const allowedRoles = ['ADMIN', 'SONG_ADMIN', 'SUPER_ADMIN']
     if (!allowedRoles.includes(currentUser.role)) {
       throw createError({
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 获取用户投稿的歌曲
+    // 获取用户投稿的电影
     const submittedSongs = await db.select({
       id: songs.id,
       title: songs.title,
@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
       played: songs.played
     }).from(songs).where(eq(songs.requesterId, userId)).orderBy(desc(songs.createdAt))
 
-    // 获取用户投票的歌曲
+    // 获取用户投票的电影
     const votedSongs = await db.select({
       id: votes.id,
       createdAt: votes.createdAt,
@@ -108,7 +108,7 @@ export default defineEventHandler(async (event) => {
       }))
     }
   } catch (error) {
-    console.error('获取用户歌曲信息失败:', error)
+    console.error('获取用户电影信息失败:', error)
     
     if (error.statusCode) {
       throw error

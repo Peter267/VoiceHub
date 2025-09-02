@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
       requesterId = requesterUser?.id || null
     }
 
-    // 检查歌曲是否已存在
+    // 检查电影是否已存在
     const existingSongResult = await db.select().from(songs)
       .where(and(
         eq(songs.title, title.trim()),
@@ -85,7 +85,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 创建歌曲
+    // 创建电影
     const newSongResult = await db.insert(songs).values({
       title: title.trim(),
       artist: artist.trim(),
@@ -115,12 +115,12 @@ export default defineEventHandler(async (event) => {
       requester: requesterInfo
     }
 
-    // 清除歌曲相关缓存
+    // 清除电影相关缓存
     try {
       await cacheService.clearSongsCache()
-      console.log('[Cache] 歌曲缓存已清除（添加歌曲）')
+      console.log('[Cache] 电影缓存已清除（添加电影）')
     } catch (error) {
-      console.error('清除歌曲缓存失败:', error)
+      console.error('清除电影缓存失败:', error)
     }
     
     return {

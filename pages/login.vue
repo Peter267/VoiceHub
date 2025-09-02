@@ -5,11 +5,11 @@
       <div class="brand-section">
         <div class="brand-content">
           <div class="logo-section">
-            <img src="/images/logo.svg" alt="VoiceHub Logo" class="brand-logo" />
-            <h1 v-if="siteTitle" class="brand-title">{{ siteTitle || 'VoiceHub' }}</h1>
+            <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="MovieHub Logo" class="brand-logo" />
+            <h1 v-if="siteTitle" class="brand-title">{{ siteTitle || 'MovieHub' }}</h1>
           </div>
           <p class="brand-description">
-            校园广播站点歌管理系统
+            校园广播站点播管理系统
           </p>
           <div class="feature-list">
             <div class="feature-item">
@@ -18,7 +18,7 @@
                 <path d="M12 1v6m0 6v6"/>
                 <path d="m21 12-6-3-6 3-6-3"/>
               </svg>
-              <span>智能点歌管理</span>
+              <span>智能点播管理</span>
             </div>
             <div class="feature-item">
               <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!user) {
     throw createError({
       statusCode: 401,
-      message: '需要登录才能点歌'
+      message: '需要登录才能点播'
     })
   }
   
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!body.title || !body.artist) {
     throw createError({
       statusCode: 400,
-      message: '歌曲名称和艺术家不能为空'
+      message: '电影名称和艺术家不能为空'
     })
   }
   
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
     const normalizedTitle = normalizeForMatch(body.title)
     const normalizedArtist = normalizeForMatch(body.artist)
 
-    // 检查是否已有完全相同的歌曲（标准化后完全匹配，仅限当前学期）
+    // 检查是否已有完全相同的电影（标准化后完全匹配，仅限当前学期）
     const currentSemester = await getCurrentSemesterName()
     const allSongs = await db.select({
       id: songs.id,
@@ -168,7 +168,7 @@ export default defineEventHandler(async (event) => {
       }
     }
     
-    // 创建歌曲
+    // 创建电影
     const songResult = await db.insert(songs).values({
       title: body.title,
       artist: body.artist,
@@ -185,14 +185,14 @@ export default defineEventHandler(async (event) => {
     
     return song
   } catch (error: any) {
-    console.error('点歌失败:', error)
+    console.error('点播失败:', error)
 
     if (error.statusCode) {
       throw error
     } else {
       throw createError({
         statusCode: 500,
-        message: '点歌失败，请稍后重试'
+        message: '点播失败，请稍后重试'
       })
         }
       }

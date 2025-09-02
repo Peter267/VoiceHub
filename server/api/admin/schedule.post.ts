@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   if (!['SONG_ADMIN', 'ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
     throw createError({
       statusCode: 403,
-      message: '只有歌曲管理员及以上权限才能创建排期'
+      message: '只有电影管理员及以上权限才能创建排期'
     })
   }
   
@@ -28,12 +28,12 @@ export default defineEventHandler(async (event) => {
   if (!body.songId || !body.playDate) {
     throw createError({
       statusCode: 400,
-      message: '歌曲ID和播放日期不能为空'
+      message: '电影ID和播放日期不能为空'
     })
   }
   
   try {
-    // 检查歌曲是否存在
+    // 检查电影是否存在
     const songResult = await db.select()
       .from(songs)
       .where(eq(songs.id, body.songId))
@@ -44,11 +44,11 @@ export default defineEventHandler(async (event) => {
     if (!song) {
       throw createError({
         statusCode: 404,
-        message: '歌曲不存在'
+        message: '电影不存在'
       })
     }
     
-    // 检查是否已经为该歌曲创建过排期，如果有则删除旧的排期
+    // 检查是否已经为该电影创建过排期，如果有则删除旧的排期
     const existingScheduleResult = await db.select()
       .from(schedules)
       .where(eq(schedules.songId, body.songId))
@@ -140,8 +140,8 @@ export default defineEventHandler(async (event) => {
     // 清除相关缓存
     try {
       await cacheService.clearSchedulesCache()
-      await cacheService.clearSongsCache()  // 清除歌曲列表缓存，确保scheduled状态更新
-      console.log('[Cache] 排期缓存和歌曲列表缓存已清除（创建排期）')
+      await cacheService.clearSongsCache()  // 清除电影列表缓存，确保scheduled状态更新
+      console.log('[Cache] 排期缓存和电影列表缓存已清除（创建排期）')
     } catch (cacheError) {
       console.error('[Cache] 清除缓存失败:', cacheError)
     }

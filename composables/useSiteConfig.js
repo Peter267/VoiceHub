@@ -1,12 +1,12 @@
 import { ref, computed } from 'vue'
 
 const defaultSubmissionGuidelines = `1. 投稿时无需加入书名号
-2. 除DJ外，其他类型歌曲均接收（包括小语种）
-3. 禁止投递含有违规内容的歌曲
-4. 点播的歌曲将由管理员进行审核
+2. 除DJ外，其他类型电影均接收（包括小语种）
+3. 禁止投递含有违规内容的电影
+4. 点播的电影将由管理员进行审核
 5. 审核通过后将安排在播放时段播出
-6. 提交即表明我已阅读投稿须知并已知该歌曲有概率无法播出
-7. 本系统仅提供音乐搜索和播放管理功能，不存储任何音乐文件。所有音乐内容均来自第三方音乐平台，版权归原平台及版权方所有。用户点歌时请确保遵守相关音乐平台的服务条款，尊重音乐作品版权。我们鼓励用户支持正版音乐，在官方平台购买和收听喜爱的音乐作品。
+6. 提交即表明我已阅读投稿须知并已知该电影有概率无法播出
+7. 本系统仅提供音乐搜索和播放管理功能，不存储任何音乐文件。所有音乐内容均来自第三方音乐平台，版权归原平台及版权方所有。用户点播时请确保遵守相关音乐平台的服务条款，尊重音乐作品版权。我们鼓励用户支持正版音乐，在官方平台购买和收听喜爱的音乐作品。
 8. 最终解释权归广播站所有`
 
 // 站点配置状态
@@ -45,11 +45,11 @@ export const useSiteConfig = () => {
       
       // 使用默认配置
       siteConfig.value = {
-        siteTitle: '校园广播站点歌系统',
+        siteTitle: '校园广播站点播系统',
         siteLogoUrl: '/favicon.ico',
         schoolLogoHomeUrl: '',
         schoolLogoPrintUrl: '',
-        siteDescription: '校园广播站点歌系统 - 让你的声音被听见',
+        siteDescription: '校园广播站点播系统 - 让你的声音被听见',
         submissionGuidelines: defaultSubmissionGuidelines,
         icpNumber: ''
       }
@@ -60,11 +60,11 @@ export const useSiteConfig = () => {
   }
 
   // 计算属性
-  const siteTitle = computed(() => siteConfig.value.siteTitle || '校园广播站点歌系统')
+  const siteTitle = computed(() => siteConfig.value.siteTitle || '校园广播站点播系统')
   const logoUrl = computed(() => siteConfig.value.siteLogoUrl || '/favicon.ico')
   const schoolLogoHomeUrl = computed(() => siteConfig.value.schoolLogoHomeUrl || '')
   const schoolLogoPrintUrl = computed(() => siteConfig.value.schoolLogoPrintUrl || '')
-  const description = computed(() => siteConfig.value.siteDescription || '校园广播站点歌系统 - 让你的声音被听见')
+  const description = computed(() => siteConfig.value.siteDescription || '校园广播站点播系统 - 让你的声音被听见')
   const guidelines = computed(() => siteConfig.value.submissionGuidelines || defaultSubmissionGuidelines)
   const icp = computed(() => siteConfig.value.icpNumber || '')
 

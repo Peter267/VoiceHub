@@ -565,8 +565,8 @@ const availablePermissions = [
   },
   {
     value: 'songs:read',
-    label: '歌曲查询',
-    description: '查看歌曲列表和详情'
+    label: '电影查询',
+    description: '查看电影列表和详情'
   }
 ]
 

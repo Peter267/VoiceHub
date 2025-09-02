@@ -35,10 +35,10 @@ export default defineEventHandler(async (event) => {
       popularGenres,
       peakHours
     ] = await Promise.all([
-      // 活跃用户数和用户列表 (最近1小时点歌、登录或点赞的用户)
+      // 活跃用户数和用户列表 (最近1小时点播、登录或点赞的用户)
       (async () => {
         try {
-          // 获取最近1小时内点歌的用户
+          // 获取最近1小时内点播的用户
           const recentSongUsers = await db.select({
             requesterId: songs.requesterId,
             requesterName: users.name,
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
           .from(users)
           .where(gte(users.lastLogin, oneHourAgo))
           
-          // 获取最近1小时内点赞过歌曲的用户
+          // 获取最近1小时内点赞过电影的用户
           const recentVoteUsers = await db.select({
             userId: votes.userId,
             userName: users.name,
@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
           // 合并并去重用户列表
           const userMap = new Map()
           
-          // 添加点歌用户
+          // 添加点播用户
           recentSongUsers.forEach(song => {
             userMap.set(song.requesterId2, {
               id: song.requesterId2,
@@ -115,7 +115,7 @@ export default defineEventHandler(async (event) => {
         }
       })(),
 
-      // 今日点歌数
+      // 今日点播数
       (async () => {
         try {
           const todayCountResult = await db.select({ count: count() })

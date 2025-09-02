@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
         } else {
           throw createError({
             statusCode: 403,
-            message: '管理员只能创建用户和歌曲管理员角色'
+            message: '管理员只能创建用户和电影管理员角色'
           })
         }
       }
@@ -96,7 +96,7 @@ export default defineEventHandler(async (event) => {
       const { cache } = await import('~/server/utils/cache-helpers')
       await cache.deletePattern('songs:*')
       await cache.deletePattern('stats:*')
-      console.log('[Cache] 歌曲和统计缓存已清除（用户创建）')
+      console.log('[Cache] 电影和统计缓存已清除（用户创建）')
     } catch (cacheError) {
       console.warn('[Cache] 清除缓存失败:', cacheError)
     }

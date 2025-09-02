@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   const limit = parseInt(query.limit as string) || 10
 
   try {
-    // 获取热门歌曲排行
+    // 获取热门电影排行
     const topSongs = await db.select({
       id: songs.id,
       title: songs.title,
@@ -46,10 +46,10 @@ export default defineEventHandler(async (event) => {
 
     return formattedData
   } catch (error) {
-    console.error('获取热门歌曲排行失败:', error)
+    console.error('获取热门电影排行失败:', error)
     throw createError({
       statusCode: 500,
-      message: '获取热门歌曲排行失败'
+      message: '获取热门电影排行失败'
     })
   }
 })

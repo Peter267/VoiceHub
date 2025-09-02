@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       createdAt: Date
     }> = []
 
-    // 获取最近的歌曲活动
+    // 获取最近的电影活动
     const recentSongs = await db.select({
       id: songs.id,
       title: songs.title,
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
       activities.push({
         id: `song-${song.id}`,
         type: 'song',
-        title: '新歌曲投稿',
+        title: '新电影投稿',
         description: `${song.requesterName || song.requesterUsername || '用户'} 投稿了《${song.title}》`,
         createdAt: song.createdAt
       })

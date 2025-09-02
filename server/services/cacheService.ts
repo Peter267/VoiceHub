@@ -383,13 +383,13 @@ class CacheService {
   }
 
 
-  // 获取歌曲数量缓存
+  // 获取电影数量缓存
   async getSongCount(semester?: string): Promise<number | null> {
     const key = this.generateKey(CACHE_PREFIXES.SONG_COUNT, semester || 'all')
     return await this.getCache<number>(key)
   }
 
-  // 设置歌曲数量缓存
+  // 设置电影数量缓存
   async setSongCount(count: number, semester?: string): Promise<void> {
     const key = this.generateKey(CACHE_PREFIXES.SONG_COUNT, semester || 'all')
     await this.setCache(key, count, CACHE_TTL.SONG_COUNT)
@@ -407,20 +407,20 @@ class CacheService {
     await this.setCache(key, songIds, CACHE_TTL.USER_VOTES)
   }
 
-  // 清除歌曲相关缓存
+  // 清除电影相关缓存
   async clearSongsCache(semester?: string): Promise<void> {
     const patterns = [
       this.generateKey(CACHE_PREFIXES.SONG_COUNT, '*'),
       this.generateKey(CACHE_PREFIXES.USER_VOTES, '*'),
-      'songs:count:*',  // 新的歌曲数量缓存
-      'songs:list:*'    // 新的歌曲列表缓存
+      'songs:count:*',  // 新的电影数量缓存
+      'songs:list:*'    // 新的电影列表缓存
     ]
     
     for (const pattern of patterns) {
       await this.deleteCachePattern(pattern)
     }
     
-    console.log(`[Cache] 歌曲相关缓存已清除${semester ? ` (学期: ${semester})` : ''}`)
+    console.log(`[Cache] 电影相关缓存已清除${semester ? ` (学期: ${semester})` : ''}`)
   }
 
   // 清理损坏的缓存数据（UTF-8编码问题）
@@ -874,7 +874,7 @@ class CacheService {
 
     console.log('[Cache] 启动定期刷新任务')
     
-    // 注意：移除了歌曲和排期的定期预热，改为按需缓存
+    // 注意：移除了电影和排期的定期预热，改为按需缓存
     
     // 每小时清理过期的刷新锁
     setInterval(() => {

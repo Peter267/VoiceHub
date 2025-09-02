@@ -12,7 +12,7 @@
       </div>
 
       <div class="modal-body">
-        <!-- 歌曲信息 -->
+        <!-- 电影信息 -->
         <div v-if="songInfo" class="song-info">
           <h4 class="song-title">{{ songInfo.title }}</h4>
           <p class="song-artist">{{ songInfo.artist }}</p>

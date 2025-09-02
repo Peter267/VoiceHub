@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     const totalUsersResult = await db.select({ count: count() }).from(users)
     const totalUsers = totalUsersResult[0].count
     
-    // 2. 获取有请求歌曲的用户数
+    // 2. 获取有请求电影的用户数
     const allUsers = await db.select().from(users)
     const allSongs = await db.select().from(songs)
     
@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       })
     }).length
     
-    // 3. 获取用户请求歌曲的平均数量
+    // 3. 获取用户请求电影的平均数量
     const userSongCounts = allUsers.map(user => {
       const songCount = allSongs.filter(song => song.requesterId === user.id).length
       return { ...user, _count: { songs: songCount } }

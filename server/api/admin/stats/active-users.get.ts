@@ -33,12 +33,12 @@ export default defineEventHandler(async (event) => {
       songWhere = { semester: semester }
     }
 
-    // 获取活跃用户数据 - 有投稿歌曲的用户
+    // 获取活跃用户数据 - 有投稿电影的用户
     const allUsers = await db.select().from(users)
     const allSongs = await db.select().from(songs)
     const allVotes = await db.select().from(votes)
     
-    // 过滤有投稿歌曲的用户
+    // 过滤有投稿电影的用户
     const activeUsers = allUsers.filter(user => {
       const userSongs = allSongs.filter(song => {
         if (song.requesterId !== user.id) return false

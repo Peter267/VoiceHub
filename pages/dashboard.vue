@@ -17,7 +17,7 @@
           </button>
           <div class="mobile-logo">
             <span v-if="$config.public.siteTitle" class="mobile-logo-text">{{ $config.public.siteTitle }}</span>
-            <span v-else class="mobile-logo-text">VoiceHub</span>
+            <span v-else class="mobile-logo-text">MovieHub</span>
             <span class="mobile-logo-subtitle">管理控制台</span>
           </div>
           <div class="mobile-user">
@@ -38,10 +38,10 @@
         <aside :class="['sidebar', { 'sidebar-open': sidebarOpen }]">
           <div class="sidebar-header">
             <NuxtLink to="/" class="logo-link">
-              <img src="/images/logo.svg" alt="VoiceHub Logo" class="logo-image" />
+              <img src="https://i.p-i.vip/88/20250826-68adc495bd1a4.png" alt="MovieHub Logo" class="logo-image" />
               <div class="logo-content">
                 <span v-if="$config.public.siteTitle" class="logo-text">{{ $config.public.siteTitle }}</span>
-                <span v-else class="logo-text">VoiceHub</span>
+                <span v-else class="logo-text">MovieHub</span>
                 <span class="logo-subtitle">管理控制台</span>
               </div>
             </NuxtLink>
@@ -64,7 +64,7 @@
               </button>
             </div>
             
-            <!-- 内容管理 - 歌曲管理员及以上可见 -->
+            <!-- 内容管理 - 电影管理员及以上可见 -->
             <div v-if="permissions.canAccessPage('schedule') || permissions.canAccessPage('print') || permissions.canAccessPage('songs')" class="nav-section">
               <div class="nav-section-title">内容管理</div>
               <button
@@ -102,7 +102,7 @@
                   <circle cx="6" cy="18" r="3"/>
                   <circle cx="18" cy="16" r="3"/>
                 </svg>
-                歌曲管理
+                电影管理
               </button>
               <button 
                 v-if="permissions.canAccessPage('data-analysis')"
@@ -283,7 +283,7 @@
               <LazyAdminOverviewDashboard @navigate="handleNavigate" />
             </div>
             
-            <!-- 歌曲管理 -->
+            <!-- 电影管理 -->
             <div v-if="activeTab === 'songs' && permissions.canAccessPage('songs')" class="content-section">
               <LazyAdminSongManagement />
             </div>
@@ -381,7 +381,7 @@ const permissions = usePermissions()
 const getPageTitle = () => {
   const titles = {
     overview: '数据概览',
-    songs: '歌曲管理',
+    songs: '电影管理',
     schedule: '排期管理',
     print: '打印排期',
     users: '用户管理',
@@ -401,7 +401,7 @@ const dynamicTitle = computed(() => {
   if (siteTitle && siteTitle.value) {
     return `${currentPageTitle} | ${siteTitle.value}`
   }
-  return `${currentPageTitle} | 校园广播站点歌系统`
+  return `${currentPageTitle} | 校园广播站点播系统`
 })
 
 // 监听activeTab变化，更新页面标题
@@ -421,7 +421,7 @@ watch(() => siteTitle?.value, () => {
 const getRoleDisplayName = (role) => {
   const roleNames = {
     'USER': '普通用户',
-    'SONG_ADMIN': '歌曲管理员',
+    'SONG_ADMIN': '电影管理员',
     'ADMIN': '超级管理员',
     'SUPER_ADMIN': '超级管理员'
   }

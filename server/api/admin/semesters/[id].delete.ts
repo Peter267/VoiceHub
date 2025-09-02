@@ -38,14 +38,14 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // 检查是否有关联的歌曲
+  // 检查是否有关联的电影
   const songCountResult = await db.select().from(songs).where(eq(songs.semester, semester.name))
   const songCount = songCountResult.length
 
   if (songCount > 0) {
     throw createError({
       statusCode: 400,
-      statusMessage: `该学期下还有 ${songCount} 首歌曲，无法删除`
+      statusMessage: `该学期下还有 ${songCount} 首电影，无法删除`
     })
   }
 
